@@ -2,7 +2,6 @@ package br.ufpa.pangenome.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.ufpa.pangenome.docker.IDockerRepository
 import br.ufpa.pangenome.ui.states.HomeUIState
 import br.ufpa.pangenome.ui.states.HomeUiIntent
 import br.ufpa.pangenome.ui.states.reduce
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val repository: IDockerRepository
+
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState = _uiState.asStateFlow()
@@ -42,12 +41,7 @@ class HomeViewModel(
     private fun testDocker(intent: HomeUiIntent.TestDocker) {
         _uiState.update { it.reduce(intent) }
         viewModelScope.launch {
-            val isRunning = repository.isRunning()
-            if (isRunning) {
-                handleIntent(HomeUiIntent.DockerRunning)
-            } else {
-                handleIntent(HomeUiIntent.DockerNotRunning)
-            }
+
         }
     }
 

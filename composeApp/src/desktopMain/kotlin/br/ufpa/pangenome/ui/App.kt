@@ -1,5 +1,7 @@
 package br.ufpa.pangenome.ui
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -34,7 +36,13 @@ fun App() {
             NavHost(
                 navController = navController,
                 startDestination = Route.Home,
-                modifier = Modifier.padding(padding).padding(16.dp)
+                modifier = Modifier.padding(padding).padding(16.dp),
+                enterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(1000)
+                    )
+                }
             ) {
                 composable<Route.Project> {
                     val viewModel: ProjectViewModel = koinViewModel()

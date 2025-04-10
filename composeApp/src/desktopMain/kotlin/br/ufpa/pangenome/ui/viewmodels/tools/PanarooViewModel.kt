@@ -1,14 +1,19 @@
 package br.ufpa.pangenome.ui.viewmodels.tools
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import br.ufpa.pangenome.docker.PanarooService
 import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiState
 import br.ufpa.pangenome.ui.states.tools.reduce
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import br.ufpa.pangenome.ui.viewmodels.Global
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
-class PanarooViewModel : ViewModel() {
+class PanarooViewModel(
+    private val service: PanarooService,
+    private val global: Global,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(PanarooUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -18,8 +23,33 @@ class PanarooViewModel : ViewModel() {
             is PanarooUiIntent.ClearInputFolder -> clearInputFolder(intent)
             is PanarooUiIntent.ChangeOutputFolder -> changeOutputFolder(intent)
             is PanarooUiIntent.ClearOutputFolder -> clearOutputFolder(intent)
+            is PanarooUiIntent.ClearOutput -> clearOutput(intent)
+            is PanarooUiIntent.RunPanaroo -> runPanaroo(intent)
+            is PanarooUiIntent.UpdateOutput -> updateOutput(intent)
         }
     }
+
+    private fun updateOutput(intent: PanarooUiIntent.UpdateOutput) {
+        _uiState.update { it.reduce(intent) }
+    }
+
+    private fun runPanaroo(intent: PanarooUiIntent.RunPanaroo) {
+        viewModelScope.launch {
+            global.job = service.start(_uiState.value.inputFolder, _uiState.value.outputFolder)
+                .onEach {
+                    handleIntent(PanarooUiIntent.UpdateOutput(it))
+                }
+                .onCompletion {
+                    handleIntent(PanarooUiIntent.UpdateOutput("Process completed successfully."))
+                }
+                .launchIn(viewModelScope)
+        }
+    }
+
+    private fun clearOutput(intent: PanarooUiIntent.ClearOutput) {
+        _uiState.update { it.reduce(intent) }
+    }
+
     private fun clearOutputFolder(intent: PanarooUiIntent.ClearOutputFolder) {
         _uiState.update { it.reduce(intent) }
     }

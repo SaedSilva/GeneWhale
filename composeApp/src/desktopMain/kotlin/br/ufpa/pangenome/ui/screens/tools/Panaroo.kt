@@ -4,7 +4,9 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
@@ -15,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.GenomeTheme
+import br.ufpa.pangenome.ui.components.Terminal
 import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiState
 import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
@@ -26,6 +29,7 @@ fun Panaroo(
     state: PanarooUiState,
     onIntent: (PanarooUiIntent) -> Unit
 ) {
+    val scrollState = rememberScrollState();
 
     val inputLaucher = rememberDirectoryPickerLauncher { directory ->
         directory?.let {
@@ -72,9 +76,12 @@ fun Panaroo(
                     }
                 )
             }
-            OutlinedButton(onClick = {
-                inputLaucher.launch()
-            }, shape = MaterialTheme.shapes.small) {
+            OutlinedButton(
+                onClick = {
+                    inputLaucher.launch()
+                },
+                shape = MaterialTheme.shapes.small
+            ) {
                 Text("Select input")
             }
         }
@@ -118,6 +125,15 @@ fun Panaroo(
                 Text("Select output")
             }
         }
+
+        OutlinedButton(onClick = {
+            onIntent(PanarooUiIntent.ClearOutput)
+            onIntent(PanarooUiIntent.RunPanaroo)
+        }) {
+            Text("Run Panaroo")
+        }
+
+        Terminal(modifier = Modifier.fillMaxWidth(), output = state.output)
     }
 }
 

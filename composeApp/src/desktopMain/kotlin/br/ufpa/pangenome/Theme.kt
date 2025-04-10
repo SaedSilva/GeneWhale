@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 fun GenomeTheme(
     colorScheme: ColorScheme = MaterialTheme.colorScheme.copy(
         primary = Color(0xFF666666),
-        primaryContainer = Color(0xFF556666),
+        surface = Color(0xFFFFFFFF),
         background = Color(0xFFF0F0F0)
     ),
     content: @Composable () -> Unit

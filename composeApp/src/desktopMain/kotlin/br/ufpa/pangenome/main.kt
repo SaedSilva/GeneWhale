@@ -1,48 +1,47 @@
 package br.ufpa.pangenome
 
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberWindowState
-import br.ufpa.pangenome.docker.DockerRepositoryProcess
-import br.ufpa.pangenome.docker.IDockerRepository
+import br.ufpa.pangenome.docker.PanarooService
 import br.ufpa.pangenome.ui.App
+import br.ufpa.pangenome.ui.viewmodels.Global
 import br.ufpa.pangenome.ui.viewmodels.HomeViewModel
 import br.ufpa.pangenome.ui.viewmodels.ProjectViewModel
 import br.ufpa.pangenome.ui.viewmodels.tools.PanarooViewModel
-import io.ktor.client.*
-import io.ktor.client.engine.cio.*
 import org.koin.compose.KoinApplication
+import org.koin.compose.koinInject
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import java.awt.Dimension
 
 fun main() = application {
-    Window(
-        onCloseRequest = ::exitApplication,
-        title = "pangenome",
+    KoinApplication(
+        application = {
+            modules(appModule, viewModelsModule)
+        }
     ) {
-        window.minimumSize = Dimension(800, 600)
-        KoinApplication(
-            application = {
-                modules(appModule, viewModelsModule)
-            }
+        val global: Global = koinInject()
+        Window(
+            onCloseRequest = {
+                global.stopAll()
+                exitApplication()
+            },
+            title = "pangenome",
         ) {
-            App()
+            window.minimumSize = Dimension(1280, 720)
+
+                App()
         }
     }
 }
 
 private val appModule = module {
-    single <IDockerRepository> { DockerRepositoryProcess() }
+    single { Global(get()) }
+    single { PanarooService() }
 }
 
-/*val ktorModule = module {
-    single { HttpClient(CIO) }
-}*/
-
 val viewModelsModule = module {
-    viewModelOf(::HomeViewModel)
     viewModelOf(::ProjectViewModel)
     viewModelOf(::PanarooViewModel)
+    viewModelOf(::HomeViewModel)
 }
