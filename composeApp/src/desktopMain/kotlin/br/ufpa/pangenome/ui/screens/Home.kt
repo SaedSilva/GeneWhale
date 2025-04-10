@@ -1,0 +1,92 @@
+package br.ufpa.pangenome.ui.screens
+
+import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import br.ufpa.pangenome.GenomeTheme
+import br.ufpa.pangenome.ui.components.ToolCard
+import br.ufpa.pangenome.ui.components.Tools
+import br.ufpa.pangenome.ui.states.HomeUIState
+import br.ufpa.pangenome.ui.states.HomeUiIntent
+import org.jetbrains.compose.resources.painterResource
+import pangenome.composeapp.generated.resources.PaPangenome2
+import pangenome.composeapp.generated.resources.Res
+
+@Composable
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    state: HomeUIState,
+    onNavigateToPanarooScreen: () -> Unit,
+    onIntent: (HomeUiIntent) -> Unit,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(Res.drawable.PaPangenome2),
+                contentDescription = null,
+                modifier = Modifier.size(256.dp)
+            )
+            Text("PaPangenome is an integrated bioinformatics tool that combines multiple pangenome analysis software into a unified platform. It simplifies and automates complex workflows by running all analyses within a pre-configured Docker environment, ensuring reproducibility, portability, and ease of use across different systems.")
+        }
+        LazyVerticalGrid(
+            columns = GridCells.FixedSize(256.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            item {
+                ToolCard(tools = Tools.Panaroo, onClick = {
+                    onNavigateToPanarooScreen()
+                })
+            }
+            item {
+                ToolCard(tools = Tools.Peppan, onClick = {
+
+                })
+            }
+            item {
+                ToolCard(tools = Tools.Pirate, onClick = {
+
+                })
+            }
+            item {
+                ToolCard(tools = Tools.Roary, onClick = {
+
+                })
+            }
+            item {
+                ToolCard(tools = Tools.Splitmem, onClick = {
+
+                })
+            }
+            item {
+                ToolCard(tools = Tools.Ppanggolin, onClick = {
+
+                })
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun HomeScreenPreview() {
+    GenomeTheme {
+        HomeScreen(modifier = Modifier.fillMaxSize(), state = HomeUIState(), {
+
+        }) {
+        }
+    }
+}

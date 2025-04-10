@@ -1,0 +1,62 @@
+package br.ufpa.pangenome.ui.viewmodels
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import br.ufpa.pangenome.docker.IDockerRepository
+import br.ufpa.pangenome.ui.states.HomeUIState
+import br.ufpa.pangenome.ui.states.HomeUiIntent
+import br.ufpa.pangenome.ui.states.reduce
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+class HomeViewModel(
+    private val repository: IDockerRepository
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(HomeUIState())
+    val uiState = _uiState.asStateFlow()
+
+    init {
+        handleIntent(HomeUiIntent.TestDocker)
+    }
+
+    fun handleIntent(intent: HomeUiIntent) {
+        when (intent) {
+            is HomeUiIntent.TestDocker -> testDocker(intent)
+            is HomeUiIntent.StartLoading -> startLoading(intent)
+            is HomeUiIntent.StopLoading -> stopLoading(intent)
+            is HomeUiIntent.DockerNotRunning -> dockerNotRunning(intent)
+            is HomeUiIntent.DockerRunning -> dockerRunning(intent)
+        }
+    }
+
+    private fun dockerRunning(intent: HomeUiIntent) {
+        _uiState.update { it.reduce(intent) }
+    }
+
+    private fun dockerNotRunning(intent: HomeUiIntent) {
+        _uiState.update { it.reduce(intent) }
+    }
+
+    private fun testDocker(intent: HomeUiIntent.TestDocker) {
+        _uiState.update { it.reduce(intent) }
+        viewModelScope.launch {
+            val isRunning = repository.isRunning()
+            if (isRunning) {
+                handleIntent(HomeUiIntent.DockerRunning)
+            } else {
+                handleIntent(HomeUiIntent.DockerNotRunning)
+            }
+        }
+    }
+
+    private fun startLoading(intent: HomeUiIntent.StartLoading) {
+        _uiState.update { it.reduce(intent) }
+    }
+
+    private fun stopLoading(intent: HomeUiIntent.StopLoading) {
+        _uiState.update { it.reduce(intent) }
+    }
+
+}
