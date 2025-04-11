@@ -9,8 +9,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 class PanarooService {
-
-
     suspend fun start(input: String, output: String): Flow<String> {
         return withContext(Dispatchers.IO) {
             channelFlow {
@@ -39,6 +37,7 @@ class PanarooService {
                     var line: String?
 
                     while (reader.readLine().also { line = it } != null) {
+                        println(line)
                         send(line!!)
                     }
 

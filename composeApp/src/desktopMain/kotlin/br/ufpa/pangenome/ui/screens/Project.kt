@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.components.SearchBar
 import br.ufpa.pangenome.ui.states.ProjectUiIntent
 import br.ufpa.pangenome.ui.states.ProjectUiState
@@ -35,7 +36,7 @@ fun ProjectScreen(
                 placeHolder = "Search projects",
                 onClickClear = { onIntent(ProjectUiIntent.ClearSearchText) }
             )
-            Button(onClick = {}, shape = MaterialTheme.shapes.small) {
+            Button(onClick = {}, shape = ThemeDefaults.ButtonShape) {
                 Text("New project")
             }
         }

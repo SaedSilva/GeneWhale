@@ -29,8 +29,7 @@ fun main() = application {
             title = "pangenome",
         ) {
             window.minimumSize = Dimension(1280, 720)
-
-                App()
+            App()
         }
     }
 }

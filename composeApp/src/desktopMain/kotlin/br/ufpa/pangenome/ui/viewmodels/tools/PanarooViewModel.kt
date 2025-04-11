@@ -26,6 +26,14 @@ class PanarooViewModel(
             is PanarooUiIntent.ClearOutput -> clearOutput(intent)
             is PanarooUiIntent.RunPanaroo -> runPanaroo(intent)
             is PanarooUiIntent.UpdateOutput -> updateOutput(intent)
+            is PanarooUiIntent.CloseScreen -> closeScreen(intent)
+        }
+    }
+
+    private fun closeScreen(intent: PanarooUiIntent.CloseScreen) {
+        viewModelScope.launch {
+            global.job?.cancel()
+            global.job = null
         }
     }
 
@@ -40,7 +48,7 @@ class PanarooViewModel(
                     handleIntent(PanarooUiIntent.UpdateOutput(it))
                 }
                 .onCompletion {
-                    handleIntent(PanarooUiIntent.UpdateOutput("Process completed successfully."))
+                    handleIntent(PanarooUiIntent.UpdateOutput("-----------------------------------------------"))
                 }
                 .launchIn(viewModelScope)
         }

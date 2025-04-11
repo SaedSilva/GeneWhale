@@ -1,11 +1,12 @@
 package br.ufpa.pangenome.ui
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,10 +39,32 @@ fun App() {
                 startDestination = Route.Home,
                 modifier = Modifier.padding(padding).padding(16.dp),
                 enterTransition = {
-                    slideIntoContainer(
-                        towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                        animationSpec = tween(1000)
-                    )
+                    fadeIn(animationSpec = tween(1000)) +
+                            slideIntoContainer(
+                                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                                animationSpec = tween(1000)
+                            )
+                },
+                popEnterTransition = {
+                    fadeIn(animationSpec = tween(1000)) +
+                            slideIntoContainer(
+                                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                                animationSpec = tween(1000)
+                            )
+                },
+                exitTransition = {
+                    fadeOut(animationSpec = tween(1000)) +
+                            slideOutOfContainer(
+                                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                                animationSpec = tween(1000)
+                            )
+                },
+                popExitTransition = {
+                    fadeOut(animationSpec = tween(1000)) +
+                            slideOutOfContainer(
+                                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                                animationSpec = tween(1000)
+                            )
                 }
             ) {
                 composable<Route.Project> {
@@ -70,7 +93,13 @@ fun App() {
                 composable<Route.Tools.Panaroo> {
                     val viewModel: PanarooViewModel = koinViewModel()
                     val state by viewModel.uiState.collectAsStateWithLifecycle()
-                    Panaroo(modifier = Modifier.fillMaxSize(), state = state) {
+                    Panaroo(
+                        modifier = Modifier.fillMaxSize(),
+                        state = state,
+                        onNavigateBack = {
+                            navController.popBackStack()
+                        }
+                    ) {
                         viewModel.handleIntent(it)
                     }
                 }

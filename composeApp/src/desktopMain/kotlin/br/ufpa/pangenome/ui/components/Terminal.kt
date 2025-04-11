@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import br.ufpa.pangenome.GenomeTheme
+import br.ufpa.pangenome.ThemeDefaults
 
 @Composable
 fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
@@ -29,7 +30,7 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
 
     Column(
         modifier = modifier
-            .clip(MaterialTheme.shapes.small)
+            .clip(ThemeDefaults.ButtonShape)
             .background(Color.Black)
             .border(4.dp, MaterialTheme.colorScheme.primary)
     ) {
