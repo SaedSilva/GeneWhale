@@ -1,13 +1,10 @@
 package br.ufpa.pangenome.ui.screens.tools
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,6 +16,8 @@ import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.components.MyTab
 import br.ufpa.pangenome.ui.components.PickFolder
 import br.ufpa.pangenome.ui.components.Terminal
+import br.ufpa.pangenome.ui.states.tools.PanarooConfig
+import br.ufpa.pangenome.ui.states.tools.PanarooConfigIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiState
 import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
@@ -45,7 +44,10 @@ fun Panaroo(
         }
     }
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
         Row(modifier = Modifier.clickable {
             onNavigateBack()
         }, verticalAlignment = Alignment.CenterVertically) {
@@ -56,50 +58,23 @@ fun Panaroo(
         PickFolder(
             modifier = Modifier.fillMaxWidth(),
             value = state.inputFolder,
-            onChangeValue = { onIntent(PanarooUiIntent.ChangeOutputFolder(it)) },
+            onChangeValue = { onIntent(PanarooUiIntent.ChangeInputFolder(it)) },
             onClickClear = { onIntent(PanarooUiIntent.ClearInputFolder) },
-            buttonText = "Select Input",
+            buttonText = "Select input",
+            placeHolder = "Select input...",
             onClickButton = { inputLaucher.launch() }
         )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .heightIn(min = 40.dp)
-                    .border(1.dp, MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
-                    .padding(4.dp),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                BasicTextField(
-                    value = state.outputFolder,
-                    onValueChange = { onIntent(PanarooUiIntent.ChangeOutputFolder(it)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 16.sp)
-                )
-                if (state.outputFolder.isBlank()) {
-                    Text("Output folder...", fontSize = 16.sp)
-                }
-            }
-            if (state.outputFolder.isNotBlank()) {
-                Icon(
-                    Icons.Default.Clear,
-                    contentDescription = null,
-                    modifier = Modifier.padding(8.dp).size(16.dp).clickable {
-                        onIntent(PanarooUiIntent.ClearOutputFolder)
-                    }
-                )
-            }
-            OutlinedButton(onClick = {
-                outputLaucher.launch()
-            }, shape = ThemeDefaults.ButtonShape) {
-                Text("Select output")
-            }
-        }
+        PickFolder(
+            modifier = Modifier.fillMaxWidth(),
+            value = state.outputFolder,
+            onChangeValue = { onIntent(PanarooUiIntent.ChangeOutputFolder(it)) },
+            onClickClear = { onIntent(PanarooUiIntent.ClearOutputFolder) },
+            buttonText = "Select output",
+            placeHolder = "Select output...",
+            onClickButton = { outputLaucher.launch() }
+        )
+
 
         OutlinedButton(
             onClick = {
@@ -137,7 +112,13 @@ fun Panaroo(
                 }
 
                 else -> {
-                    Text("Other")
+                    Config(
+                        modifier = Modifier.fillMaxWidth(),
+                        state = state.config,
+                        onIntent = {
+                            onIntent(PanarooUiIntent.ConfigIntent(it))
+                        }
+                    )
                 }
             }
         }
@@ -149,5 +130,66 @@ fun Panaroo(
 private fun PanarooPreview() {
     GenomeTheme {
         Panaroo(modifier = Modifier.fillMaxSize(), state = PanarooUiState(), onNavigateBack = {}) {}
+    }
+}
+
+@Composable
+private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent: (PanarooConfigIntent) -> Unit) {
+    Column(modifier = modifier) {
+        Row {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Memory for container", fontSize = 14.sp)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
+                    Text("0", fontSize = 14.sp)
+                    Slider(
+                        value = state.memorySlider,
+                        onValueChange = {
+                            onIntent(PanarooConfigIntent.ChangeMemorySlider(it))
+                        },
+                        modifier = Modifier.weight(1f).height(24.dp)
+                    )
+                    Text("${state.maxMemory}", fontSize = 14.sp)
+                }
+                Text("Selected memory: ${state.memory} mb", fontSize = 14.sp)
+            }
+            VerticalDivider(modifier = Modifier.height(72.dp).padding(end = 4.dp, start = 4.dp))
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Threads for exec", fontSize = 14.sp)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
+                    Text("0", fontSize = 14.sp)
+                    Slider(
+                        value = state.threadsSlider,
+                        onValueChange = {
+                            onIntent(PanarooConfigIntent.ChangeThreadsSlider(it))
+                        },
+                        modifier = Modifier.weight(1f).height(24.dp),
+                        steps = state.maxThreads - 1
+                    )
+                    Text("${state.maxThreads}", fontSize = 14.sp)
+                }
+                Text("Selected threads: ${state.threads}", fontSize = 14.sp)
+            }
+        }
+        HorizontalDivider()
+    }
+}
+
+@Preview
+@Composable
+private fun ConfigPreview() {
+    GenomeTheme {
+        Config(modifier = Modifier.fillMaxSize().padding(16.dp), state = PanarooConfig(memorySlider = 0.5f)) {
+
+        }
     }
 }

@@ -7,7 +7,10 @@ import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiState
 import br.ufpa.pangenome.ui.states.tools.reduce
 import br.ufpa.pangenome.ui.viewmodels.Global
-import kotlinx.coroutines.flow.*
+import br.ufpa.utils.toMB
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PanarooViewModel(
@@ -16,6 +19,33 @@ class PanarooViewModel(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(PanarooUiState())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            service.logs.collect { output ->
+                _uiState.update { it.reduce(PanarooUiIntent.UpdateOutput(output)) }
+            }
+        }
+        viewModelScope.launch {
+            service.isRunning.collect { isRunning ->
+                _uiState.update { it.copy(isRunning = isRunning) }
+            }
+        }
+        viewModelScope.launch {
+            global.uiState.collect { globalState ->
+                _uiState.update {
+                    it.copy(
+                        config = it.config.copy(
+                            maxMemory = globalState.memoryBytes.toMB(),
+                            maxThreads = globalState.threads,
+                            threadsSlider = 1.0f / globalState.threads
+                        )
+                    )
+                }
+
+            }
+        }
+    }
 
     fun handleIntent(intent: PanarooUiIntent) {
         when (intent) {
@@ -27,7 +57,12 @@ class PanarooViewModel(
             is PanarooUiIntent.RunPanaroo -> runPanaroo(intent)
             is PanarooUiIntent.UpdateOutput -> updateOutput(intent)
             is PanarooUiIntent.CloseScreen -> closeScreen(intent)
+            is PanarooUiIntent.ConfigIntent -> config(intent)
         }
+    }
+
+    private fun config(intent: PanarooUiIntent.ConfigIntent) {
+        _uiState.update { it.copy(config = it.config.reduce(intent.intent)) }
     }
 
     private fun closeScreen(intent: PanarooUiIntent.CloseScreen) {
@@ -43,14 +78,7 @@ class PanarooViewModel(
 
     private fun runPanaroo(intent: PanarooUiIntent.RunPanaroo) {
         viewModelScope.launch {
-            global.job = service.start(_uiState.value.inputFolder, _uiState.value.outputFolder)
-                .onEach {
-                    handleIntent(PanarooUiIntent.UpdateOutput(it))
-                }
-                .onCompletion {
-                    handleIntent(PanarooUiIntent.UpdateOutput("-----------------------------------------------"))
-                }
-                .launchIn(viewModelScope)
+            service.start(_uiState.value.inputFolder, _uiState.value.outputFolder)
         }
     }
 

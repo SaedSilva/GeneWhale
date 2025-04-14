@@ -2,71 +2,91 @@ package br.ufpa.pangenome.docker
 
 import br.ufpa.pangenome.docker.DockerUtils.IDENTIFIER
 import br.ufpa.pangenome.docker.DockerUtils.convertPathForDocker
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 
-class PanarooService {
-    suspend fun start(input: String, output: String): Flow<String> {
-        return withContext(Dispatchers.IO) {
-            channelFlow {
+class PanarooService(
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
+    private val _log = MutableSharedFlow<String>(100)
+    val logs = _log.asSharedFlow()
+    private val _isRunning = MutableStateFlow(false)
+    val isRunning = _isRunning.asStateFlow()
+
+    private var currentProcess: Process? = null
+
+    suspend fun start(input: String, output: String) {
+        if (currentProcess == null || !currentProcess!!.isAlive) {
+            withContext(dispatcher) {
+                _isRunning.emit(true)
+                val unixInput = convertPathForDocker(input)
+                val unixOutput = convertPathForDocker(output)
+
+                val command = mutableListOf(
+                    "docker", "run", "--rm", "-i", "--name", "${IDENTIFIER}_panaroo",
+                    "-v", "$unixInput:/app/gff",
+                    "-v", "$unixOutput:/app/results",
+                    "saedss/panaroo:latest"
+                )
+
+                val builder = ProcessBuilder(
+                    command
+                )
+
+                builder.redirectErrorStream(true)
                 try {
-                    val unixInput = convertPathForDocker(input)
-                    val unixOutput = convertPathForDocker(output)
 
-                    val command = listOf(
-                        "docker", "run", "--rm", "-i", "--name", "${IDENTIFIER}_panaroo",
-                        "-v", "$unixInput:/app/gff",
-                        "-v", "$unixOutput:/app/results",
-                        "saedss/panaroo:latest"
-                    )
-                    println(command)
+                    currentProcess = builder.start()
 
-                    val builder = ProcessBuilder(
-                        command
-                    )
+                    _log.emit("Starting process [PID: ${currentProcess?.pid()}] with command:\n${command.joinToString(" ")}")
 
-                    builder.redirectErrorStream(true)
-
-                    val process = builder.start()
-
-                    val reader = process.inputStream.bufferedReader()
-
-                    var line: String?
-
-                    while (reader.readLine().also { line = it } != null) {
-                        println(line)
-                        send(line!!)
+                    currentProcess?.inputStream?.bufferedReader().use { reader ->
+                        reader?.lineSequence()?.forEach { line -> _log.emit(line) }
                     }
 
-                    val exitCode = process.waitFor()
+                    val exitCode = currentProcess?.waitFor()
 
                     if (exitCode != 0) {
-                        send("Error: Process exited with code $exitCode")
+                        _log.emit("Error: Process exited with code $exitCode")
                     } else {
-                        send("Process completed successfully.")
+                        _log.emit("Process completed successfully.")
                     }
 
-                    reader.close()
-
                 } catch (e: Exception) {
-                    send("Error: ${e.message}")
+                    _log.emit("Error: ${e.message}")
                 } finally {
-                    close()
+                    currentProcess?.destroy()
+                    currentProcess = null
+                    _isRunning.emit(false)
                 }
-            }.flowOn(Dispatchers.IO)
+            }
+        } else {
+            _log.emit("Process is already running.")
         }
     }
 
     suspend fun stop() = withContext(Dispatchers.IO) {
+        _isRunning.emit(false)
+        try {
+            currentProcess?.destroy()
+            currentProcess = null
+            _log.emit("Local process stopped manually.")
+        } catch (e: Exception) {
+            _log.emit("Error stopping local process: ${e.message}")
+        }
+
         try {
             val command = listOf("docker", "stop", "${IDENTIFIER}_panaroo")
             val process = ProcessBuilder(command).start()
             process.waitFor()
+            _log.emit("Docker container stopped.")
         } catch (e: Exception) {
-            println("Error stopping container: ${e.message}")
+            _log.emit("Error stopping container: ${e.message}")
         }
     }
 }

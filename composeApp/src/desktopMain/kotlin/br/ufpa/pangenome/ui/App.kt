@@ -27,6 +27,8 @@ import br.ufpa.pangenome.ui.viewmodels.tools.PanarooViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 
+private const val time = 500
+
 @Composable
 @Preview
 fun App() {
@@ -39,31 +41,31 @@ fun App() {
                 startDestination = Route.Home,
                 modifier = Modifier.padding(padding).padding(16.dp),
                 enterTransition = {
-                    fadeIn(animationSpec = tween(1000)) +
+                    fadeIn(animationSpec = tween(time)) +
                             slideIntoContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                                animationSpec = tween(1000)
+                                animationSpec = tween(time)
                             )
                 },
                 popEnterTransition = {
-                    fadeIn(animationSpec = tween(1000)) +
+                    fadeIn(animationSpec = tween(time)) +
                             slideIntoContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                                animationSpec = tween(1000)
+                                animationSpec = tween(time)
                             )
                 },
                 exitTransition = {
-                    fadeOut(animationSpec = tween(1000)) +
+                    fadeOut(animationSpec = tween(time)) +
                             slideOutOfContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                                animationSpec = tween(1000)
+                                animationSpec = tween(time)
                             )
                 },
                 popExitTransition = {
-                    fadeOut(animationSpec = tween(1000)) +
+                    fadeOut(animationSpec = tween(time)) +
                             slideOutOfContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                                animationSpec = tween(1000)
+                                animationSpec = tween(time)
                             )
                 }
             ) {

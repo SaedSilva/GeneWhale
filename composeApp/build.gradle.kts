@@ -52,6 +52,8 @@ compose.desktop {
         mainClass = "br.ufpa.pangenome.MainKt"
 
         nativeDistributions {
+            includeAllModules = true
+
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "br.ufpa.pangenome"
             packageVersion = "1.0.0"
