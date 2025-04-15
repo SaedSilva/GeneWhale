@@ -7,6 +7,7 @@ import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiState
 import br.ufpa.pangenome.ui.states.tools.reduce
 import br.ufpa.pangenome.ui.viewmodels.Global
+import br.ufpa.utils.Desktop
 import br.ufpa.utils.toMB
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -58,7 +59,12 @@ class PanarooViewModel(
             is PanarooUiIntent.UpdateOutput -> updateOutput(intent)
             is PanarooUiIntent.CloseScreen -> closeScreen(intent)
             is PanarooUiIntent.ConfigIntent -> config(intent)
+            is PanarooUiIntent.OpenDocs -> openDocs()
         }
+    }
+
+    private fun openDocs() {
+        Desktop.openBrowser("https://gthlab.au/panaroo/#/gettingstarted/quickstart")
     }
 
     private fun config(intent: PanarooUiIntent.ConfigIntent) {

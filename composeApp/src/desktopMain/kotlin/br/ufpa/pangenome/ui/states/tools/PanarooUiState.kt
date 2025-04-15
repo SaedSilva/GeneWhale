@@ -21,6 +21,7 @@ sealed class PanarooUiIntent {
     data class UpdateOutput(val output: String) : PanarooUiIntent()
     data class ConfigIntent(val intent: PanarooConfigIntent) : PanarooUiIntent()
     data object CloseScreen : PanarooUiIntent()
+    data object OpenDocs : PanarooUiIntent()
 }
 
 fun PanarooUiState.reduce(intent: PanarooUiIntent): PanarooUiState {
@@ -34,6 +35,7 @@ fun PanarooUiState.reduce(intent: PanarooUiIntent): PanarooUiState {
         is PanarooUiIntent.UpdateOutput -> this.copy(output = this.output + intent.output)
         is PanarooUiIntent.CloseScreen -> this
         is PanarooUiIntent.ConfigIntent -> this.copy(config = this.config.reduce(intent.intent))
+        is PanarooUiIntent.OpenDocs -> this
     }
 }
 

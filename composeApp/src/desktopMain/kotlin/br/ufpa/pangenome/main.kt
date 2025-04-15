@@ -8,6 +8,7 @@ import br.ufpa.pangenome.ui.viewmodels.Global
 import br.ufpa.pangenome.ui.viewmodels.HomeViewModel
 import br.ufpa.pangenome.ui.viewmodels.ProjectViewModel
 import br.ufpa.pangenome.ui.viewmodels.tools.PanarooViewModel
+import br.ufpa.utils.Desktop
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import org.koin.core.module.dsl.viewModelOf

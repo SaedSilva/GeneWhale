@@ -9,10 +9,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.GenomeTheme
 import br.ufpa.pangenome.ThemeDefaults
+import br.ufpa.pangenome.ui.components.MemorySlider
 import br.ufpa.pangenome.ui.components.MyTab
 import br.ufpa.pangenome.ui.components.PickFolder
 import br.ufpa.pangenome.ui.components.Terminal
@@ -48,11 +50,32 @@ fun Panaroo(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Row(modifier = Modifier.clickable {
-            onNavigateBack()
-        }, verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.AutoMirrored.Default.ArrowBack, null)
-            Text("Back", fontSize = 18.sp)
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.clickable {
+                    onNavigateBack()
+                }.align(Alignment.TopStart), verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(Icons.AutoMirrored.Default.ArrowBack, null)
+                Text("Back", fontSize = 18.sp)
+            }
+            Text(
+                "Panaroo",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+            OutlinedButton(
+                modifier = Modifier.align(Alignment.TopEnd).height(32.dp),
+                onClick = {
+                    onIntent(PanarooUiIntent.OpenDocs)
+                },
+                shape = ThemeDefaults.ButtonShape
+            ) {
+                Text("📚 Open documentation", lineHeight = 16.sp)
+            }
         }
 
         PickFolder(
@@ -77,13 +100,14 @@ fun Panaroo(
 
 
         OutlinedButton(
+            modifier = Modifier.height(32.dp),
             onClick = {
                 onIntent(PanarooUiIntent.ClearOutput)
                 onIntent(PanarooUiIntent.RunPanaroo)
             },
             shape = ThemeDefaults.ButtonShape
         ) {
-            Text("Run Panaroo")
+            Text("Run Panaroo", lineHeight = 16.sp)
         }
 
         Column(
@@ -137,26 +161,15 @@ private fun PanarooPreview() {
 private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent: (PanarooConfigIntent) -> Unit) {
     Column(modifier = modifier) {
         Row {
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("Memory for container", fontSize = 14.sp)
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Text("0", fontSize = 14.sp)
-                    Slider(
-                        value = state.memorySlider,
-                        onValueChange = {
-                            onIntent(PanarooConfigIntent.ChangeMemorySlider(it))
-                        },
-                        modifier = Modifier.weight(1f).height(24.dp)
-                    )
-                    Text("${state.maxMemory}", fontSize = 14.sp)
-                }
-                Text("Selected memory: ${state.memory} mb", fontSize = 14.sp)
-            }
+            MemorySlider(
+                modifier = Modifier.weight(1f),
+                value = state.memorySlider,
+                onValueChange = {
+                    onIntent(PanarooConfigIntent.ChangeMemorySlider(it))
+                },
+                maxMemory = state.maxMemory.toString(),
+                selectedMemory = state.memory.toString(),
+            )
             VerticalDivider(modifier = Modifier.height(72.dp).padding(end = 4.dp, start = 4.dp))
             Column(
                 modifier = Modifier.weight(1f)
@@ -183,6 +196,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent
         HorizontalDivider()
     }
 }
+
 
 @Preview
 @Composable
