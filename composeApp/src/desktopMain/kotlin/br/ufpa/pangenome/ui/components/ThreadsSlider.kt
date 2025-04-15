@@ -13,17 +13,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MemorySlider(
+fun ThreadsSlider(
     modifier: Modifier = Modifier,
     value: Float,
     onValueChange: (Float) -> Unit,
-    maxMemory: Long,
-    selectedMemory: Long
+    maxThreads: Int,
+    threads: Int
 ) {
     Column(
         modifier = modifier
     ) {
-        Text("Memory for container", fontSize = 14.sp)
+        Text("Threads for exec", fontSize = 14.sp)
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(2.dp)
@@ -32,10 +32,11 @@ fun MemorySlider(
             Slider(
                 value = value,
                 onValueChange = onValueChange,
-                modifier = Modifier.weight(1f).height(24.dp)
+                modifier = Modifier.weight(1f).height(24.dp),
+                steps = maxThreads - 1
             )
-            Text("$maxMemory", fontSize = 14.sp)
+            Text("$maxThreads", fontSize = 14.sp)
         }
-        Text("Selected memory: $selectedMemory mb", fontSize = 14.sp)
+        Text("Selected threads: $threads", fontSize = 14.sp)
     }
 }

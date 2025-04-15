@@ -14,10 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.GenomeTheme
 import br.ufpa.pangenome.ThemeDefaults
-import br.ufpa.pangenome.ui.components.MemorySlider
-import br.ufpa.pangenome.ui.components.MyTab
-import br.ufpa.pangenome.ui.components.PickFolder
-import br.ufpa.pangenome.ui.components.Terminal
+import br.ufpa.pangenome.ui.components.*
 import br.ufpa.pangenome.ui.states.tools.PanarooConfig
 import br.ufpa.pangenome.ui.states.tools.PanarooConfigIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
@@ -167,31 +164,17 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent
                 onValueChange = {
                     onIntent(PanarooConfigIntent.ChangeMemorySlider(it))
                 },
-                maxMemory = state.maxMemory.toString(),
-                selectedMemory = state.memory.toString(),
+                maxMemory = state.maxMemory,
+                selectedMemory = state.memory,
             )
             VerticalDivider(modifier = Modifier.height(72.dp).padding(end = 4.dp, start = 4.dp))
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("Threads for exec", fontSize = 14.sp)
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Text("0", fontSize = 14.sp)
-                    Slider(
-                        value = state.threadsSlider,
-                        onValueChange = {
-                            onIntent(PanarooConfigIntent.ChangeThreadsSlider(it))
-                        },
-                        modifier = Modifier.weight(1f).height(24.dp),
-                        steps = state.maxThreads - 1
-                    )
-                    Text("${state.maxThreads}", fontSize = 14.sp)
-                }
-                Text("Selected threads: ${state.threads}", fontSize = 14.sp)
-            }
+            ThreadsSlider(
+                modifier = Modifier.weight(1f),
+                value = state.threadsSlider,
+                onValueChange = { onIntent(PanarooConfigIntent.ChangeThreadsSlider(it)) },
+                maxThreads = state.maxThreads,
+                threads = state.threads
+            )
         }
         HorizontalDivider()
     }

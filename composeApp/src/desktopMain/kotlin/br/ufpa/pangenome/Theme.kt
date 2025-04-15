@@ -7,13 +7,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 
+object Colors {
+    val primary: Color = Color(0xFF888888)
+    val secondaryContainer: Color = Color(0xFFBBBBBB)
+    val surface: Color = Color(0xFFF0F0F0)
+    val background: Color = Color(0xFFF0F0F0)
+    val outline: Color = Color(0xFF888888)
+}
+
 @Composable
 fun GenomeTheme(
     colorScheme: ColorScheme = MaterialTheme.colorScheme.copy(
-        primary = Color(0xFF888888),
-        secondaryContainer = Color(0xFFBBBBBB),
-        surface = Color(0xFFF0F0F0),
-        background = Color(0xFFF0F0F0)
+        primary = Colors.primary,
+        secondaryContainer = Colors.secondaryContainer,
+        surface = Colors.surface,
+        background = Colors.background,
+        outline = Colors.outline,
     ),
     content: @Composable () -> Unit
 ) {
