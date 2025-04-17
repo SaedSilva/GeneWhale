@@ -55,6 +55,8 @@ data class PanarooConfig(
 sealed class PanarooConfigIntent {
     data class ChangeMemorySlider(val memory: Float) : PanarooConfigIntent()
     data class ChangeThreadsSlider(val threads: Float) : PanarooConfigIntent()
+    data class ChangeCleanMode(val cleanMode: CleanMode) : PanarooConfigIntent()
+    data class ChangeRemoveInvalidGenes(val remove: Boolean) : PanarooConfigIntent()
 }
 
 fun PanarooConfig.reduce(intent: PanarooConfigIntent): PanarooConfig {
@@ -75,6 +77,10 @@ fun PanarooConfig.reduce(intent: PanarooConfigIntent): PanarooConfig {
                 threads = threadsF.toThreads(this.maxThreads)
             )
         }
+
+        is PanarooConfigIntent.ChangeCleanMode -> this.copy(cleanMode = intent.cleanMode)
+
+        is PanarooConfigIntent.ChangeRemoveInvalidGenes -> this.copy(removeInvalidGenes = intent.remove)
     }
 }
 

@@ -20,19 +20,38 @@ class PanarooService(
 
     private var currentProcess: Process? = null
 
-    suspend fun start(input: String, output: String) {
+    /**
+     * Starts the Panaroo process using Docker.
+     * @param input The input directory containing GFF files.
+     * @param output The output directory for results.
+     * @param memory Optional memory limit in MB for the Docker container.
+     * @param parameters Additional parameters for the Panaroo command.
+     */
+    suspend fun start(
+        input: String,
+        output: String,
+        memory: Long? = null,
+        parameters: List<String> = emptyList()
+    ) {
         if (currentProcess == null || !currentProcess!!.isAlive) {
             withContext(dispatcher) {
                 _isRunning.emit(true)
                 val unixInput = convertPathForDocker(input)
                 val unixOutput = convertPathForDocker(output)
 
+                @Suppress("NAME_SHADOWING")
+                val parameters = parameters.flatMap { it.split(" ") }
                 val command = mutableListOf(
                     "docker", "run", "--rm", "-i", "--name", "${IDENTIFIER}_panaroo",
                     "-v", "$unixInput:/app/gff",
                     "-v", "$unixOutput:/app/results",
-                    "saedss/panaroo:latest"
+                    "saedss/panaroo:latest",
+                    "source ~/.bashrc && conda activate panaroo && cd /app && panaroo -i gff/*.gff -o results"
                 )
+                command.addAll(parameters)
+                memory?.let {
+                    command.add(2, "--memory=${it}m")
+                }
 
                 val builder = ProcessBuilder(
                     command

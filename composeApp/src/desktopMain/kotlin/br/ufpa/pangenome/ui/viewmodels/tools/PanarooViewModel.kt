@@ -3,9 +3,7 @@ package br.ufpa.pangenome.ui.viewmodels.tools
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.ufpa.pangenome.docker.PanarooService
-import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
-import br.ufpa.pangenome.ui.states.tools.PanarooUiState
-import br.ufpa.pangenome.ui.states.tools.reduce
+import br.ufpa.pangenome.ui.states.tools.*
 import br.ufpa.pangenome.ui.viewmodels.Global
 import br.ufpa.utils.Desktop
 import br.ufpa.utils.toMB
@@ -84,7 +82,12 @@ class PanarooViewModel(
 
     private fun runPanaroo(intent: PanarooUiIntent.RunPanaroo) {
         viewModelScope.launch {
-            service.start(_uiState.value.inputFolder, _uiState.value.outputFolder)
+            service.start(
+                input = _uiState.value.inputFolder,
+                output = _uiState.value.outputFolder,
+                memory = _uiState.value.config.memory,
+                parameters = createParams(_uiState.value.config)
+            )
         }
     }
 
@@ -108,5 +111,17 @@ class PanarooViewModel(
         _uiState.update { it.reduce(intent) }
     }
 
+    private fun createParams(config: PanarooConfig): List<String> {
+        val params = mutableListOf<String>()
+        if (config.cleanMode != CleanMode.NONE) {
+            params.add("--clean-mode")
+            params.add(config.cleanMode.toString())
+        }
+        if (config.threads > 0) {
+            params.add("--threads")
+            params.add(config.threads.toString())
+        }
+        return params
+    }
 
 }

@@ -14,8 +14,10 @@ import org.koin.compose.koinInject
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import java.awt.Dimension
+import java.util.*
 
 fun main() = application {
+    Locale.setDefault(Locale.ENGLISH)
     KoinApplication(
         application = {
             modules(appModule, viewModelsModule)

@@ -3,24 +3,28 @@ package br.ufpa.pangenome.ui.screens.tools
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.GenomeTheme
 import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.components.*
-import br.ufpa.pangenome.ui.states.tools.PanarooConfig
-import br.ufpa.pangenome.ui.states.tools.PanarooConfigIntent
-import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
-import br.ufpa.pangenome.ui.states.tools.PanarooUiState
+import br.ufpa.pangenome.ui.states.tools.*
 import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
 import io.github.vinceglb.filekit.path
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,7 +84,7 @@ fun Panaroo(
             value = state.inputFolder,
             onChangeValue = { onIntent(PanarooUiIntent.ChangeInputFolder(it)) },
             onClickClear = { onIntent(PanarooUiIntent.ClearInputFolder) },
-            buttonText = "Select input",
+            tooltip = "Select gff input folder with files",
             placeHolder = "Select input...",
             onClickButton = { inputLaucher.launch() }
         )
@@ -90,7 +94,7 @@ fun Panaroo(
             value = state.outputFolder,
             onChangeValue = { onIntent(PanarooUiIntent.ChangeOutputFolder(it)) },
             onClickClear = { onIntent(PanarooUiIntent.ClearOutputFolder) },
-            buttonText = "Select output",
+            tooltip = "Select output folder",
             placeHolder = "Select output...",
             onClickButton = { outputLaucher.launch() }
         )
@@ -154,8 +158,11 @@ private fun PanarooPreview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent: (PanarooConfigIntent) -> Unit) {
+    val cleanModeTooltipState = rememberTooltipState(isPersistent = true)
+
     Column(modifier = modifier) {
         Row {
             MemorySlider(
@@ -177,6 +184,71 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent
             )
         }
         HorizontalDivider()
+        Row {
+            Column {
+                Row {
+                    Text("Clean mode")
+                    TooltipBox(
+                        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                        tooltip = {
+                            PlainTooltip {
+                                Text(
+                                    "The stringency mode at which to run panaroo. Must be one of 'strict','moderate' or 'sensitive'. Each of these modes can be fine tuned using the additional parameters in the 'Graph correction' section.\n" +
+                                            "strict:\n" +
+                                            "Requires fairly strong evidence (present in  at least 5% of genomes) to keep likely contaminant genes. Will remove genes that are refound more often than they were called originally.\n" +
+                                            "moderate:\n" +
+                                            "Requires moderate evidence (present in  at least 1% of genomes) to keep likely contaminant genes. Keeps genes that are refound more often than they were called originally.\n" +
+                                            "sensitive:\n" +
+                                            "Does not delete any genes and only performes merge and refinding operations. Useful if rare plasmids are of interest as these are often hard to disguish from contamination. Results will likely include  higher number of spurious annotations."
+                                )
+                            }
+                        },
+                        state = cleanModeTooltipState,
+                        focusable = false
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = null,
+                            modifier = Modifier
+//                                .onPointerEvent(PointerEventType.Press) {
+////                                    scope.launch { cleanModeTooltipState.show() }
+//                                }.onPointerEvent(PointerEventType.Move) {
+////                                    scope.launch { cleanModeTooltipState.dismiss() }
+//                                }
+                        )
+                    }
+                }
+                Row {
+                    CleanMode.entries.forEach {
+                        Row(
+                            modifier = Modifier
+                                .height(32.dp)
+                                .selectable(
+                                    selected = state.cleanMode == it,
+                                    onClick = {
+                                        onIntent(PanarooConfigIntent.ChangeCleanMode(it))
+                                    },
+                                    role = Role.RadioButton
+                                ),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(2.dp)
+                        ) {
+                            RadioButton(
+                                selected = state.cleanMode == it,
+                                onClick = null
+                            )
+                            Text(
+                                it.toString(),
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.height(28.dp)
+                            )
+                        }
+                    }
+                }
+            }
+            VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
+        }
+        HorizontalDivider()
     }
 }
 
@@ -185,7 +257,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent
 @Composable
 private fun ConfigPreview() {
     GenomeTheme {
-        Config(modifier = Modifier.fillMaxSize().padding(16.dp), state = PanarooConfig(memorySlider = 0.5f)) {
+        Config(modifier = Modifier.fillMaxWidth().padding(16.dp), state = PanarooConfig(maxThreads = 4)) {
 
         }
     }
