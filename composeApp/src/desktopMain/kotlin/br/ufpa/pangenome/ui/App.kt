@@ -95,11 +95,16 @@ fun App() {
                 composable<Route.Tools.Panaroo> {
                     val viewModel: PanarooViewModel = koinViewModel()
                     val state by viewModel.uiState.collectAsStateWithLifecycle()
+                    val configState by viewModel.uiStateConfig.collectAsStateWithLifecycle()
                     Panaroo(
                         modifier = Modifier.fillMaxSize(),
                         state = state,
+                        configState = configState,
                         onNavigateBack = {
                             navController.popBackStack()
+                        },
+                        onConfigIntent = {
+                            viewModel.handleConfigIntent(it)
                         }
                     ) {
                         viewModel.handleIntent(it)

@@ -19,6 +19,9 @@ class PanarooViewModel(
     private val _uiState = MutableStateFlow(PanarooUiState())
     val uiState = _uiState.asStateFlow()
 
+    private val _uiStateConfig = MutableStateFlow(PanarooConfig())
+    val uiStateConfig = _uiStateConfig.asStateFlow()
+
     init {
         viewModelScope.launch {
             service.logs.collect { output ->
@@ -32,13 +35,11 @@ class PanarooViewModel(
         }
         viewModelScope.launch {
             global.uiState.collect { globalState ->
-                _uiState.update {
+                _uiStateConfig.update {
                     it.copy(
-                        config = it.config.copy(
-                            maxMemory = globalState.memoryBytes.toMB(),
-                            maxThreads = globalState.threads,
-                            threadsSlider = 1.0f / globalState.threads
-                        )
+                        maxMemory = globalState.memoryBytes.toMB(),
+                        maxThreads = globalState.threads,
+                        threadsSlider = 1.0f / globalState.threads
                     )
                 }
 
@@ -56,17 +57,20 @@ class PanarooViewModel(
             is PanarooUiIntent.RunPanaroo -> runPanaroo(intent)
             is PanarooUiIntent.UpdateOutput -> updateOutput(intent)
             is PanarooUiIntent.CloseScreen -> closeScreen(intent)
-            is PanarooUiIntent.ConfigIntent -> config(intent)
             is PanarooUiIntent.OpenDocs -> openDocs()
         }
+    }
+
+    fun handleConfigIntent(intent: PanarooConfigIntent) {
+        config(intent)
     }
 
     private fun openDocs() {
         Desktop.openBrowser("https://gthlab.au/panaroo/#/gettingstarted/quickstart")
     }
 
-    private fun config(intent: PanarooUiIntent.ConfigIntent) {
-        _uiState.update { it.copy(config = it.config.reduce(intent.intent)) }
+    private fun config(intent: PanarooConfigIntent) {
+        _uiStateConfig.update { it.reduce(intent) }
     }
 
     private fun closeScreen(intent: PanarooUiIntent.CloseScreen) {
@@ -85,8 +89,8 @@ class PanarooViewModel(
             service.start(
                 input = _uiState.value.inputFolder,
                 output = _uiState.value.outputFolder,
-                memory = _uiState.value.config.memory,
-                parameters = createParams(_uiState.value.config)
+                memory = _uiStateConfig.value.memory,
+                parameters = createParams(_uiStateConfig.value)
             )
         }
     }
