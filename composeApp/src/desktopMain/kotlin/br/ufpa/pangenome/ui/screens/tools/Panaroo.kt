@@ -10,10 +10,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -22,9 +19,7 @@ import br.ufpa.pangenome.GenomeTheme
 import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.components.*
 import br.ufpa.pangenome.ui.states.tools.*
-import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
 import io.github.vinceglb.filekit.path
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,17 +30,6 @@ fun Panaroo(
     onIntent: (PanarooUiIntent) -> Unit
 ) {
     var index by remember { mutableStateOf(0) }
-
-    val inputLaucher = rememberDirectoryPickerLauncher { directory ->
-        directory?.let {
-            onIntent(PanarooUiIntent.ChangeInputFolder(it.path))
-        }
-    }
-    val outputLaucher = rememberDirectoryPickerLauncher { directory ->
-        directory?.let {
-            onIntent(PanarooUiIntent.ChangeOutputFolder(it.path))
-        }
-    }
 
     Column(
         modifier = modifier,
@@ -86,7 +70,8 @@ fun Panaroo(
             onClickClear = { onIntent(PanarooUiIntent.ClearInputFolder) },
             tooltip = "Select gff input folder with files",
             placeHolder = "Select input...",
-            onClickButton = { inputLaucher.launch() }
+            onClickButton = { },
+            onResult = { it?.let { onIntent(PanarooUiIntent.ChangeInputFolder(it.path)) } }
         )
 
         PickFolder(
@@ -96,7 +81,8 @@ fun Panaroo(
             onClickClear = { onIntent(PanarooUiIntent.ClearOutputFolder) },
             tooltip = "Select output folder",
             placeHolder = "Select output...",
-            onClickButton = { outputLaucher.launch() }
+            onClickButton = { },
+            onResult = { it?.let { onIntent(PanarooUiIntent.ChangeOutputFolder(it.path)) } }
         )
 
 
@@ -158,7 +144,7 @@ private fun PanarooPreview() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent: (PanarooConfigIntent) -> Unit) {
     val cleanModeTooltipState = rememberTooltipState(isPersistent = true)

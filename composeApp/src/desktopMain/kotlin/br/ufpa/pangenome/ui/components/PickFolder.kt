@@ -12,11 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.GenomeTheme
 import br.ufpa.pangenome.ThemeDefaults
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
 import org.jetbrains.compose.resources.painterResource
 import pangenome.composeapp.generated.resources.Res
 import pangenome.composeapp.generated.resources.folder
@@ -30,8 +31,13 @@ fun PickFolder(
     onClickClear: () -> Unit,
     placeHolder: String,
     onClickButton: () -> Unit,
+    onResult: (PlatformFile?) -> Unit = {},
     tooltip: String
 ) {
+    val launcher = rememberDirectoryPickerLauncher { file ->
+        onResult(file)
+    }
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -71,14 +77,7 @@ fun PickFolder(
                 }
                 TooltipArea(
                     tooltip = {
-                        Box(
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
-                                .padding(4.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(tooltip, color = Color.White)
-                        }
+                        MyTooltip(tooltip = tooltip)
                     },
                     delayMillis = 100,
                     tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
@@ -88,7 +87,10 @@ fun PickFolder(
                         contentDescription = null,
                         modifier = Modifier
                             .size(24.dp)
-                            .clickable { onClickButton() }
+                            .clickable {
+                                onClickButton()
+                                launcher.launch()
+                            }
                     )
                 }
             }
