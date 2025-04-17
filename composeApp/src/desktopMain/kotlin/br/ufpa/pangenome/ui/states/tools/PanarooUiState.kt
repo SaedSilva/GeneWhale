@@ -98,5 +98,15 @@ enum class CleanMode {
             SENSITIVE -> "sensitive"
         }
     }
+
+    fun fromString(value: String): CleanMode {
+        return when (value) {
+            "none" -> NONE
+            "strict" -> STRICT
+            "moderate" -> MODERATE
+            "sensitive" -> SENSITIVE
+            else -> NONE
+        }
+    }
 }
 
