@@ -47,32 +47,32 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
-                ToolCard(tools = Tools.Panaroo, onClick = {
+                ToolCard(tool = Tools.Panaroo, onClick = {
                     onNavigateToPanarooScreen()
                 })
             }
             item {
-                ToolCard(tools = Tools.Peppan, onClick = {
+                ToolCard(tool = Tools.Peppan, onClick = {
 
                 })
             }
             item {
-                ToolCard(tools = Tools.Pirate, onClick = {
+                ToolCard(tool = Tools.Pirate, onClick = {
 
                 })
             }
             item {
-                ToolCard(tools = Tools.Roary, onClick = {
+                ToolCard(tool = Tools.Roary, onClick = {
 
                 })
             }
             item {
-                ToolCard(tools = Tools.Splitmem, onClick = {
+                ToolCard(tool = Tools.Splitmem, onClick = {
 
                 })
             }
             item {
-                ToolCard(tools = Tools.Ppanggolin, onClick = {
+                ToolCard(tool = Tools.Ppanggolin, onClick = {
 
                 })
             }
