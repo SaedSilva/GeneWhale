@@ -14,6 +14,8 @@ kotlin {
         val desktopMain by getting
         
         commonMain.dependencies {
+            implementation(libs.kotlin.test)
+
             val fileKitVersion = "0.10.0-beta01"
 
             implementation("io.github.vinceglb:filekit-core:$fileKitVersion")
@@ -60,3 +62,4 @@ compose.desktop {
         }
     }
 }
+
