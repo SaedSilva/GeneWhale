@@ -1,4 +1,4 @@
-package br.ufpa.utils
+package br.ufpa.pangenome.utils
 
 import kotlin.math.roundToInt
 

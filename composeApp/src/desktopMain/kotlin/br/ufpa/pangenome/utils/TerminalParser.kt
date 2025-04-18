@@ -1,4 +1,4 @@
-package br.ufpa.utils
+package br.ufpa.pangenome.utils
 
 object TerminalParser {
     fun addLineToList(

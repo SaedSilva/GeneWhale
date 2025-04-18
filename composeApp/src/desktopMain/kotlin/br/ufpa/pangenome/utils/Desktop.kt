@@ -1,4 +1,4 @@
-package br.ufpa.utils
+package br.ufpa.pangenome.utils
 
 import java.awt.Desktop
 import java.net.URI

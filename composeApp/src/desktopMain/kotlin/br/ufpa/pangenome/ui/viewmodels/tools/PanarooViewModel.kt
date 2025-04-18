@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import br.ufpa.pangenome.docker.PanarooService
 import br.ufpa.pangenome.ui.states.tools.*
 import br.ufpa.pangenome.ui.viewmodels.Global
-import br.ufpa.utils.Desktop
-import br.ufpa.utils.toMB
+import br.ufpa.pangenome.utils.Desktop
+import br.ufpa.pangenome.utils.toMB
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,7 +19,7 @@ class PanarooViewModel(
     private val _uiState = MutableStateFlow(PanarooUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _uiStateConfig = MutableStateFlow(PanarooConfig())
+    private val _uiStateConfig = MutableStateFlow(PanarooParams())
     val uiStateConfig = _uiStateConfig.asStateFlow()
 
     init {
@@ -61,7 +61,7 @@ class PanarooViewModel(
         }
     }
 
-    fun handleConfigIntent(intent: PanarooConfigIntent) {
+    fun handleConfigIntent(intent: PanarooParamsIntent) {
         config(intent)
     }
 
@@ -69,7 +69,7 @@ class PanarooViewModel(
         Desktop.openBrowser("https://gthlab.au/panaroo/#/gettingstarted/quickstart")
     }
 
-    private fun config(intent: PanarooConfigIntent) {
+    private fun config(intent: PanarooParamsIntent) {
         _uiStateConfig.update { it.reduce(intent) }
     }
 
@@ -115,7 +115,7 @@ class PanarooViewModel(
         _uiState.update { it.reduce(intent) }
     }
 
-    private fun createParams(config: PanarooConfig): List<String> {
+    private fun createParams(config: PanarooParams): List<String> {
         val params = mutableListOf<String>()
         if (config.cleanMode != CleanMode.NONE) {
             params.add("--clean-mode")

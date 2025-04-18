@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.GenomeTheme
 import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.components.*
-import br.ufpa.pangenome.ui.states.tools.PanarooConfig
-import br.ufpa.pangenome.ui.states.tools.PanarooConfigIntent
+import br.ufpa.pangenome.ui.states.tools.PanarooParams
+import br.ufpa.pangenome.ui.states.tools.PanarooParamsIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
 import br.ufpa.pangenome.ui.states.tools.PanarooUiState
 import io.github.vinceglb.filekit.path
@@ -30,9 +30,9 @@ import io.github.vinceglb.filekit.path
 fun Panaroo(
     modifier: Modifier = Modifier,
     state: PanarooUiState,
-    configState: PanarooConfig,
+    configState: PanarooParams,
     onNavigateBack: () -> Unit,
-    onConfigIntent: (PanarooConfigIntent) -> Unit,
+    onConfigIntent: (PanarooParamsIntent) -> Unit,
     onIntent: (PanarooUiIntent) -> Unit,
 ) {
     var index by remember { mutableStateOf(0) }
@@ -148,7 +148,7 @@ private fun PanarooPreview() {
     GenomeTheme {
         Panaroo(
             modifier = Modifier.fillMaxSize(), state = PanarooUiState(), onNavigateBack = {},
-            configState = PanarooConfig(),
+            configState = PanarooParams(),
             onConfigIntent = {}
         ) {}
     }
@@ -156,7 +156,7 @@ private fun PanarooPreview() {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent: (PanarooConfigIntent) -> Unit) {
+private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent: (PanarooParamsIntent) -> Unit) {
     val cleanModeTooltipState = rememberTooltipState(isPersistent = true)
 
     Column(modifier = modifier) {
@@ -165,7 +165,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent
                 modifier = Modifier.weight(1f),
                 value = state.memorySlider,
                 onValueChange = {
-                    onIntent(PanarooConfigIntent.ChangeMemorySlider(it))
+                    onIntent(PanarooParamsIntent.ChangeMemorySlider(it))
                 },
                 maxMemory = state.maxMemory,
                 selectedMemory = state.memory,
@@ -174,7 +174,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent
             ThreadsSlider(
                 modifier = Modifier.weight(1f),
                 value = state.threadsSlider,
-                onValueChange = { onIntent(PanarooConfigIntent.ChangeThreadsSlider(it)) },
+                onValueChange = { onIntent(PanarooParamsIntent.ChangeThreadsSlider(it)) },
                 maxThreads = state.maxThreads,
                 threads = state.threads
             )
@@ -226,7 +226,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooConfig, onIntent
 @Composable
 private fun ConfigPreview() {
     GenomeTheme {
-        Config(modifier = Modifier.fillMaxWidth().padding(16.dp), state = PanarooConfig(maxThreads = 4)) {
+        Config(modifier = Modifier.fillMaxWidth().padding(16.dp), state = PanarooParams(maxThreads = 4)) {
 
         }
     }

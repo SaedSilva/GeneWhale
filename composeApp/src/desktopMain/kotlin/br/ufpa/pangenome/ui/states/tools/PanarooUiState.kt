@@ -1,7 +1,7 @@
 package br.ufpa.pangenome.ui.states.tools
 
-import br.ufpa.utils.toMB
-import br.ufpa.utils.toThreads
+import br.ufpa.pangenome.utils.toMB
+import br.ufpa.pangenome.utils.toThreads
 
 data class PanarooUiState(
     val inputFolder: String = "",
@@ -36,7 +36,7 @@ fun PanarooUiState.reduce(intent: PanarooUiIntent): PanarooUiState {
     }
 }
 
-data class PanarooConfig(
+data class PanarooParams(
     val memorySlider: Float = 0.0f,
     val memory: Long = 0L,
     val maxMemory: Long = 0L,
@@ -49,21 +49,21 @@ data class PanarooConfig(
     val removeInvalidGenes: Boolean = false,
 )
 
-sealed class PanarooConfigIntent {
-    data class ChangeMemorySlider(val memory: Float) : PanarooConfigIntent()
-    data class ChangeThreadsSlider(val threads: Float) : PanarooConfigIntent()
-    data class ChangeCleanMode(val cleanMode: CleanMode) : PanarooConfigIntent()
-    data class ChangeRemoveInvalidGenes(val remove: Boolean) : PanarooConfigIntent()
+sealed class PanarooParamsIntent {
+    data class ChangeMemorySlider(val memory: Float) : PanarooParamsIntent()
+    data class ChangeThreadsSlider(val threads: Float) : PanarooParamsIntent()
+    data class ChangeCleanMode(val cleanMode: CleanMode) : PanarooParamsIntent()
+    data class ChangeRemoveInvalidGenes(val remove: Boolean) : PanarooParamsIntent()
 }
 
-fun PanarooConfig.reduce(intent: PanarooConfigIntent): PanarooConfig {
+fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
     return when (intent) {
-        is PanarooConfigIntent.ChangeMemorySlider -> this.copy(
+        is PanarooParamsIntent.ChangeMemorySlider -> this.copy(
             memorySlider = intent.memory,
             memory = intent.memory.toMB(this.maxMemory)
         )
 
-        is PanarooConfigIntent.ChangeThreadsSlider -> {
+        is PanarooParamsIntent.ChangeThreadsSlider -> {
             val threadsF = if (intent.threads == 0.0f) {
                 1.0f / this.maxThreads
             } else {
@@ -75,9 +75,9 @@ fun PanarooConfig.reduce(intent: PanarooConfigIntent): PanarooConfig {
             )
         }
 
-        is PanarooConfigIntent.ChangeCleanMode -> this.copy(cleanMode = intent.cleanMode)
+        is PanarooParamsIntent.ChangeCleanMode -> this.copy(cleanMode = intent.cleanMode)
 
-        is PanarooConfigIntent.ChangeRemoveInvalidGenes -> this.copy(removeInvalidGenes = intent.remove)
+        is PanarooParamsIntent.ChangeRemoveInvalidGenes -> this.copy(removeInvalidGenes = intent.remove)
     }
 }
 

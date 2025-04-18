@@ -1,11 +1,35 @@
-This is a Kotlin Multiplatform project targeting Desktop.
+## Papagenome is a utility tool for help analsyis of pangomes using docker
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+---
 
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+### Tools included
+- [ ] Roary ![progress](https://progress-bar.xyz/0/)
+- [ ] Panaroo ![progress](https://progress-bar.xyz/10/)
+- [ ] Ppanggolin ![progress](https://progress-bar.xyz/0/)
+- [ ] Pirate ![progress](https://progress-bar.xyz/0/)
+- [ ] Peppan ![progress](https://progress-bar.xyz/0/)
+- [ ] Pandelos ![progress](https://progress-bar.xyz/0/)
+- [ ] Panacota ![progress](https://progress-bar.xyz/0/)
+- [ ] Ribap ![progress](https://progress-bar.xyz/0/)
+- [ ] Pato ![progress](https://progress-bar.xyz/0/)
+- [ ] Micropan ![progress](https://progress-bar.xyz/0/)
+- [ ] GET_HOMOLOGUES ![progress](https://progress-bar.xyz/0/)
+- [ ] PanCake ![progress](https://progress-bar.xyz/0/)
+- [ ] PGAP-X ![progress](https://progress-bar.xyz/0/)
+- [ ] PanFunPro ![progress](https://progress-bar.xyz/0/)
+- [ ] SplitMEM ![progress](https://progress-bar.xyz/0/)
+- [ ] Panakeia ![progress](https://progress-bar.xyz/0/)
+- [ ] PANPROVA ![progress](https://progress-bar.xyz/0/)
+- [ ] BGDMdocker ![progress](https://progress-bar.xyz/0/)
+- [ ] DeNoGAP ![progress](https://progress-bar.xyz/0/)
+- [ ] Harvest ![progress](https://progress-bar.xyz/0/)
+- [ ] NGSPanPipe ![progress](https://progress-bar.xyz/0/)
+- [ ] PanACEA ![progress](https://progress-bar.xyz/0/)
+- [ ] PANINI ![progress](https://progress-bar.xyz/0/)
+- [ ] PanOCT ![progress](https://progress-bar.xyz/0/)
+- [ ] Panseq ![progress](https://progress-bar.xyz/0/)
+- [ ] PanTetris ![progress](https://progress-bar.xyz/0/)
+- [ ] Spine e AGEnt ![progress](https://progress-bar.xyz/0/)
+- [ ] Pyseer ![progress](https://progress-bar.xyz/0/)
+- [ ] Seq-pan-seq ![progress](https://progress-bar.xyz/0/)
+- [ ] Ptolemy ![progress](https://progress-bar.xyz/0/)
