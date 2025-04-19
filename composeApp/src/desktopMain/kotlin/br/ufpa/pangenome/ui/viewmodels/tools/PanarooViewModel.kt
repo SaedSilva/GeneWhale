@@ -125,6 +125,9 @@ class PanarooViewModel(
             params.add("--threads")
             params.add(config.threads.toString())
         }
+        if (config.removeInvalidGenes) {
+            params.add("--remove-invalid-genes")
+        }
         return params
     }
 
