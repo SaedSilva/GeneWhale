@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.ufpa.pangenome.GenomeTheme
+import br.ufpa.pangenome.ui.theme.GenomeTheme
 import br.ufpa.pangenome.ui.components.ToolCard
 import br.ufpa.pangenome.ui.components.Tools
 import br.ufpa.pangenome.ui.states.HomeUIState

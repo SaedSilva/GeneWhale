@@ -16,8 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import br.ufpa.pangenome.GenomeTheme
-import br.ufpa.pangenome.ThemeDefaults
+import br.ufpa.pangenome.ui.theme.GenomeTheme
+import br.ufpa.pangenome.ui.theme.ThemeDefaults
 
 @Composable
 fun Terminal(modifier: Modifier = Modifier, output: List<String>) {

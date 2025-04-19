@@ -3,19 +3,16 @@ package br.ufpa.pangenome.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.components.SearchBar
 import br.ufpa.pangenome.ui.states.ProjectUiIntent
 import br.ufpa.pangenome.ui.states.ProjectUiState
+import br.ufpa.pangenome.ui.theme.ThemeDefaults
 
 @Composable
 fun ProjectScreen(

@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.ufpa.pangenome.GenomeTheme
-import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.components.*
 import br.ufpa.pangenome.ui.states.tools.*
+import br.ufpa.pangenome.ui.theme.GenomeTheme
+import br.ufpa.pangenome.ui.theme.ThemeDefaults
 import io.github.vinceglb.filekit.path
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -16,7 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.ufpa.pangenome.GenomeTheme
+import br.ufpa.pangenome.ui.theme.GenomeTheme
 import br.ufpa.pangenome.ui.navigation.Route
 import br.ufpa.pangenome.ui.screens.HomeScreen
 import br.ufpa.pangenome.ui.screens.ProjectScreen

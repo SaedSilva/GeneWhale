@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.ufpa.pangenome.GenomeTheme
-import br.ufpa.pangenome.ThemeDefaults
+import br.ufpa.pangenome.ui.theme.GenomeTheme
+import br.ufpa.pangenome.ui.theme.ThemeDefaults
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
 import org.jetbrains.compose.resources.painterResource
