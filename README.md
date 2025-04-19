@@ -3,8 +3,8 @@
 ---
 
 ### Tools included
+- [X] Panaroo ![progress](https://progress-bar.xyz/15/)
 - [ ] Roary ![progress](https://progress-bar.xyz/0/)
-- [ ] Panaroo ![progress](https://progress-bar.xyz/10/)
 - [ ] Ppanggolin ![progress](https://progress-bar.xyz/0/)
 - [ ] Pirate ![progress](https://progress-bar.xyz/0/)
 - [ ] Peppan ![progress](https://progress-bar.xyz/0/)
