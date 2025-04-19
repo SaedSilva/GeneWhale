@@ -59,7 +59,7 @@ sealed class PanarooParamsIntent {
     data object ShowCleanModeDropdown : PanarooParamsIntent()
     data object HideCleanModeDropdown : PanarooParamsIntent()
 
-    data class ChangeRemoveInvalidGenes(val remove: Boolean) : PanarooParamsIntent()
+    data class SetRemoveInvalidGenes(val remove: Boolean) : PanarooParamsIntent()
 }
 
 fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
@@ -82,10 +82,10 @@ fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
         }
 
         is PanarooParamsIntent.ChangeCleanMode -> this.copy(cleanMode = intent.cleanMode)
-
-        is PanarooParamsIntent.ChangeRemoveInvalidGenes -> this.copy(removeInvalidGenes = intent.remove)
         is PanarooParamsIntent.HideCleanModeDropdown -> this.copy(showCleaModeDropdown = false)
         is PanarooParamsIntent.ShowCleanModeDropdown -> this.copy(showCleaModeDropdown = true)
+
+        is PanarooParamsIntent.SetRemoveInvalidGenes -> this.copy(removeInvalidGenes = intent.remove)
     }
 }
 

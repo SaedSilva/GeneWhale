@@ -178,6 +178,8 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
         }
         HorizontalDivider()
         Row {
+
+            //Clean Mode
             Column {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -222,7 +224,42 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                 )
 
             }
+
             VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
+
+
+            //Remove invalid genes
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier.height(56.dp)
+            ) {
+                Checkbox(
+                    checked = state.removeInvalidGenes,
+                    onCheckedChange = { onIntent(PanarooParamsIntent.SetRemoveInvalidGenes(it)) },
+                    modifier = Modifier.size(24.dp)
+                )
+                Text("Remove invalid genes")
+                TooltipArea(
+                    tooltip = {
+                        MyTooltip(
+                            tooltip = "removes annotations that do not conform to the\n" +
+                                    "expected Prokka format such as those including\n" +
+                                    "premature stop codons."
+                        )
+                    },
+                    delayMillis = 100,
+                    tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Info,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+            }
+            VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
+
         }
         HorizontalDivider()
     }
