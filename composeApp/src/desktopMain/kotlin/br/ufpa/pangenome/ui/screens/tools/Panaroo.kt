@@ -156,7 +156,10 @@ private fun PanarooPreview() {
 private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent: (PanarooParamsIntent) -> Unit) {
     val cleanModeTooltipState = rememberTooltipState(isPersistent = true)
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Row {
             MemorySlider(
                 modifier = Modifier.weight(1f),
@@ -288,6 +291,39 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                     value = state.threshold,
                     onChangeValue = {
                         onIntent(PanarooParamsIntent.ChangeThreshold(it))
+                    }
+                )
+            }
+            VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
+
+            //family threshold
+            Column {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    Text("family threshold")
+                    TooltipArea(
+                        tooltip = {
+                            MyTooltip(
+                                tooltip = "protein family sequence identity threshold (default=0.7)"
+                            )
+                        },
+                        delayMillis = 100,
+                        tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
+                CustomTextField(
+                    modifier = Modifier,
+                    value = state.familyThreshold,
+                    onChangeValue = {
+                        onIntent(PanarooParamsIntent.ChangeFamilyThreshold(it))
                     }
                 )
             }

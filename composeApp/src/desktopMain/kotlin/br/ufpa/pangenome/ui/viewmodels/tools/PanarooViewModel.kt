@@ -133,6 +133,10 @@ class PanarooViewModel(
             params.add("--threshold")
             params.add(config.threshold)
         }
+        if (config.familyThreshold.isNotBlank() && config.familyThreshold != original.familyThreshold) {
+            params.add("--family_threshold")
+            params.add(config.familyThreshold)
+        }
 
         return params
     }

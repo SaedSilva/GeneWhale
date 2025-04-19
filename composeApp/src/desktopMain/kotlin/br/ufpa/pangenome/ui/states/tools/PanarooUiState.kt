@@ -51,7 +51,8 @@ data class PanarooParams(
 
     val removeInvalidGenes: Boolean = false,
 
-    val threshold: String = "0.98" //Float
+    val threshold: String = "0.98", //Float
+    val familyThreshold: String = "0.7" //Float
 
 )
 
@@ -66,6 +67,7 @@ sealed class PanarooParamsIntent {
     data class SetRemoveInvalidGenes(val remove: Boolean) : PanarooParamsIntent()
 
     data class ChangeThreshold(val threshold: String) : PanarooParamsIntent()
+    data class ChangeFamilyThreshold(val threshold: String) : PanarooParamsIntent()
 }
 
 fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
@@ -96,6 +98,14 @@ fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
         is PanarooParamsIntent.ChangeThreshold -> {
             if (intent.threshold.isEmpty() || intent.threshold.isValidFloat()) {
                 this.copy(threshold = intent.threshold)
+            } else {
+                this
+            }
+        }
+
+        is PanarooParamsIntent.ChangeFamilyThreshold -> {
+            if (intent.threshold.isEmpty() || intent.threshold.isValidFloat()) {
+                this.copy(familyThreshold = intent.threshold)
             } else {
                 this
             }
