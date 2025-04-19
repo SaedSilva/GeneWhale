@@ -19,10 +19,7 @@ import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.GenomeTheme
 import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.components.*
-import br.ufpa.pangenome.ui.states.tools.PanarooParams
-import br.ufpa.pangenome.ui.states.tools.PanarooParamsIntent
-import br.ufpa.pangenome.ui.states.tools.PanarooUiIntent
-import br.ufpa.pangenome.ui.states.tools.PanarooUiState
+import br.ufpa.pangenome.ui.states.tools.*
 import io.github.vinceglb.filekit.path
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -182,17 +179,19 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
         HorizontalDivider()
         Row {
             Column {
-                Row {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text("Clean mode")
                     TooltipArea(
                         tooltip = {
                             MyTooltip(
                                 tooltip = "The stringency mode at which to run panaroo. Must be one of 'strict','moderate' or 'sensitive'. Each of these modes can be fine tuned using the additional parameters in the 'Graph correction' section.\n" +
-                                        "strict:\n" +
+                                        "strict: " +
                                         "Requires fairly strong evidence (present in  at least 5% of genomes) to keep likely contaminant genes. Will remove genes that are refound more often than they were called originally.\n" +
-                                        "moderate:\n" +
+                                        "moderate: " +
                                         "Requires moderate evidence (present in  at least 1% of genomes) to keep likely contaminant genes. Keeps genes that are refound more often than they were called originally.\n" +
-                                        "sensitive:\n" +
+                                        "sensitive: " +
                                         "Does not delete any genes and only performes merge and refinding operations. Useful if rare plasmids are of interest as these are often hard to disguish from contamination. Results will likely include  higher number of spurious annotations."
                             )
                         },
@@ -202,19 +201,27 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                         Icon(
                             imageVector = Icons.Outlined.Info,
                             contentDescription = null,
-                            modifier = Modifier
+                            modifier = Modifier.size(18.dp)
                         )
                     }
                 }
+                DropdownSelector(
+                    modifier = Modifier.width(128.dp),
+                    expanded = state.showCleaModeDropdown,
+                    onDismissRequest = {
+                        onIntent(PanarooParamsIntent.HideCleanModeDropdown)
+                    },
+                    selectedOption = state.cleanMode,
+                    options = CleanMode.entries,
+                    onClickOption = {
+                        onIntent(PanarooParamsIntent.ChangeCleanMode(it))
+                    },
+                    onClick = {
+                        onIntent(PanarooParamsIntent.ShowCleanModeDropdown)
+                    }
+                )
+
             }
-            DropdownSelector(
-                modifier = Modifier,
-                expanded = TODO(),
-                onDismissRequest = TODO(),
-                selectedOption = TODO(),
-                options = TODO(),
-                onClickOption = TODO()
-            )
             VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
         }
         HorizontalDivider()

@@ -2,6 +2,7 @@ package br.ufpa.pangenome.ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.GenomeTheme
 import br.ufpa.pangenome.ThemeDefaults
 import br.ufpa.pangenome.ui.states.tools.CleanMode
@@ -19,6 +21,7 @@ import br.ufpa.pangenome.ui.states.tools.CleanMode
 fun <T> DropdownSelector(
     modifier: Modifier = Modifier,
     expanded: Boolean,
+    onClick: () -> Unit,
     onDismissRequest: () -> Unit,
     selectedOption: T,
     options: List<T>,
@@ -32,20 +35,25 @@ fun <T> DropdownSelector(
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(32.dp)
+                .height(24.dp)
                 .border(1.dp, MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
+                .clickable {
+                    onClick()
+                }
                 .padding(4.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Column {
-                Text(selectedOption.toString())
+                Text(selectedOption.toString(), fontSize = 12.sp, lineHeight = 12.sp)
                 DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
                     options.forEach {
                         DropdownMenuItem(
                             text = { Text(it.toString()) },
-                            onClick = { onClickOption(it) }
+                            onClick = {
+                                onDismissRequest()
+                                onClickOption(it)
+                            }
                         )
-                        HorizontalDivider()
                     }
                 }
             }
@@ -65,6 +73,7 @@ private fun DropDownSelectorPreview() {
         DropdownSelector(
             modifier = Modifier.padding(16.dp),
             expanded = true,
+            onClick = {},
             onDismissRequest = {},
             options = CleanMode.entries,
             onClickOption = {},

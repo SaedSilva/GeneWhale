@@ -46,13 +46,19 @@ data class PanarooParams(
     val maxThreads: Int = 0,
 
     val cleanMode: CleanMode = CleanMode.NONE,
+    val showCleaModeDropdown: Boolean = false,
+
     val removeInvalidGenes: Boolean = false,
 )
 
 sealed class PanarooParamsIntent {
     data class ChangeMemorySlider(val memory: Float) : PanarooParamsIntent()
     data class ChangeThreadsSlider(val threads: Float) : PanarooParamsIntent()
+
     data class ChangeCleanMode(val cleanMode: CleanMode) : PanarooParamsIntent()
+    data object ShowCleanModeDropdown : PanarooParamsIntent()
+    data object HideCleanModeDropdown : PanarooParamsIntent()
+
     data class ChangeRemoveInvalidGenes(val remove: Boolean) : PanarooParamsIntent()
 }
 
@@ -78,6 +84,8 @@ fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
         is PanarooParamsIntent.ChangeCleanMode -> this.copy(cleanMode = intent.cleanMode)
 
         is PanarooParamsIntent.ChangeRemoveInvalidGenes -> this.copy(removeInvalidGenes = intent.remove)
+        is PanarooParamsIntent.HideCleanModeDropdown -> this.copy(showCleaModeDropdown = false)
+        is PanarooParamsIntent.ShowCleanModeDropdown -> this.copy(showCleaModeDropdown = true)
     }
 }
 

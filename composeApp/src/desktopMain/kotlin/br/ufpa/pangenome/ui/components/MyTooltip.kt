@@ -18,7 +18,7 @@ import br.ufpa.pangenome.ThemeDefaults
 fun MyTooltip(modifier: Modifier = Modifier, tooltip: String) {
     Box(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.75f), ThemeDefaults.ButtonShape)
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.9f), ThemeDefaults.ButtonShape)
             .padding(4.dp),
         contentAlignment = Alignment.Center
     ) {
