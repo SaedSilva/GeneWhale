@@ -46,14 +46,17 @@ fun <T> DropdownSelector(
             Column {
                 Text(selectedOption.toString(), fontSize = 12.sp, lineHeight = 12.sp)
                 DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
-                    options.forEach {
+                    options.forEachIndexed { index, value ->
                         DropdownMenuItem(
-                            text = { Text(it.toString()) },
+                            text = { Text(value.toString()) },
                             onClick = {
                                 onDismissRequest()
-                                onClickOption(it)
+                                onClickOption(value)
                             }
                         )
+                        if (index < options.size - 1) {
+                            HorizontalDivider()
+                        }
                     }
                 }
             }

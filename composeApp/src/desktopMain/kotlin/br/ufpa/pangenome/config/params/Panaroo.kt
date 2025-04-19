@@ -9,7 +9,7 @@ data class PanarooParams(
     val codonTable: Int = 11,
 
     // Mode
-    val cleanMode: String = "strict",
+    val cleanMode: String? = null,
     val removeInvalidGenes: Boolean = false,
 
     // Matching
