@@ -1,5 +1,6 @@
 package br.ufpa.pangenome.ui.states.tools
 
+import br.ufpa.pangenome.utils.isValidFloat
 import br.ufpa.pangenome.utils.toMB
 import br.ufpa.pangenome.utils.toThreads
 
@@ -49,6 +50,9 @@ data class PanarooParams(
     val showCleaModeDropdown: Boolean = false,
 
     val removeInvalidGenes: Boolean = false,
+
+    val threshold: String = "0.98" //Float
+
 )
 
 sealed class PanarooParamsIntent {
@@ -60,6 +64,8 @@ sealed class PanarooParamsIntent {
     data object HideCleanModeDropdown : PanarooParamsIntent()
 
     data class SetRemoveInvalidGenes(val remove: Boolean) : PanarooParamsIntent()
+
+    data class ChangeThreshold(val threshold: String) : PanarooParamsIntent()
 }
 
 fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
@@ -86,6 +92,14 @@ fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
         is PanarooParamsIntent.ShowCleanModeDropdown -> this.copy(showCleaModeDropdown = true)
 
         is PanarooParamsIntent.SetRemoveInvalidGenes -> this.copy(removeInvalidGenes = intent.remove)
+
+        is PanarooParamsIntent.ChangeThreshold -> {
+            if (intent.threshold.isEmpty() || intent.threshold.isValidFloat()) {
+                this.copy(threshold = intent.threshold)
+            } else {
+                this
+            }
+        }
     }
 }
 

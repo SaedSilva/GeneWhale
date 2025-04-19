@@ -260,6 +260,39 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
             }
             VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
 
+            //threshold
+            Column {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    Text("threshold")
+                    TooltipArea(
+                        tooltip = {
+                            MyTooltip(
+                                tooltip = "sequence identity threshold (default=0.98)"
+                            )
+                        },
+                        delayMillis = 100,
+                        tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
+                CustomTextField(
+                    modifier = Modifier,
+                    value = state.threshold,
+                    onChangeValue = {
+                        onIntent(PanarooParamsIntent.ChangeThreshold(it))
+                    }
+                )
+            }
+            VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
+
         }
         HorizontalDivider()
     }

@@ -117,6 +117,7 @@ class PanarooViewModel(
 
     private fun createParams(config: PanarooParams): List<String> {
         val params = mutableListOf<String>()
+        val original = PanarooParams()
         if (config.cleanMode != CleanMode.NONE) {
             params.add("--clean-mode")
             params.add(config.cleanMode.toString())
@@ -128,6 +129,11 @@ class PanarooViewModel(
         if (config.removeInvalidGenes) {
             params.add("--remove-invalid-genes")
         }
+        if (config.threshold.isNotBlank() && config.threshold != original.threshold) {
+            params.add("--threshold")
+            params.add(config.threshold)
+        }
+
         return params
     }
 

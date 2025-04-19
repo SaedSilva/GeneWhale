@@ -13,3 +13,12 @@ fun Float.toMB(mb: Long): Long {
 fun Float.toThreads(maxThreads: Int): Int {
     return (this * maxThreads).roundToInt()
 }
+
+fun String.isValidFloat(): Boolean {
+    return try {
+        this.toDouble()
+        true
+    } catch (e: NumberFormatException) {
+        false
+    }
+}
