@@ -108,4 +108,15 @@ class PanarooService(
             _log.emit("Error stopping container: ${e.message}")
         }
     }
+
+    suspend fun remove() = withContext(Dispatchers.IO) {
+        try {
+            val command = listOf("docker", "rm", "${IDENTIFIER}_panaroo")
+            val process = ProcessBuilder(command).start()
+            process.waitFor()
+            _log.emit("Docker container removed.")
+        } catch (e: Exception) {
+            _log.emit("Error removing container: ${e.message}")
+        }
+    }
 }
