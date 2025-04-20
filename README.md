@@ -16,8 +16,13 @@ If you don't have Docker installed, you can follow the installation instructions
 website: https://docs.docker.com/get-docker/
 
 The tool works as a wrapper to simplify the use of pan-genome tools.
-It is available for Windows and Linux.
-A macOS version is not planned at this time.
+It is available for Windows and Linux and macOS.
+
+In the releases section, you can download the tool for your operating system.
+I recommend use the jar file for the operational system with java 21 or higher installer.
+website: https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html
+
+But you can use the installer for your operational system.
 
 ---
 
