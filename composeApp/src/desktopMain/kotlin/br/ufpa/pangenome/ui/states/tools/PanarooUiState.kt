@@ -69,6 +69,7 @@ data class PanarooParams(
 }
 
 sealed class PanarooParamsIntent {
+
     data class ChangeMemorySlider(val memory: Float) : PanarooParamsIntent()
     data class ChangeThreadsSlider(val threads: Float) : PanarooParamsIntent()
 

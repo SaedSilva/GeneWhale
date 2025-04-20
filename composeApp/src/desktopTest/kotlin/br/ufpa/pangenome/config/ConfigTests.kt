@@ -11,7 +11,8 @@ class ConfigTests {
     fun testSaveConfig() {
         runBlocking {
             Config.save("panaroo.json", PanarooParams(
-                removeInvalidGenes = true
+                removeInvalidGenes = true,
+                threads = 4,
             ))
         }
     }

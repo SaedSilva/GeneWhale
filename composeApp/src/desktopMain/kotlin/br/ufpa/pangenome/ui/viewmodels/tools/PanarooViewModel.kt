@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class PanarooViewModel(
     private val service: PanarooService,
@@ -24,7 +25,7 @@ class PanarooViewModel(
     val uiStateConfig = _uiStateConfig.asStateFlow()
 
     init {
-        viewModelScope.launch {
+        runBlocking {
             val data = Config.load<br.ufpa.pangenome.config.params.PanarooParams>("panaroo.json")
             data?.let {
                 _uiStateConfig.update { state ->
@@ -32,6 +33,8 @@ class PanarooViewModel(
                 }
             }
         }
+
+
         viewModelScope.launch {
             service.logs.collect { output ->
                 _uiState.update { it.reduce(PanarooUiIntent.UpdateOutput(output)) }
@@ -48,10 +51,9 @@ class PanarooViewModel(
                     it.copy(
                         maxMemory = globalState.memoryBytes.toMB(),
                         maxThreads = globalState.threads,
-                        threadsSlider = 1.0f / globalState.threads
+                        threadsSlider = 1.0f / globalState.threads * it.threads
                     )
                 }
-
             }
         }
     }
