@@ -2,6 +2,7 @@ package br.ufpa.pangenome.ui.viewmodels.tools
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.ufpa.pangenome.config.Config
 import br.ufpa.pangenome.docker.PanarooService
 import br.ufpa.pangenome.ui.states.tools.*
 import br.ufpa.pangenome.ui.viewmodels.Global
@@ -23,6 +24,14 @@ class PanarooViewModel(
     val uiStateConfig = _uiStateConfig.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            val data = Config.load<br.ufpa.pangenome.config.params.PanarooParams>("panaroo.json")
+            data?.let {
+                _uiStateConfig.update { state ->
+                    PanarooParams.fromEntity(it, state)
+                }
+            }
+        }
         viewModelScope.launch {
             service.logs.collect { output ->
                 _uiState.update { it.reduce(PanarooUiIntent.UpdateOutput(output)) }

@@ -54,7 +54,19 @@ data class PanarooParams(
     val threshold: String = "0.98", //Float
     val familyThreshold: String = "0.7" //Float
 
-)
+) {
+    companion object {
+        fun fromEntity(entity: br.ufpa.pangenome.config.params.PanarooParams, state: PanarooParams): PanarooParams {
+            return state.copy(
+                threads = entity.threads,
+                cleanMode = CleanMode.valueOf(entity.cleanMode ?: "NONE"),
+                removeInvalidGenes = entity.removeInvalidGenes,
+                threshold = entity.threshold.toString(),
+                familyThreshold = entity.familyThreshold.toString(),
+            )
+        }
+    }
+}
 
 sealed class PanarooParamsIntent {
     data class ChangeMemorySlider(val memory: Float) : PanarooParamsIntent()
