@@ -1,32 +1,37 @@
-## Papagenome is a utility tool for help analsyis of pangomes using docker
+## Papagenome: A Utility Tool for Pan-Genome Analysis Using Docker
 
----
+Papagenome is a utility tool designed to simplify the analysis of pan-genomes by acting as a wrapper for commonly used tools, leveraging Docker for seamless execution.
 
-To use the tool, you must have Docker installed on your machine.  
-Additionally, it is important that Docker is operational, meaning the Docker daemon must be running.  
-To check if Docker is running, you can use the following command:
+### Requirements
+
+To use Papagenome, you must have [Docker](https://docs.docker.com/get-docker/) installed on your machine.  
+Additionally, Docker must be running (i.e., the Docker daemon must be active).  
+To verify if Docker is running, use the following command:
 
 ```bash
 docker info
 ```
 
-If Docker is running, you will see information about Docker's configuration.
-If Docker is not running, you will see an error message indicating that the Docker daemon is not running.
-If you don't have Docker installed, you can follow the installation instructions on the official Docker
-website: https://docs.docker.com/get-docker/
+- If Docker is running, you will see detailed information about your Docker configuration.
+- If it is not running, you will see an error message indicating that the Docker daemon is not active.
 
-The tool works as a wrapper to simplify the use of pan-genome tools.
-It is available for Windows and Linux and macOS.
+### Supported Platforms
 
-In the releases section, you can download the tool for your operating system.
-I recommend use the jar file for the operational system with java 21 or higher installer.
-website: https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html
+Papagenome is available for **Windows**, **Linux**, and **macOS**.
 
-But you can use the installer for your operational system.
+You can download the appropriate version for your operating system from the **Releases** section.
+
+### Running the Tool
+
+We recommend using the `.jar` file if you already have **Java 21 or higher** installed on your system.  
+You can download the latest JDK from the official website:  
+[https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
+
+Alternatively, you can use the installer provided for your operating system.
 
 ---
 
-### Tools included
+### Tools progress:
 
 - [X] Panaroo ![progress](https://progress-bar.xyz/20/)
 - [ ] Roary ![progress](https://progress-bar.xyz/0/)
