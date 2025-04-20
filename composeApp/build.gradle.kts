@@ -23,8 +23,8 @@ kotlin {
             implementation("io.github.vinceglb:filekit-dialogs-compose:$fileKitVersion")
             implementation("io.github.vinceglb:filekit-coil:$fileKitVersion")
 
-            implementation("io.ktor:ktor-client-core:3.1.2")
-            implementation("io.ktor:ktor-client-cio:3.1.2")
+//            implementation("io.ktor:ktor-client-core:3.1.2")
+//            implementation("io.ktor:ktor-client-cio:3.1.2")
 
             implementation("io.insert-koin:koin-compose:4.0.3")
             implementation("io.insert-koin:koin-compose-viewmodel:4.0.3")
@@ -54,6 +54,10 @@ compose.desktop {
         mainClass = "br.ufpa.pangenome.MainKt"
 
         nativeDistributions {
+            buildTypes.release.proguard {
+                version.set("7.7.0")
+            }
+
             includeAllModules = true
 
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
@@ -62,4 +66,6 @@ compose.desktop {
         }
     }
 }
+
+
 
