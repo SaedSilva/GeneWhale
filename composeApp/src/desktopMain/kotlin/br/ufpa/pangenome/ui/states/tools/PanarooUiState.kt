@@ -1,8 +1,10 @@
 package br.ufpa.pangenome.ui.states.tools
 
+import androidx.compose.ui.text.toUpperCase
 import br.ufpa.pangenome.utils.isValidFloat
 import br.ufpa.pangenome.utils.toMB
 import br.ufpa.pangenome.utils.toThreads
+import java.util.*
 
 data class PanarooUiState(
     val inputFolder: String = "",
@@ -56,10 +58,10 @@ data class PanarooParams(
 
 ) {
     companion object {
-        fun fromEntity(entity: br.ufpa.pangenome.config.params.PanarooParams, state: PanarooParams): PanarooParams {
+        fun fromEntity(entity: br.ufpa.pangenome.config.params.PanarooParamsConfig, state: PanarooParams): PanarooParams {
             return state.copy(
                 threads = entity.threads,
-                cleanMode = CleanMode.valueOf(entity.cleanMode ?: "NONE"),
+                cleanMode = CleanMode.valueOf(entity.cleanMode?.uppercase(Locale.US) ?: "NONE"),
                 removeInvalidGenes = entity.removeInvalidGenes,
                 threshold = entity.threshold.toString(),
                 familyThreshold = entity.familyThreshold.toString(),
@@ -69,6 +71,7 @@ data class PanarooParams(
 }
 
 sealed class PanarooParamsIntent {
+    data object Save: PanarooParamsIntent()
 
     data class ChangeMemorySlider(val memory: Float) : PanarooParamsIntent()
     data class ChangeThreadsSlider(val threads: Float) : PanarooParamsIntent()
@@ -85,6 +88,8 @@ sealed class PanarooParamsIntent {
 
 fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
     return when (intent) {
+        is PanarooParamsIntent.Save -> this
+
         is PanarooParamsIntent.ChangeMemorySlider -> this.copy(
             memorySlider = intent.memory,
             memory = intent.memory.toMB(this.maxMemory)

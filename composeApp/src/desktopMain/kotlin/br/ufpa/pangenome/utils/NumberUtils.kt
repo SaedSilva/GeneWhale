@@ -22,3 +22,12 @@ fun String.isValidFloat(): Boolean {
         false
     }
 }
+
+fun String.isValidInt(): Boolean {
+    return try {
+        this.toInt()
+        true
+    } catch (e: NumberFormatException) {
+        false
+    }
+}

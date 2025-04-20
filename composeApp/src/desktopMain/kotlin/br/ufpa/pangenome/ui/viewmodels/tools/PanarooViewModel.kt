@@ -3,6 +3,7 @@ package br.ufpa.pangenome.ui.viewmodels.tools
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.ufpa.pangenome.config.Config
+import br.ufpa.pangenome.config.params.PanarooParamsConfig
 import br.ufpa.pangenome.docker.PanarooService
 import br.ufpa.pangenome.ui.states.tools.*
 import br.ufpa.pangenome.ui.viewmodels.Global
@@ -26,7 +27,7 @@ class PanarooViewModel(
 
     init {
         runBlocking {
-            val data = Config.load<br.ufpa.pangenome.config.params.PanarooParams>("panaroo.json")
+            val data = Config.load<br.ufpa.pangenome.config.params.PanarooParamsConfig>("panaroo.json")
             data?.let {
                 _uiStateConfig.update { state ->
                     PanarooParams.fromEntity(it, state)
@@ -81,6 +82,11 @@ class PanarooViewModel(
     }
 
     private fun config(intent: PanarooParamsIntent) {
+        if (intent is PanarooParamsIntent.Save) {
+            viewModelScope.launch {
+                Config.save(Config.DEFAULT_PANAROO_CONFIG, PanarooParamsConfig.fromState(_uiStateConfig.value))
+            }
+        }
         _uiStateConfig.update { it.reduce(intent) }
     }
 
@@ -129,13 +135,13 @@ class PanarooViewModel(
     private fun createParams(config: PanarooParams): List<String> {
         val params = mutableListOf<String>()
         val original = PanarooParams()
-        if (config.cleanMode != CleanMode.NONE) {
-            params.add("--clean-mode")
-            params.add(config.cleanMode.toString())
-        }
         if (config.threads > 0) {
             params.add("--threads")
             params.add(config.threads.toString())
+        }
+        if (config.cleanMode != CleanMode.NONE) {
+            params.add("--clean-mode")
+            params.add(config.cleanMode.toString())
         }
         if (config.removeInvalidGenes) {
             params.add("--remove-invalid-genes")

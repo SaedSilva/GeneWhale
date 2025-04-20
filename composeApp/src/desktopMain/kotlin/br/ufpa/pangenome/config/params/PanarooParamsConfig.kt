@@ -1,9 +1,11 @@
 package br.ufpa.pangenome.config.params
 
+import br.ufpa.pangenome.ui.states.tools.CleanMode
+import br.ufpa.pangenome.ui.states.tools.PanarooParams
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PanarooParams(
+data class PanarooParamsConfig(
     // General
     val threads: Int = 1,
     val codonTable: Int = 11,
@@ -42,4 +44,16 @@ data class PanarooParams(
     val coreThreshold: Float = 0.95f,
     val coreSubset: Int? = null,
     val coreEntropyFilter: Float? = null,
-)
+) {
+    companion object {
+        fun fromState(state: PanarooParams): PanarooParamsConfig {
+            val config = PanarooParamsConfig()
+            return config.copy(
+                threads = if (state.threads > 0) state.threads else config.threads,
+                cleanMode = if (state.cleanMode != CleanMode.NONE) state.cleanMode.toString() else null,
+                removeInvalidGenes = if (state.removeInvalidGenes) state.removeInvalidGenes else config.removeInvalidGenes,
+                threshold = if (state.threshold != config.threshold.toString()) state.threshold.toFloat() else config.threshold,
+            )
+        }
+    }
+}

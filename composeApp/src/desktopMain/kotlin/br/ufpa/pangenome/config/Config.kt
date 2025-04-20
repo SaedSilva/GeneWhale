@@ -52,4 +52,6 @@ object Config {
             }
         }
     }
+
+    const val DEFAULT_PANAROO_CONFIG = "panaroo.json"
 }
