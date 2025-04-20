@@ -19,7 +19,6 @@ class Global(
 
     init {
         operatingSystemMemory()
-        println(_uiState.value)
     }
 
     var job: Job? = null
