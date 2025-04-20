@@ -1,9 +1,24 @@
 ## Papagenome is a utility tool for help analsyis of pangomes using docker
 
 ---
+To use the tool, you must have Docker installed on your machine.  
+Additionally, it is important that Docker is operational, meaning the Docker daemon must be running.  
+To check if Docker is running, you can use the following command:
+
+```bash
+docker info
+```
+
+If Docker is running, you will see information about Docker's configuration.  
+If Docker is not running, you will see an error message indicating that the Docker daemon is not running.  
+If you don't have Docker installed, you can follow the installation instructions on the official Docker
+website: https://docs.docker.com/get-docker/
+
+---
 
 ### Tools included
-- [X] Panaroo ![progress](https://progress-bar.xyz/15/)
+
+- [X] Panaroo ![progress](https://progress-bar.xyz/20/)
 - [ ] Roary ![progress](https://progress-bar.xyz/0/)
 - [ ] Ppanggolin ![progress](https://progress-bar.xyz/0/)
 - [ ] Pirate ![progress](https://progress-bar.xyz/0/)
