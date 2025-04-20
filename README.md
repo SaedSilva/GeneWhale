@@ -1,6 +1,7 @@
 ## Papagenome is a utility tool for help analsyis of pangomes using docker
 
 ---
+
 To use the tool, you must have Docker installed on your machine.  
 Additionally, it is important that Docker is operational, meaning the Docker daemon must be running.  
 To check if Docker is running, you can use the following command:
@@ -9,10 +10,14 @@ To check if Docker is running, you can use the following command:
 docker info
 ```
 
-If Docker is running, you will see information about Docker's configuration.  
-If Docker is not running, you will see an error message indicating that the Docker daemon is not running.  
+If Docker is running, you will see information about Docker's configuration.
+If Docker is not running, you will see an error message indicating that the Docker daemon is not running.
 If you don't have Docker installed, you can follow the installation instructions on the official Docker
 website: https://docs.docker.com/get-docker/
+
+The tool works as a wrapper to simplify the use of pan-genome tools.
+It is available for Windows and Linux.
+A macOS version is not planned at this time.
 
 ---
 
