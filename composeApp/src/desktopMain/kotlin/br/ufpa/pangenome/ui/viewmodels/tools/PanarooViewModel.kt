@@ -28,10 +28,10 @@ class PanarooViewModel(
 
     init {
         runBlocking {
-            val data = Config.load<br.ufpa.pangenome.config.params.PanarooParamsConfig>("panaroo.json")
-            data?.let {
+            val panaroo = Config.load<PanarooParamsConfig>(Config.DEFAULT_PANAROO_CONFIG)
+            panaroo?.let { data ->
                 _uiStateConfig.update { state ->
-                    PanarooParams.fromEntity(it, state)
+                    PanarooParams.fromEntity(data, state)
                 }
             }
         }

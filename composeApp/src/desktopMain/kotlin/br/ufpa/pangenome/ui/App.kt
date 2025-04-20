@@ -6,7 +6,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -61,7 +63,7 @@ fun App() {
     GenomeTheme {
         Scaffold(
             snackbarHost = {
-                SnackbarHost(snackBarState)
+                SnackbarHost(snackBarState, modifier = Modifier.width(200.dp).height(100.dp))
             }
         ) { padding ->
             NavHost(
