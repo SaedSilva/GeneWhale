@@ -8,64 +8,92 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.ufpa.pangenome.ui.theme.GenomeTheme
 import br.ufpa.pangenome.ui.navigation.Route
 import br.ufpa.pangenome.ui.screens.HomeScreen
 import br.ufpa.pangenome.ui.screens.ProjectScreen
 import br.ufpa.pangenome.ui.screens.tools.Panaroo
+import br.ufpa.pangenome.ui.states.GlobalEffect
+import br.ufpa.pangenome.ui.theme.GenomeTheme
+import br.ufpa.pangenome.ui.viewmodels.Global
 import br.ufpa.pangenome.ui.viewmodels.HomeViewModel
 import br.ufpa.pangenome.ui.viewmodels.ProjectViewModel
 import br.ufpa.pangenome.ui.viewmodels.tools.PanarooViewModel
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 
-private const val time = 500
+private const val TIME_TRANSITION = 500
 
 @Composable
 @Preview
 fun App() {
     val navController = rememberNavController()
+    val snackBarState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val global: Global = koinInject()
+
+    LaunchedEffect(Unit) {
+        scope.launch {
+            global.uiEffect.collect {
+                when (it) {
+                    is GlobalEffect.ShowSnackBar -> {
+                        snackBarState.showSnackbar(
+                            message = it.message,
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     GenomeTheme {
-        Scaffold { padding ->
+        Scaffold(
+            snackbarHost = {
+                SnackbarHost(snackBarState)
+            }
+        ) { padding ->
             NavHost(
                 navController = navController,
                 startDestination = Route.Home,
                 modifier = Modifier.padding(padding).padding(16.dp),
                 enterTransition = {
-                    fadeIn(animationSpec = tween(time)) +
+                    fadeIn(animationSpec = tween(TIME_TRANSITION)) +
                             slideIntoContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                                animationSpec = tween(time)
+                                animationSpec = tween(TIME_TRANSITION)
                             )
                 },
                 popEnterTransition = {
-                    fadeIn(animationSpec = tween(time)) +
+                    fadeIn(animationSpec = tween(TIME_TRANSITION)) +
                             slideIntoContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                                animationSpec = tween(time)
+                                animationSpec = tween(TIME_TRANSITION)
                             )
                 },
                 exitTransition = {
-                    fadeOut(animationSpec = tween(time)) +
+                    fadeOut(animationSpec = tween(TIME_TRANSITION)) +
                             slideOutOfContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                                animationSpec = tween(time)
+                                animationSpec = tween(TIME_TRANSITION)
                             )
                 },
                 popExitTransition = {
-                    fadeOut(animationSpec = tween(time)) +
+                    fadeOut(animationSpec = tween(TIME_TRANSITION)) +
                             slideOutOfContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                                animationSpec = tween(time)
+                                animationSpec = tween(TIME_TRANSITION)
                             )
                 }
             ) {

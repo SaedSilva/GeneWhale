@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import br.ufpa.pangenome.config.Config
 import br.ufpa.pangenome.config.params.PanarooParamsConfig
 import br.ufpa.pangenome.docker.PanarooService
+import br.ufpa.pangenome.ui.states.GlobalEffect
 import br.ufpa.pangenome.ui.states.tools.*
 import br.ufpa.pangenome.ui.viewmodels.Global
 import br.ufpa.pangenome.utils.Desktop
@@ -85,6 +86,7 @@ class PanarooViewModel(
         if (intent is PanarooParamsIntent.Save) {
             viewModelScope.launch {
                 Config.save(Config.DEFAULT_PANAROO_CONFIG, PanarooParamsConfig.fromState(_uiStateConfig.value))
+                global.handleEffect(GlobalEffect.ShowSnackBar("Configuration saved"))
             }
         }
         _uiStateConfig.update { it.reduce(intent) }
