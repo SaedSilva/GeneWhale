@@ -54,9 +54,12 @@ data class PanarooParams(
     val removeInvalidGenes: Boolean = false,
 
     val threshold: String = "0.98", //Float
-    val familyThreshold: String = "0.7" //Float
+    val familyThreshold: String = "0.7", //Float
+    val lenDifPercent: String = "0.98", //Float
+    val familyLenDifPercent: String = "0.0", //Float
+    val mergeParalogs: Boolean = false,
 
-) {
+    ) {
     companion object {
         fun fromEntity(entity: PanarooParamsConfig, state: PanarooParams): PanarooParams {
             return state.copy(
@@ -65,6 +68,9 @@ data class PanarooParams(
                 removeInvalidGenes = entity.removeInvalidGenes,
                 threshold = entity.threshold.toString(),
                 familyThreshold = entity.familyThreshold.toString(),
+                lenDifPercent = entity.lenDifPercent.toString(),
+                familyLenDifPercent = entity.familyLenDifPercent.toString(),
+                mergeParalogs = entity.mergeParalogs,
             )
         }
     }
@@ -84,6 +90,9 @@ sealed class PanarooParamsIntent {
 
     data class ChangeThreshold(val threshold: String) : PanarooParamsIntent()
     data class ChangeFamilyThreshold(val threshold: String) : PanarooParamsIntent()
+    data class ChangeLenDifPercent(val threshold: String) : PanarooParamsIntent()
+    data class ChangeFamilyLenDifPercent(val threshold: String) : PanarooParamsIntent()
+    data class SetMergeParalogs(val merge: Boolean) : PanarooParamsIntent()
 }
 
 fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
@@ -128,6 +137,24 @@ fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
                 this
             }
         }
+
+        is PanarooParamsIntent.ChangeLenDifPercent -> {
+            if (intent.threshold.isEmpty() || intent.threshold.isValidFloat()) {
+                this.copy(lenDifPercent = intent.threshold)
+            } else {
+                this
+            }
+        }
+
+        is PanarooParamsIntent.ChangeFamilyLenDifPercent -> {
+            if (intent.threshold.isEmpty() || intent.threshold.isValidFloat()) {
+                this.copy(familyLenDifPercent = intent.threshold)
+            } else {
+                this
+            }
+        }
+
+        is PanarooParamsIntent.SetMergeParalogs -> this.copy(mergeParalogs = intent.merge)
     }
 }
 

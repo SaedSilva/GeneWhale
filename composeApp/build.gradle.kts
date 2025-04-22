@@ -56,6 +56,7 @@ compose.desktop {
         nativeDistributions {
             buildTypes.release.proguard {
                 version.set("7.7.0")
+                joinOutputJars.set(true)
             }
 
             includeAllModules = true

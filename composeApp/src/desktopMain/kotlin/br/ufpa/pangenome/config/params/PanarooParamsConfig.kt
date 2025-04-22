@@ -54,6 +54,9 @@ data class PanarooParamsConfig(
                 removeInvalidGenes = state.removeInvalidGenes,
                 threshold = if (state.threshold != config.threshold.toString()) state.threshold.toFloat() else config.threshold,
                 familyThreshold = if (state.familyThreshold != config.familyThreshold.toString()) state.familyThreshold.toFloat() else config.familyThreshold,
+                lenDifPercent = if (state.lenDifPercent != config.lenDifPercent.toString()) state.lenDifPercent.toFloat() else config.lenDifPercent,
+                familyLenDifPercent = if (state.familyLenDifPercent != config.familyLenDifPercent.toString()) state.familyLenDifPercent.toFloat() else config.familyLenDifPercent,
+                mergeParalogs = state.mergeParalogs,
             )
         }
     }

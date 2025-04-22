@@ -329,6 +329,39 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                 }
                 VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
 
+                //lenDifPercent
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        Text("LEN_DIF_PERCENT")
+                        TooltipArea(
+                            tooltip = {
+                                MyTooltip(
+                                    tooltip = "length difference cutoff (default=0.98)"
+                                )
+                            },
+                            delayMillis = 100,
+                            tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+                    CustomTextField(
+                        modifier = Modifier,
+                        value = state.lenDifPercent,
+                        onChangeValue = {
+                            onIntent(PanarooParamsIntent.ChangeLenDifPercent(it))
+                        }
+                    )
+                }
+
+
             }
             HorizontalDivider()
         }
