@@ -22,12 +22,21 @@ import pangenome.composeapp.generated.resources.panaroo
 import pangenome.composeapp.generated.resources.ppanggolin
 
 @Composable
-fun ToolCard(modifier: Modifier = Modifier, tool: Tools, onClick: () -> Unit) {
+fun ToolCard(
+    modifier: Modifier = Modifier,
+    tool: Tools,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
     val scrollState = rememberScrollState()
 
     OutlinedCard(modifier.width(256.dp).height(300.dp)) {
         Box(
-            modifier = Modifier.clickable { onClick() }.padding(16.dp).fillMaxSize(),
+            modifier = if (enabled) {
+                Modifier.clickable { onClick() }.padding(16.dp).fillMaxSize()
+            } else {
+                Modifier.padding(16.dp).fillMaxSize()
+            },
         ) {
             tool.icon?.let {
                 Image(

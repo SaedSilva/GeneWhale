@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.pangenome.ui.theme.GenomeTheme
@@ -28,18 +29,18 @@ fun <T> DropdownSelector(
     onClickOption: (T) -> Unit
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.clip(ThemeDefaults.ButtonShape),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Box(
             modifier = Modifier
-                .weight(1f)
-                .height(24.dp)
-                .border(1.dp, MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
                 .clickable {
                     onClick()
                 }
+                .weight(1f)
+                .height(24.dp)
+                .border(1.dp, MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
                 .padding(4.dp),
             contentAlignment = Alignment.CenterStart
         ) {

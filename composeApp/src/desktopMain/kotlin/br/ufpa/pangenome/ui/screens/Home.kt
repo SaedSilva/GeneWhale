@@ -2,7 +2,10 @@ package br.ufpa.pangenome.ui.screens
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
@@ -10,11 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.ufpa.pangenome.ui.theme.GenomeTheme
 import br.ufpa.pangenome.ui.components.ToolCard
 import br.ufpa.pangenome.ui.components.Tools
 import br.ufpa.pangenome.ui.states.HomeUIState
 import br.ufpa.pangenome.ui.states.HomeUiIntent
+import br.ufpa.pangenome.ui.theme.GenomeTheme
 import org.jetbrains.compose.resources.painterResource
 import pangenome.composeapp.generated.resources.PaPangenome2
 import pangenome.composeapp.generated.resources.Res
@@ -47,34 +50,57 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
-                ToolCard(tool = Tools.Panaroo, onClick = {
-                    onNavigateToPanarooScreen()
-                })
+                ToolCard(
+                    tool = Tools.Panaroo,
+                    onClick = {
+                        onNavigateToPanarooScreen()
+                    }
+                )
             }
             item {
-                ToolCard(tool = Tools.Peppan, onClick = {
+                ToolCard(
+                    tool = Tools.Peppan,
+                    onClick = {
 
-                })
+                    },
+                    enabled = false
+                )
             }
             item {
-                ToolCard(tool = Tools.Pirate, onClick = {
+                ToolCard(
+                    tool = Tools.Pirate,
+                    onClick = {
 
-                })
+                    },
+                    enabled = false
+                )
             }
             item {
-                ToolCard(tool = Tools.Roary, onClick = {
+                ToolCard(
+                    tool = Tools.Roary,
+                    onClick = {
 
-                })
+                    },
+                    enabled = false
+                )
             }
             item {
-                ToolCard(tool = Tools.Splitmem, onClick = {
+                ToolCard(
+                    tool = Tools.Splitmem,
+                    onClick = {
 
-                })
+                    },
+                    enabled = false
+                )
             }
             item {
-                ToolCard(tool = Tools.Ppanggolin, onClick = {
+                ToolCard(
+                    tool = Tools.Ppanggolin,
+                    onClick = {
 
-                })
+                    },
+                    enabled = false
+                )
             }
         }
     }
