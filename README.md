@@ -1,4 +1,9 @@
-[![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)]()
+![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0)
 
 [//]: # ([![Version]&#40;https://img.shields.io/github/v/release/SaedSilva/GeneWhale?sort=semver&display_name=release&label=alpha&color=brightgreen&#41;]&#40;&#41;)
 
@@ -14,9 +19,16 @@
 **The current version is not fully functional.**
 **And the release download is not available yet.**
 **Probably project name will change.**
-**For use at this moment, please use the source code.**
+**For use at this moment, please use the source code with jdk 21.**
+
+Clone this project:
+
+```bash
+git clone https://github.com/SaedSilva/GeneWhale.git
+```
 
 Create a package for your OS using the following command:
+
 
 ```bash
 ./gradlew build composeApp:packageReleaseDistributionForCurrentOS
