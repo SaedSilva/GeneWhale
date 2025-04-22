@@ -8,7 +8,7 @@ import javax.swing.filechooser.FileSystemView
 
 object Config {
     private fun getDefaultFolder(): File {
-        val folder = File(FileSystemView.getFileSystemView().defaultDirectory, "papangenome")
+        val folder = File(FileSystemView.getFileSystemView().defaultDirectory, "genewhale")
         if (!folder.exists()) {
             folder.mkdirs()
         }

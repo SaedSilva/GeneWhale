@@ -31,13 +31,13 @@ Create a package for your OS using the following command:
 
 
 ```bash
-./gradlew build composeApp:packageReleaseDistributionForCurrentOS
+./gradlew build composeApp:packageDistributionForCurrentOS
 ```
 
 Or create a jar file using the following command:
 
 ```bash
-./gradlew build composeApp:packageReleaseUberJarForCurrentOS
+./gradlew build composeApp:packageUberJarForCurrentOS
 ```
 
 ---
