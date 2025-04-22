@@ -360,12 +360,44 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                         }
                     )
                 }
+                VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
 
+                //familyLenDifPercent
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        Text("FAMILY_LEN_DIF_PERCENT")
+                        TooltipArea(
+                            tooltip = {
+                                MyTooltip(
+                                    tooltip = "length difference cutoff at the gene family level (default=0.0)"
+                                )
+                            },
+                            delayMillis = 100,
+                            tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+                    CustomTextField(
+                        modifier = Modifier,
+                        value = state.familyLenDifPercent,
+                        onChangeValue = {
+                            onIntent(PanarooParamsIntent.ChangeFamilyLenDifPercent(it))
+                        }
+                    )
+                }
 
             }
             HorizontalDivider()
         }
-        OutlinedButton(
+        Button(
             modifier = Modifier.height(32.dp).align(Alignment.BottomEnd),
             onClick = {
                 onIntent(PanarooParamsIntent.Save)
