@@ -1,8 +1,8 @@
 [![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)]()
 
-[![Version](https://img.shields.io/github/v/release/SaedSilva/papangenome?sort=semver&display_name=release&label=alpha&color=brightgreen)]()
+[//]: # ([![Version]&#40;https://img.shields.io/github/v/release/SaedSilva/GeneWhale?sort=semver&display_name=release&label=alpha&color=brightgreen&#41;]&#40;&#41;)
 
-[![Github All Releases](https://img.shields.io/github/downloads/SaedSilva/papangenome/total.svg)]()
+[//]: # ([![Github All Releases]&#40;https://img.shields.io/github/downloads/SaedSilva/GeneWhale/total.svg&#41;]&#40;&#41;)
 
 ## GeneWhale: A Utility Tool for Pan-Genome Analysis Using Docker
 
