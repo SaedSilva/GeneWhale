@@ -1,14 +1,37 @@
-## Papagenome: A Utility Tool for Pan-Genome Analysis Using Docker
+[![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)]()
 
-### WARNING
-**This project is still in development.**
-**The current version is not fully functional.**
-**And the release download is not available yet.**
-**Probably project name will change. :D**
+[![Version](https://img.shields.io/github/v/release/SaedSilva/papangenome?sort=semver&display_name=release&label=alpha&color=brightgreen)]()
+
+[![Github All Releases](https://img.shields.io/github/downloads/SaedSilva/papangenome/total.svg)]()
+
+## Papagenome: A Utility Tool for Pan-Genome Analysis Using Docker
 
 ---
 
-Papagenome is a utility tool designed to simplify the analysis of pan-genomes by acting as a wrapper for commonly used tools, leveraging Docker for seamless execution.
+### WARNING
+
+**This project is still in development.**
+**The current version is not fully functional.**
+**And the release download is not available yet.**
+**Probably project name will change.**
+**For use at this moment, please use the source code.**
+
+Create a package for your OS using the following command:
+
+```bash
+./gradlew build composeApp:packageReleaseDistributionForCurrentOS
+```
+
+Or create a jar file using the following command:
+
+```bash
+./gradlew build composeApp:packageReleaseUberJarForCurrentOS
+```
+
+---
+
+Papagenome is a utility tool designed to simplify the analysis of pan-genomes by acting as a wrapper for commonly used
+tools, leveraging Docker for seamless execution.
 
 ### Requirements
 
@@ -40,6 +63,8 @@ Alternatively, you can use the installer provided for your operating system.
 ---
 
 ### Tools progress:
+
+Marked tool is minimally functional and can be used for pan-genome analysis.
 
 - [X] Panaroo ![progress](https://progress-bar.xyz/20/)
 - [ ] Roary ![progress](https://progress-bar.xyz/0/)
