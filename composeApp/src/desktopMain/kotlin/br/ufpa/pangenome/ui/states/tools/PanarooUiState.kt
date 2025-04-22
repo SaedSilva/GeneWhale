@@ -1,6 +1,6 @@
 package br.ufpa.pangenome.ui.states.tools
 
-import androidx.compose.ui.text.toUpperCase
+import br.ufpa.pangenome.config.params.PanarooParamsConfig
 import br.ufpa.pangenome.utils.isValidFloat
 import br.ufpa.pangenome.utils.toMB
 import br.ufpa.pangenome.utils.toThreads
@@ -58,7 +58,7 @@ data class PanarooParams(
 
 ) {
     companion object {
-        fun fromEntity(entity: br.ufpa.pangenome.config.params.PanarooParamsConfig, state: PanarooParams): PanarooParams {
+        fun fromEntity(entity: PanarooParamsConfig, state: PanarooParams): PanarooParams {
             return state.copy(
                 threads = entity.threads,
                 cleanMode = CleanMode.valueOf(entity.cleanMode?.uppercase(Locale.US) ?: "NONE"),
@@ -71,7 +71,7 @@ data class PanarooParams(
 }
 
 sealed class PanarooParamsIntent {
-    data object Save: PanarooParamsIntent()
+    data object Save : PanarooParamsIntent()
 
     data class ChangeMemorySlider(val memory: Float) : PanarooParamsIntent()
     data class ChangeThreadsSlider(val threads: Float) : PanarooParamsIntent()
