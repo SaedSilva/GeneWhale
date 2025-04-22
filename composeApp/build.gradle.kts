@@ -51,7 +51,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "br.ufpa.pangenome.MainKt"
+        mainClass = "br.ufpa.genewhale.MainKt"
 
         nativeDistributions {
             buildTypes.release.proguard {
@@ -62,7 +62,7 @@ compose.desktop {
             includeAllModules = true
 
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
-            packageName = "br.ufpa.pangenome"
+            packageName = "br.ufpa.genewhale"
             packageVersion = "1.0.0"
         }
     }

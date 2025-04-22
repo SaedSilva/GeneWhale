@@ -4,7 +4,7 @@
 
 [![Github All Releases](https://img.shields.io/github/downloads/SaedSilva/papangenome/total.svg)]()
 
-## Papagenome: A Utility Tool for Pan-Genome Analysis Using Docker
+## GeneWhale: A Utility Tool for Pan-Genome Analysis Using Docker
 
 ---
 
@@ -30,12 +30,12 @@ Or create a jar file using the following command:
 
 ---
 
-Papagenome is a utility tool designed to simplify the analysis of pan-genomes by acting as a wrapper for commonly used
+GeneWhale is a utility tool designed to simplify the analysis of pan-genomes by acting as a wrapper for commonly used
 tools, leveraging Docker for seamless execution.
 
 ### Requirements
 
-To use Papagenome, you must have [Docker](https://docs.docker.com/get-docker/) installed on your machine.  
+To use GeneWhale, you must have [Docker](https://docs.docker.com/get-docker/) installed on your machine.  
 Additionally, Docker must be running (i.e., the Docker daemon must be active).  
 To verify if Docker is running, use the following command:
 
@@ -48,7 +48,7 @@ docker info
 
 ### Supported Platforms
 
-Papagenome is available for **Windows**, **Linux**, and **macOS**.
+GeneWhale is available for **Windows**, **Linux**, and **macOS**.
 
 You can download the appropriate version for your operating system from the **Releases** section.
 
@@ -62,7 +62,7 @@ Alternatively, you can use the installer provided for your operating system.
 
 ---
 
-### Tools progress:
+### Pan genomes Tools progress:
 
 Marked tool is minimally functional and can be used for pan-genome analysis.
 
