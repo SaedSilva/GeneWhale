@@ -1,5 +1,13 @@
 ## Papagenome: A Utility Tool for Pan-Genome Analysis Using Docker
 
+### WARNING
+**This project is still in development.**
+**The current version is not fully functional.**
+**And the release download is not available yet.**
+**Probably project name will change. :D**
+
+---
+
 Papagenome is a utility tool designed to simplify the analysis of pan-genomes by acting as a wrapper for commonly used tools, leveraging Docker for seamless execution.
 
 ### Requirements
