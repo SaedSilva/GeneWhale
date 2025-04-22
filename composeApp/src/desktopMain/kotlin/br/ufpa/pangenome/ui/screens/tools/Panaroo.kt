@@ -237,10 +237,10 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                     modifier = Modifier.height(56.dp)
                 ) {
-                    Checkbox(
+                    RoundedCornerCheckBox(
                         checked = state.removeInvalidGenes,
                         onCheckedChange = { onIntent(PanarooParamsIntent.SetRemoveInvalidGenes(it)) },
-                        modifier = Modifier.size(24.dp)
+//                        modifier = Modifier.size(24.dp)
                     )
                     Text("Remove invalid genes")
                     TooltipArea(
