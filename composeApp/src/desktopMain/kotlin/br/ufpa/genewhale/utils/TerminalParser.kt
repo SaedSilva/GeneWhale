@@ -1,5 +1,6 @@
 package br.ufpa.genewhale.utils
 
+@Deprecated("This object is not used anymore")
 object TerminalParser {
     fun addLineToList(
         line: String,

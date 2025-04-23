@@ -20,9 +20,7 @@ import java.util.*
 fun main() = application {
     Locale.setDefault(Locale.US)
     KoinApplication(
-        application = {
-            modules(appModule, viewModelsModule)
-        }
+        application = { modules(appModule, viewModelsModule) }
     ) {
         val global: Global = koinInject()
         Window(
@@ -31,9 +29,7 @@ fun main() = application {
                 exitApplication()
             },
             title = "GeneWhale",
-            state = rememberWindowState(
-                placement = WindowPlacement.Maximized
-            )
+            state = rememberWindowState(placement = WindowPlacement.Maximized)
         ) {
             window.minimumSize = Dimension(1280, 720)
             App()
@@ -46,7 +42,7 @@ private val appModule = module {
     single { PanarooService() }
 }
 
-val viewModelsModule = module {
+private val viewModelsModule = module {
     viewModelOf(::ProjectViewModel)
     viewModelOf(::PanarooViewModel)
     viewModelOf(::HomeViewModel)

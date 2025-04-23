@@ -77,6 +77,9 @@ object Config {
     }
 
     const val PANAROO_CONFIG_FILE = "panaroo.json"
+
+    @Suppress("MemberVisibilityCanBePrivate")
     const val APP_FOLDER = "genewhale"
+
     const val CONFIG_FOLDER = "config"
 }
