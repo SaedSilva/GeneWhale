@@ -10,10 +10,13 @@ import br.ufpa.genewhale.ui.viewmodels.Global
 import br.ufpa.genewhale.ui.viewmodels.HomeViewModel
 import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import br.ufpa.genewhale.ui.viewmodels.tools.PanarooViewModel
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import pangenome.composeapp.generated.resources.Res
+import pangenome.composeapp.generated.resources.genewhalegenewhaleicon
 import java.awt.Dimension
 import java.util.*
 
@@ -29,7 +32,8 @@ fun main() = application {
                 exitApplication()
             },
             title = "GeneWhale",
-            state = rememberWindowState(placement = WindowPlacement.Maximized)
+            state = rememberWindowState(placement = WindowPlacement.Maximized),
+            icon = painterResource(Res.drawable.genewhalegenewhaleicon)
         ) {
             window.minimumSize = Dimension(1280, 720)
             App()

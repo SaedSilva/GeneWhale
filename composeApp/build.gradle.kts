@@ -54,6 +54,20 @@ compose.desktop {
         mainClass = "br.ufpa.genewhale.MainKt"
 
         nativeDistributions {
+
+            macOS {
+
+                iconFile.set(project.file("src/desktopMain/resources/genewhaleicon.icns"))
+            }
+            windows {
+                shortcut = true
+                iconFile.set(project.file("src/desktopMain/resources/genewhaleicon.ico"))
+            }
+            linux {
+
+                iconFile.set(project.file("src/desktopMain/resources/genewhaleicon.png"))
+            }
+
             buildTypes.release.proguard {
                 version.set("7.7.0")
                 joinOutputJars.set(true)
@@ -61,9 +75,13 @@ compose.desktop {
 
             includeAllModules = true
 
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
-            packageName = "br.ufpa.genewhale"
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "GeneWhale"
+            description = "GeneWhale complete tool for genomes analysis"
+            copyright = "© 2025 Saed Silva Sousa. All rights reserved."
+            vendor = "Saed Silva Sousa"
             packageVersion = "1.0.0"
+            licenseFile.set(project.file("../LICENSE"))
         }
     }
 }
