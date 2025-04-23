@@ -1,7 +1,9 @@
 package br.ufpa.genewhale
 
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import br.ufpa.genewhale.docker.PanarooService
 import br.ufpa.genewhale.ui.App
 import br.ufpa.genewhale.ui.viewmodels.Global
@@ -29,6 +31,9 @@ fun main() = application {
                 exitApplication()
             },
             title = "GeneWhale",
+            state = rememberWindowState(
+                placement = WindowPlacement.Maximized
+            )
         ) {
             window.minimumSize = Dimension(1280, 720)
             App()

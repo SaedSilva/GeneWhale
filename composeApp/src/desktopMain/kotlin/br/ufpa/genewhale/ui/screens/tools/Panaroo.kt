@@ -225,41 +225,69 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                             onIntent(PanarooParamsIntent.ShowCleanModeDropdown)
                         }
                     )
-
                 }
-
                 VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
 
-
                 //Remove invalid genes
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                Column(
                     modifier = Modifier.height(56.dp)
                 ) {
-                    RoundedCornerCheckBox(
-                        checked = state.removeInvalidGenes,
-                        onCheckedChange = { onIntent(PanarooParamsIntent.SetRemoveInvalidGenes(it)) },
-//                        modifier = Modifier.size(24.dp)
-                    )
-                    Text("Remove invalid genes")
-                    TooltipArea(
-                        tooltip = {
-                            MyTooltip(
-                                tooltip = "removes annotations that do not conform to the\n" +
-                                        "expected Prokka format such as those including\n" +
-                                        "premature stop codons."
-                            )
-                        },
-                        delayMillis = 100,
-                        tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier
                     ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Info,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
+                        RoundedCornerCheckBox(
+                            checked = state.removeInvalidGenes,
+                            onCheckedChange = { onIntent(PanarooParamsIntent.SetRemoveInvalidGenes(it)) }
                         )
+                        Text("Remove invalid genes")
+                        TooltipArea(
+                            tooltip = {
+                                MyTooltip(
+                                    tooltip = "removes annotations that do not conform to the\n" +
+                                            "expected Prokka format such as those including\n" +
+                                            "premature stop codons."
+                                )
+                            },
+                            delayMillis = 100,
+                            tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
                     }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier.height(56.dp)
+                    ) {
+                        RoundedCornerCheckBox(
+                            checked = state.mergeParalogs,
+                            onCheckedChange = { onIntent(PanarooParamsIntent.SetMergeParalogs(it)) }
+                        )
+                        Text("Merge paralogs")
+                        TooltipArea(
+                            tooltip = {
+                                MyTooltip(
+                                    tooltip = "don't split paralogs"
+                                )
+                            },
+                            delayMillis = 100,
+                            tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+
+
                 }
                 VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
 
@@ -393,6 +421,9 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                         }
                     )
                 }
+
+                //mergeParalogs
+
 
             }
             HorizontalDivider()

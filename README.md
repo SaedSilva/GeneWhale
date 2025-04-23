@@ -86,6 +86,7 @@ Alternatively, you can use the installer provided for your operating system.
 ### Pan genomes Tools progress:
 
 Marked tool is minimally functional and can be used for pan-genome analysis.
+The progress bar indicates the percentage of addition of the tool's parameters and functionalities.
 
 - [X] Panaroo ![progress](https://progress-bar.xyz/20/)
 - [ ] Roary ![progress](https://progress-bar.xyz/0/)
