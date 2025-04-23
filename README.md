@@ -3,7 +3,10 @@
 
 [//]: # ([![Github All Releases]&#40;https://img.shields.io/github/downloads/SaedSilva/GeneWhale/total.svg&#41;]&#40;&#41;)
 
-## GeneWhale: A Utility Tool for Pan-Genome Analysis Using Docker
+<div align="center">
+    <img src="GeneWhaleNoBg.png" alt="gene whale logo"/>
+    <h1 align="center">GeneWhale: A Utility Tool for Pan-Genome Analysis Using Docker</h1>
+</div>
 
 ![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)
 
@@ -114,3 +117,12 @@ Marked tool is minimally functional and can be used for pan-genome analysis.
 - [ ] Pyseer ![progress](https://progress-bar.xyz/0/)
 - [ ] Seq-pan-seq ![progress](https://progress-bar.xyz/0/)
 - [ ] Ptolemy ![progress](https://progress-bar.xyz/0/)
+
+
+### License
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+You can find the full license text in the [LICENSE](LICENSE) file.
+
+
+### Contributors
+![Contributors](https://contrib.rocks/image?repo=saedsilva/genewhale)
