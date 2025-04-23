@@ -108,7 +108,7 @@ class PanarooViewModel(
             service.basicUsage(
                 input = _uiState.value.inputFolder,
                 output = _uiState.value.outputFolder,
-                memory = _uiStateConfig.value.memory,
+                memory = if (_uiStateConfig.value.memory > 0L) _uiStateConfig.value.memory else null,
                 parameters = createParams(_uiStateConfig.value)
             )
         }

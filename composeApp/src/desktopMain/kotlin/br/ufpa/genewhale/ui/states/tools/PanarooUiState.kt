@@ -78,6 +78,7 @@ data class PanarooParams(
 
 sealed class PanarooParamsIntent {
     data object Save : PanarooParamsIntent()
+    data object Reset : PanarooParamsIntent()
 
     data class ChangeMemorySlider(val memory: Float) : PanarooParamsIntent()
     data class ChangeThreadsSlider(val threads: Float) : PanarooParamsIntent()
@@ -98,6 +99,12 @@ sealed class PanarooParamsIntent {
 fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
     return when (intent) {
         is PanarooParamsIntent.Save -> this
+
+        is PanarooParamsIntent.Reset -> PanarooParams().copy(
+            maxThreads = this.maxThreads,
+            maxMemory = this.maxMemory,
+            threadsSlider = 1.0f / this.maxThreads,
+        )
 
         is PanarooParamsIntent.ChangeMemorySlider -> this.copy(
             memorySlider = intent.memory,
