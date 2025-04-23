@@ -4,7 +4,7 @@
 [//]: # ([![Github All Releases]&#40;https://img.shields.io/github/downloads/SaedSilva/GeneWhale/total.svg&#41;]&#40;&#41;)
 
 <div align="center">
-    <img src="GeneWhaleNoBg.png" alt="gene whale logo"/>
+    <img src="GeneWhaleNoBg.png" alt="gene whale logo" width="128" height="128"/>
     <h1 align="center">GeneWhale: A Utility Tool for Pan-Genome Analysis Using Docker</h1>
 </div>
 
