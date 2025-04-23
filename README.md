@@ -29,7 +29,6 @@ git clone https://github.com/SaedSilva/GeneWhale.git
 
 Create a package for your OS using the following command:
 
-
 ```bash
 ./gradlew build composeApp:packageDistributionForCurrentOS
 ```
