@@ -28,7 +28,7 @@ class PanarooViewModel(
 
     init {
         runBlocking {
-            val panaroo = Config.load<PanarooParamsConfig>(Config.DEFAULT_PANAROO_CONFIG)
+            val panaroo = Config.load<PanarooParamsConfig>(Config.PANAROO_CONFIG_FILE)
             panaroo?.let { data ->
                 _uiStateConfig.update { state ->
                     PanarooParams.fromEntity(data, state)
@@ -85,7 +85,7 @@ class PanarooViewModel(
     private fun config(intent: PanarooParamsIntent) {
         if (intent is PanarooParamsIntent.Save) {
             viewModelScope.launch {
-                Config.save(Config.DEFAULT_PANAROO_CONFIG, PanarooParamsConfig.fromState(_uiStateConfig.value))
+                Config.save(Config.PANAROO_CONFIG_FILE, PanarooParamsConfig.fromState(_uiStateConfig.value))
                 global.handleEffect(GlobalEffect.ShowSnackBar("Configuration saved"))
             }
         }

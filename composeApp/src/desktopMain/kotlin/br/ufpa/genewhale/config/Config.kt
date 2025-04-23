@@ -8,7 +8,7 @@ import javax.swing.filechooser.FileSystemView
 
 object Config {
     private fun getDefaultFolder(): File {
-        val folder = File(FileSystemView.getFileSystemView().defaultDirectory, "genewhale")
+        val folder = File(FileSystemView.getFileSystemView().defaultDirectory, APP_FOLDER)
         if (!folder.exists()) {
             folder.mkdirs()
         }
@@ -16,7 +16,7 @@ object Config {
     }
 
     fun getDefaultFolderWithChild(folder: String): File {
-        val file  = File(getDefaultFolder(), folder)
+        val file = File(getDefaultFolder(), folder)
         if (!file.exists()) {
             file.mkdirs()
         }
@@ -25,7 +25,7 @@ object Config {
 
     suspend inline fun <reified T> save(name: String, dataClass: T) {
         withContext(Dispatchers.IO) {
-            val file = File(getDefaultFolderWithChild("config"), name)
+            val file = File(getDefaultFolderWithChild(CONFIG_FOLDER), name)
             if (!file.exists()) {
                 file.createNewFile()
             }
@@ -36,9 +36,9 @@ object Config {
         }
     }
 
-    suspend inline fun<reified T> load(name: String): T? {
+    suspend inline fun <reified T> load(name: String): T? {
         return withContext(Dispatchers.IO) {
-            val file = File(getDefaultFolderWithChild("config"), name)
+            val file = File(getDefaultFolderWithChild(CONFIG_FOLDER), name)
 
             if (!file.exists()) {
                 return@withContext null
@@ -53,5 +53,7 @@ object Config {
         }
     }
 
-    const val DEFAULT_PANAROO_CONFIG = "panaroo.json"
+    const val PANAROO_CONFIG_FILE = "panaroo.json"
+    const val APP_FOLDER = "genewhale"
+    const val CONFIG_FOLDER = "config"
 }

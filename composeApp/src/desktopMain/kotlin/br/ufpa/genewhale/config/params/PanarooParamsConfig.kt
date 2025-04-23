@@ -24,7 +24,7 @@ data class PanarooParamsConfig(
     // Refind
     val searchRadius: Int? = null,
     val refindPropMatch: Float? = null,
-    val refindMode: String = "default",
+    val refindMode: String? = null,
 
     // Graph correction
     val minTrailingSupport: Int? = null,

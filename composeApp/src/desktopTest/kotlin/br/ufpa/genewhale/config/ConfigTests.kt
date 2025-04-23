@@ -10,7 +10,7 @@ class ConfigTests {
     @Test
     fun testSaveConfig() {
         runBlocking {
-            Config.save(Config.DEFAULT_PANAROO_CONFIG, PanarooParamsConfig(
+            Config.save(Config.PANAROO_CONFIG_FILE, PanarooParamsConfig(
                 removeInvalidGenes = true,
                 threads = 4,
             ))
@@ -20,7 +20,7 @@ class ConfigTests {
     @Test
     fun testLoadConfig() {
         runBlocking {
-            val panaroo = Config.load<PanarooParamsConfig>(Config.DEFAULT_PANAROO_CONFIG)
+            val panaroo = Config.load<PanarooParamsConfig>(Config.PANAROO_CONFIG_FILE)
             asserter.assertNotNull("s", panaroo)
         }
     }
