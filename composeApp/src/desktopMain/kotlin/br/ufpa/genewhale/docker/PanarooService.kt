@@ -10,9 +10,16 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 
+/**
+ * Service to manage the Panaroo process using Docker.
+ * This class provides methods to start, stop, and remove the Panaroo Docker container.
+ * It also handles logging and process management.
+ * @param dispatcher The coroutine dispatcher to use for background operations.
+ */
 class PanarooService(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
+
     private val _log = MutableSharedFlow<String>(100)
     val logs = _log.asSharedFlow()
     private val _isRunning = MutableStateFlow(false)
@@ -89,6 +96,9 @@ class PanarooService(
         }
     }
 
+    /**
+     * Stops the currently running Panaroo process.
+     */
     suspend fun stop() = withContext(Dispatchers.IO) {
         _isRunning.emit(false)
         try {
@@ -109,6 +119,9 @@ class PanarooService(
         }
     }
 
+    /**
+     * Removes the Panaroo Docker container.
+     */
     suspend fun remove() = withContext(Dispatchers.IO) {
         try {
             val command = listOf("docker", "rm", "${IDENTIFIER}_panaroo")

@@ -2,6 +2,10 @@ package br.ufpa.genewhale.ui.navigation
 
 import kotlinx.serialization.Serializable
 
+
+/**
+ * Represents the different routes in the application.
+ */
 @Serializable
 sealed class Route {
     @Serializable
