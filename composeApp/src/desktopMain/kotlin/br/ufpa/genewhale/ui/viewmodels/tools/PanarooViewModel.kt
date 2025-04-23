@@ -105,7 +105,7 @@ class PanarooViewModel(
 
     private fun runPanaroo(intent: PanarooUiIntent.RunPanaroo) {
         viewModelScope.launch {
-            service.start(
+            service.basicUsage(
                 input = _uiState.value.inputFolder,
                 output = _uiState.value.outputFolder,
                 memory = _uiStateConfig.value.memory,
