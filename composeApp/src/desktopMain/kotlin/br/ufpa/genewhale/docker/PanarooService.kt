@@ -40,30 +40,25 @@ class PanarooService(
         memory: Long? = null,
         parameters: List<String> = emptyList()
     ) {
-        if (currentProcess == null || !currentProcess?.isAlive!!) {
+        if (currentProcess?.isAlive != true) {
             withContext(dispatcher) {
                 _isRunning.emit(true)
                 val unixInput = convertPathForDocker(input)
                 val unixOutput = convertPathForDocker(output)
 
-                @Suppress("NAME_SHADOWING")
-                val parameters = parameters.flatMap { it.split(" ") }
                 val command = mutableListOf(
                     "docker", "run", "--rm", "-i", "--name", "${IDENTIFIER}_panaroo",
                     "-v", "$unixInput:/app/gff",
                     "-v", "$unixOutput:/app/results",
                     "saedss/panaroo:latest",
-                    "bash", "-c",
-                    "source ~/.bashrc && conda activate panaroo && cd /app && panaroo -i gff/*.gff -o results"
-                )
-                command.addAll(parameters)
-                memory?.let {
-                    command.add(2, "--memory=${it}m")
+                    "bash", "-c"
+                ).apply {
+                    val joinedParams = parameters.joinToString(" ")
+                    add("source ~/.bashrc && conda activate panaroo && cd /app && panaroo -i gff/*.gff -o results $joinedParams")
+                    memory?.let { add(2, "--memory=${it}m") }
                 }
 
-                val builder = ProcessBuilder(
-                    command
-                )
+                val builder = ProcessBuilder(command)
 
                 builder.redirectErrorStream(true)
                 try {
