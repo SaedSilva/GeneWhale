@@ -3,15 +3,39 @@ package br.ufpa.genewhale.web
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.lang.Thread.sleep
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import java.net.HttpURLConnection
+import java.net.URI
 
 class WebServiceJavaImpl(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : WebService {
-    override suspend fun getLatestVersion(): String {
+    private val json = Json { ignoreUnknownKeys = true }
+
+    override suspend fun getLatestVersion(): String? {
         return withContext(dispatcher) {
-            sleep(1000)
-            return@withContext "1.0.1"
+            try {
+                val url = URI(GITHUB_API_URL).toURL()
+                val conn = url.openConnection() as HttpURLConnection
+                conn.requestMethod = "GET"
+                val value = conn.inputStream.bufferedReader().use { it.readText() }
+                val response = json.decodeFromString<GithubResponse>(value)
+                response.name
+            } catch (e: Exception) {
+                null
+            }
         }
     }
+
+    companion object {
+        private const val GITHUB_API_URL = "https://api.github.com/repos/vitejs/vite/releases/latest"
+    }
 }
+
+@Serializable
+data class GithubResponse(
+    val name: String,
+    @SerialName("tag_name") val tagName: String
+)

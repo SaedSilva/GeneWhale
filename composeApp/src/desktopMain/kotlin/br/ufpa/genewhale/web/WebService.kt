@@ -1,5 +1,5 @@
 package br.ufpa.genewhale.web
 
 interface WebService {
-    suspend fun getLatestVersion(): String
+    suspend fun getLatestVersion(): String?
 }
