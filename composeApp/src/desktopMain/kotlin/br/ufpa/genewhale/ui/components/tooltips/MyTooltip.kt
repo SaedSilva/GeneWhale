@@ -1,4 +1,4 @@
-package br.ufpa.genewhale.ui.components
+package br.ufpa.genewhale.ui.components.tooltips
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background

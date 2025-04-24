@@ -1,4 +1,4 @@
-package br.ufpa.genewhale.ui.components
+package br.ufpa.genewhale.ui.components.pickfiles
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.ufpa.genewhale.ui.components.tooltips.MyTooltip
+import br.ufpa.genewhale.ui.components.clickableWithHoverIcon
 import br.ufpa.genewhale.ui.theme.GenomeTheme
 import br.ufpa.genewhale.ui.theme.ThemeDefaults
 import io.github.vinceglb.filekit.PlatformFile
@@ -89,7 +91,7 @@ fun PickFolder(
                         contentDescription = null,
                         modifier = Modifier
                             .size(24.dp)
-                            .clickable {
+                            .clickableWithHoverIcon {
                                 onClickButton()
                                 launcher.launch()
                             }

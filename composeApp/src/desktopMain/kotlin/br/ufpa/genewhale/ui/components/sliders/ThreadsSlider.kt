@@ -1,4 +1,4 @@
-package br.ufpa.genewhale.ui.components
+package br.ufpa.genewhale.ui.components.sliders
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

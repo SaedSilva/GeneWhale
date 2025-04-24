@@ -1,4 +1,4 @@
-package br.ufpa.genewhale.ui.components
+package br.ufpa.genewhale.ui.components.buttons
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -7,7 +7,6 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +23,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import br.ufpa.genewhale.ui.components.clickableWithHoverIcon
 import br.ufpa.genewhale.ui.theme.GenomeTheme
 
 @Composable
@@ -55,7 +55,7 @@ fun CustomCheckBox(
             .clip(
                 RoundedCornerShape(5.dp)
             )
-            .clickable {
+            .clickableWithHoverIcon {
                 onCheckedChange(!checked)
             }
     ) {
@@ -89,7 +89,7 @@ fun RoundedCornerCheckBox(
             .border(width = 2.dp, color = backgroundColor, shape = RoundedCornerShape(6.dp))
             .clip(CircleShape)
             .background(tintColor)
-            .clickable { onCheckedChange(!checked) }
+            .clickableWithHoverIcon { onCheckedChange(!checked) }
             .background(if (checked) backgroundColor else Color.White),
     ) {
         AnimatedVisibility(

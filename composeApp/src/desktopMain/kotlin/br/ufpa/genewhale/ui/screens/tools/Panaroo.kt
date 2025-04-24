@@ -4,11 +4,9 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.TooltipArea
 import androidx.compose.foundation.TooltipPlacement
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
@@ -20,6 +18,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.genewhale.ui.components.*
+import br.ufpa.genewhale.ui.components.buttons.MyTab
+import br.ufpa.genewhale.ui.components.buttons.RoundedCornerCheckBox
+import br.ufpa.genewhale.ui.components.dropdown.DropdownSelector
+import br.ufpa.genewhale.ui.components.pickfiles.PickFolder
+import br.ufpa.genewhale.ui.components.sliders.MemorySlider
+import br.ufpa.genewhale.ui.components.sliders.ThreadsSlider
+import br.ufpa.genewhale.ui.components.textfield.CustomTextField
+import br.ufpa.genewhale.ui.components.tooltips.MyTooltip
 import br.ufpa.genewhale.ui.states.tools.*
 import br.ufpa.genewhale.ui.theme.GenomeTheme
 import br.ufpa.genewhale.ui.theme.ThemeDefaults
@@ -73,7 +79,7 @@ fun Panaroo(
                 modifier = Modifier
                     .size(32.dp)
                     .clip(RoundedCornerShape(32.dp))
-                    .clickable { onNavigateBack() }
+                    .clickableWithHoverIcon { onNavigateBack() }
                     .align(Alignment.TopEnd)
             )
         }

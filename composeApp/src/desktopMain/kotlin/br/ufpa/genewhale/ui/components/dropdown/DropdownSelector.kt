@@ -1,8 +1,7 @@
-package br.ufpa.genewhale.ui.components
+package br.ufpa.genewhale.ui.components.dropdown
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
@@ -14,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.ufpa.genewhale.ui.components.clickableWithHoverIcon
 import br.ufpa.genewhale.ui.theme.GenomeTheme
 import br.ufpa.genewhale.ui.theme.ThemeDefaults
 import br.ufpa.genewhale.ui.states.tools.CleanMode
@@ -34,8 +34,8 @@ fun <T> DropdownSelector(
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Box(
-            modifier = Modifier
-                .clickable {
+            modifier = Modifier.Companion
+                .clickableWithHoverIcon {
                     onClick()
                 }
                 .weight(1f)

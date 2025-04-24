@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import br.ufpa.genewhale.ui.components.SearchBar
+import br.ufpa.genewhale.ui.components.textfield.SearchBar
 import br.ufpa.genewhale.ui.states.ProjectUiIntent
 import br.ufpa.genewhale.ui.states.ProjectUiState
 import br.ufpa.genewhale.ui.theme.ThemeDefaults

@@ -1,8 +1,7 @@
-package br.ufpa.genewhale.ui.components
+package br.ufpa.genewhale.ui.components.cards
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.ufpa.genewhale.ui.components.clickableWithHoverIcon
 import br.ufpa.genewhale.ui.theme.GenomeTheme
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -30,13 +30,16 @@ fun ToolCard(
 ) {
     val scrollState = rememberScrollState()
 
-    OutlinedCard(modifier.width(256.dp).height(300.dp)) {
+    OutlinedCard(
+        modifier
+            .width(256.dp)
+            .height(300.dp)
+    ) {
         Box(
-            modifier = if (enabled) {
-                Modifier.clickable { onClick() }.padding(16.dp).fillMaxSize()
-            } else {
-                Modifier.padding(16.dp).fillMaxSize()
-            },
+            modifier = Modifier.Companion
+                .clickableWithHoverIcon(enabled = enabled) { onClick() }
+                .padding(16.dp)
+                .fillMaxSize()
         ) {
             tool.icon?.let {
                 Image(
