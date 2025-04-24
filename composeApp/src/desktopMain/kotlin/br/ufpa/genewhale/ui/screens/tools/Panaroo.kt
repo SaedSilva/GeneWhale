@@ -17,9 +17,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.ufpa.genewhale.ui.components.*
+import br.ufpa.genewhale.ui.components.Terminal
+import br.ufpa.genewhale.ui.components.buttons.MyButton
+import br.ufpa.genewhale.ui.components.buttons.MyOutlinedButton
 import br.ufpa.genewhale.ui.components.buttons.MyTab
 import br.ufpa.genewhale.ui.components.buttons.RoundedCornerCheckBox
+import br.ufpa.genewhale.ui.components.clickableWithHoverIcon
 import br.ufpa.genewhale.ui.components.dropdown.DropdownSelector
 import br.ufpa.genewhale.ui.components.pickfiles.PickFolder
 import br.ufpa.genewhale.ui.components.sliders.MemorySlider
@@ -50,26 +53,17 @@ fun Panaroo(
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            /*Row(
-                modifier = Modifier.clickable {
-                    onNavigateBack()
-                }.align(Alignment.TopStart), verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(Icons.AutoMirrored.Default.ArrowBack, null)
-                Text("Back", fontSize = 18.sp)
-            }*/
             Text(
                 "Panaroo",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.TopCenter)
             )
-            OutlinedButton(
+            MyOutlinedButton(
                 modifier = Modifier.align(Alignment.TopStart).height(32.dp),
                 onClick = {
                     onIntent(PanarooUiIntent.OpenDocs)
-                },
-                shape = ThemeDefaults.ButtonShape
+                }
             ) {
                 Text("📚 Open documentation", lineHeight = 16.sp)
             }
@@ -107,13 +101,12 @@ fun Panaroo(
         )
 
 
-        OutlinedButton(
+        MyOutlinedButton(
             modifier = Modifier.height(32.dp),
             onClick = {
                 onIntent(PanarooUiIntent.ClearOutput)
                 onIntent(PanarooUiIntent.RunPanaroo)
-            },
-            shape = ThemeDefaults.ButtonShape
+            }
         ) {
             Text("Run Panaroo", lineHeight = 16.sp)
         }
@@ -147,9 +140,7 @@ fun Panaroo(
                     Config(
                         modifier = Modifier.fillMaxSize(),
                         state = configState,
-                        onIntent = {
-                            onConfigIntent(it)
-                        }
+                        onIntent = { onConfigIntent(it) }
                     )
                 }
             }
@@ -446,12 +437,11 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
             }
             HorizontalDivider()
         }
-        Button(
+        MyButton(
             modifier = Modifier.height(32.dp).align(Alignment.BottomEnd),
             onClick = {
                 onIntent(PanarooParamsIntent.Save)
-            },
-            shape = ThemeDefaults.ButtonShape
+            }
         ) {
             Text("Save", lineHeight = 16.sp)
         }
