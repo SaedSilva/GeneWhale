@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,34 +29,25 @@ import br.ufpa.genewhale.ui.viewmodels.Global
 import br.ufpa.genewhale.ui.viewmodels.HomeViewModel
 import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import br.ufpa.genewhale.ui.viewmodels.tools.PanarooViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
-
 private const val TIME_TRANSITION = 500
+
+const val APP_VERSION = "1.0.0"
 
 @Composable
 @Preview
 fun App() {
     val navController = rememberNavController()
     val snackBarState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     val global: Global = koinInject()
 
     LaunchedEffect(Unit) {
-        scope.launch {
-            global.uiEffect.collect {
-                when (it) {
-                    is GlobalEffect.ShowSnackBar -> {
-                        snackBarState.showSnackbar(
-                            message = it.message,
-                            duration = SnackbarDuration.Short
-                        )
-                    }
-                }
-            }
-        }
+        handleGlobalEffect(global, snackBarState)
+        global.testVersion()
     }
 
     GenomeTheme {
@@ -113,6 +104,37 @@ fun App() {
                         }
                     ) {
                         viewModel.handleIntent(it)
+                    }
+                }
+            }
+        }
+    }
+}
+
+private fun CoroutineScope.handleGlobalEffect(
+    global: Global,
+    snackBarState: SnackbarHostState
+) {
+    launch {
+        global.uiEffect.collect {
+            when (it) {
+                is GlobalEffect.ShowSnackBar -> {
+                    snackBarState.showSnackbar(
+                        message = it.message,
+                        duration = SnackbarDuration.Short
+                    )
+                }
+
+                is GlobalEffect.ShowSnackBarWithAction -> {
+                    when (
+                        snackBarState.showSnackbar(
+                            message = it.message,
+                            actionLabel = it.actionLabel,
+                            duration = SnackbarDuration.Short
+                        )
+                    ) {
+                        SnackbarResult.Dismissed -> {}
+                        SnackbarResult.ActionPerformed -> it.action()
                     }
                 }
             }

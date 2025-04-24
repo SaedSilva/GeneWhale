@@ -24,12 +24,14 @@ class WebServiceJavaImpl(
                 val response = json.decodeFromString<GithubResponse>(value)
                 response.name
             } catch (e: Exception) {
+                e.printStackTrace()
                 null
             }
         }
     }
 
     companion object {
+        //TODO Update this URL to the real URL
         private const val GITHUB_API_URL = "https://api.github.com/repos/vitejs/vite/releases/latest"
     }
 }

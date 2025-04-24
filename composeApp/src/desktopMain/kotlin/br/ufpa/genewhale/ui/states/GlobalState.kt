@@ -12,4 +12,9 @@ sealed class GlobalIntent {
 
 sealed class GlobalEffect {
     data class ShowSnackBar(val message: String) : GlobalEffect()
+    data class ShowSnackBarWithAction(
+        val message: String,
+        val actionLabel: String,
+        val action: () -> Unit
+    ) : GlobalEffect()
 }
