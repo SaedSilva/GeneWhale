@@ -32,8 +32,7 @@ class WebServiceJavaImpl(
     }
 
     companion object {
-        //TODO Update this URL to the real URL
-        private const val GITHUB_API_URL = "https://api.github.com/repos/vitejs/vite/releases/latest"
+        private const val GITHUB_API_URL = "https://api.github.com/repos/saedsilva/genewhale/releases/latest"
     }
 }
 

@@ -6,13 +6,16 @@ import androidx.compose.foundation.TooltipArea
 import androidx.compose.foundation.TooltipPlacement
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,14 +44,14 @@ fun Panaroo(
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
+            /*Row(
                 modifier = Modifier.clickable {
                     onNavigateBack()
                 }.align(Alignment.TopStart), verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(Icons.AutoMirrored.Default.ArrowBack, null)
                 Text("Back", fontSize = 18.sp)
-            }
+            }*/
             Text(
                 "Panaroo",
                 fontSize = 24.sp,
@@ -56,7 +59,7 @@ fun Panaroo(
                 modifier = Modifier.align(Alignment.TopCenter)
             )
             OutlinedButton(
-                modifier = Modifier.align(Alignment.TopEnd).height(32.dp),
+                modifier = Modifier.align(Alignment.TopStart).height(32.dp),
                 onClick = {
                     onIntent(PanarooUiIntent.OpenDocs)
                 },
@@ -64,6 +67,15 @@ fun Panaroo(
             ) {
                 Text("📚 Open documentation", lineHeight = 16.sp)
             }
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(RoundedCornerShape(32.dp))
+                    .clickable { onNavigateBack() }
+                    .align(Alignment.TopEnd)
+            )
         }
 
         PickFolder(

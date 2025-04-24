@@ -55,7 +55,7 @@ class Global(
                     message = "New version available: $version",
                     actionLabel = "Update",
                     action = {
-                        Desktop.openBrowser("https://github.com/vitejs/vite/releases")
+                        Desktop.openBrowser("https://github.com/saedsilva/genewhale/releases")
                     }
                 ))
             }

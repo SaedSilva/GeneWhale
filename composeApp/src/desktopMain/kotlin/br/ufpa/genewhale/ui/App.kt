@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -37,8 +39,9 @@ const val APP_VERSION = "1.0.0"
 
 @Composable
 @Preview
-fun App() {
-    val navController = rememberNavController()
+fun App(
+    navController: NavHostController
+) {
     val snackBarState = remember { SnackbarHostState() }
     val global: Global = koinInject()
 

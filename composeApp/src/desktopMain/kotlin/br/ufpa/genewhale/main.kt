@@ -1,9 +1,12 @@
 package br.ufpa.genewhale
 
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import androidx.navigation.compose.rememberNavController
 import br.ufpa.genewhale.docker.PanarooService
 import br.ufpa.genewhale.ui.App
 import br.ufpa.genewhale.ui.viewmodels.Global
@@ -28,6 +31,7 @@ fun main() = application {
         application = { modules(appModule, viewModelsModule, webModules) }
     ) {
         val global: Global = koinInject()
+        val navController = rememberNavController()
         Window(
             onCloseRequest = {
                 global.stopAll()
@@ -35,10 +39,18 @@ fun main() = application {
             },
             title = "GeneWhale",
             state = rememberWindowState(placement = WindowPlacement.Maximized),
-            icon = painterResource(Res.drawable.genewhalegenewhaleicon)
+            icon = painterResource(Res.drawable.genewhalegenewhaleicon),
+            onKeyEvent = {
+                if (it.key == Key.Escape) {
+                    navController.navigateUp()
+                    true
+                } else {
+                    false
+                }
+            }
         ) {
             window.minimumSize = Dimension(1280, 720)
-            App()
+            App(navController)
         }
     }
 }
