@@ -3,7 +3,10 @@ package br.ufpa.genewhale.ui
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,11 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import br.ufpa.genewhale.ui.navigation.Route
 import br.ufpa.genewhale.ui.screens.HomeScreen
 import br.ufpa.genewhale.ui.screens.ProjectScreen
@@ -30,7 +31,6 @@ import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import br.ufpa.genewhale.ui.viewmodels.tools.PanarooViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 private const val TIME_TRANSITION = 500
@@ -40,13 +40,13 @@ const val APP_VERSION = "1.0.0"
 @Composable
 @Preview
 fun App(
-    navController: NavHostController
+    navController: NavHostController,
+    global: Global
 ) {
     val snackBarState = remember { SnackbarHostState() }
-    val global: Global = koinInject()
 
     LaunchedEffect(Unit) {
-        handleSnackBarState(global, snackBarState)
+        handleGlobalEffects(global, snackBarState)
         global.testVersion()
     }
 
@@ -111,7 +111,7 @@ fun App(
     }
 }
 
-private fun CoroutineScope.handleSnackBarState(
+private fun CoroutineScope.handleGlobalEffects(
     global: Global,
     snackBarState: SnackbarHostState
 ) {
@@ -137,6 +137,8 @@ private fun CoroutineScope.handleSnackBarState(
                         SnackbarResult.ActionPerformed -> it.action()
                     }
                 }
+
+                is GlobalEffect.CloseApplication -> {}
             }
         }
     }

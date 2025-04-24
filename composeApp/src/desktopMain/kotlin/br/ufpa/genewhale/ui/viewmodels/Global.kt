@@ -36,27 +36,29 @@ class Global(
             is GlobalIntent.ShowLoading -> {
                 _uiState.update { it.reduce(intent) }
             }
+
             is GlobalIntent.HideLoading -> {
                 _uiState.update { it.reduce(intent) }
+            }
+
+            is GlobalIntent.CloseApplication -> {
+                _uiState.update { it.reduce(intent) }
+                stopAll()
             }
         }
     }
 
     suspend fun handleEffect(effect: GlobalEffect) {
-        when (effect) {
-            is GlobalEffect.ShowSnackBar -> {
-                _uiEffect.emit(effect)
-            }
-            is GlobalEffect.ShowSnackBarWithAction -> {
-                _uiEffect.emit(effect)
-            }
-        }
+        _uiEffect.emit(effect)
     }
 
+
     fun stopAll() {
-        runBlocking {
+        scope.launch {
             val panaroo = async { panarooService.stop() }
             panaroo.await()
+            delay(2000)
+            _uiEffect.emit(GlobalEffect.CloseApplication)
         }
     }
 
@@ -64,13 +66,14 @@ class Global(
         scope.launch {
             val version = webService.getLatestVersion()
             if (version != null && version != APP_VERSION) {
-                handleEffect(GlobalEffect.ShowSnackBarWithAction(
-                    message = "New version available: $version",
-                    actionLabel = "Update",
-                    action = {
-                        Desktop.openBrowser("https://github.com/saedsilva/genewhale/releases")
-                    }
-                ))
+                handleEffect(
+                    GlobalEffect.ShowSnackBarWithAction(
+                        message = "New version available: $version",
+                        actionLabel = "Update",
+                        action = {
+                            Desktop.openBrowser("https://github.com/saedsilva/genewhale/releases")
+                        }
+                    ))
             }
         }
     }

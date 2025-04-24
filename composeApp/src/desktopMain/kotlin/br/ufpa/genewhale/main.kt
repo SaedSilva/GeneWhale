@@ -1,28 +1,19 @@
 package br.ufpa.genewhale
 
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowPlacement
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberWindowState
 import androidx.navigation.compose.rememberNavController
-import br.ufpa.genewhale.docker.PanarooService
-import br.ufpa.genewhale.ui.App
+import br.ufpa.genewhale.di.appModule
+import br.ufpa.genewhale.di.viewModelsModule
+import br.ufpa.genewhale.di.webModules
+import br.ufpa.genewhale.ui.states.GlobalEffect
 import br.ufpa.genewhale.ui.viewmodels.Global
-import br.ufpa.genewhale.ui.viewmodels.HomeViewModel
-import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
-import br.ufpa.genewhale.ui.viewmodels.tools.PanarooViewModel
-import br.ufpa.genewhale.web.WebService
-import br.ufpa.genewhale.web.WebServiceJavaImpl
-import org.jetbrains.compose.resources.painterResource
+import br.ufpa.genewhale.ui.windows.MainWindow
+import br.ufpa.genewhale.ui.windows.StoppingContainersWindow
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
-import org.koin.core.module.dsl.viewModelOf
-import org.koin.dsl.module
-import pangenome.composeapp.generated.resources.Res
-import pangenome.composeapp.generated.resources.genewhalegenewhaleicon
-import java.awt.Dimension
 import java.util.*
 
 fun main() = application {
@@ -31,41 +22,21 @@ fun main() = application {
         application = { modules(appModule, viewModelsModule, webModules) }
     ) {
         val global: Global = koinInject()
+        val state by global.uiState.collectAsState()
         val navController = rememberNavController()
-        Window(
-            onCloseRequest = {
-                global.stopAll()
-                exitApplication()
-            },
-            title = "GeneWhale",
-            state = rememberWindowState(placement = WindowPlacement.Maximized),
-            icon = painterResource(Res.drawable.genewhalegenewhaleicon),
-            onKeyEvent = {
-                if (it.key == Key.Escape) {
-                    navController.navigateUp()
-                    true
-                } else {
-                    false
+
+        LaunchedEffect(Unit) {
+            global.uiEffect.collect {
+                if (it is GlobalEffect.CloseApplication) {
+                    exitApplication()
                 }
             }
-        ) {
-            window.minimumSize = Dimension(1280, 720)
-            App(navController)
+        }
+
+        if (state.isClosing) {
+            StoppingContainersWindow()
+        } else {
+            MainWindow(global, navController)
         }
     }
-}
-
-private val appModule = module {
-    single { Global(get(), get()) }
-    single { PanarooService() }
-}
-
-private val viewModelsModule = module {
-    viewModelOf(::ProjectViewModel)
-    viewModelOf(::PanarooViewModel)
-    viewModelOf(::HomeViewModel)
-}
-
-private val webModules = module {
-    single <WebService>{ WebServiceJavaImpl() }
 }
