@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import br.ufpa.genewhale.ui.theme.GenomeTheme
 import br.ufpa.genewhale.ui.theme.ThemeDefaults
@@ -52,7 +54,12 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
                 }
             }
             VerticalScrollbar(
-                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().shadow(4.dp).padding(8.dp),
+                modifier = Modifier
+                    .pointerHoverIcon(PointerIcon.Hand)
+                    .align(Alignment.CenterEnd)
+                    .fillMaxHeight()
+                    .shadow(4.dp)
+                    .padding(8.dp),
                 style = LocalScrollbarStyle.current.copy(
                     hoverDurationMillis = 100,
                     hoverColor = Color.Green,

@@ -22,6 +22,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 
@@ -36,6 +38,7 @@ fun MyTab(
     interactionSource: MutableInteractionSource? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val otherModifier = if (enabled) Modifier.pointerHoverIcon(PointerIcon.Hand) else Modifier
     // The color of the Ripple should always the selected color, as we want to show the color
     // before the item is considered selected, and hence before the new contentColor is
     // provided by TabTransition.
@@ -45,6 +48,7 @@ fun MyTab(
         Column(
             modifier =
                 modifier
+                    .then(otherModifier)
                     .selectable(
                         selected = selected,
                         onClick = onClick,
