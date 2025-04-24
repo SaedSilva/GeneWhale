@@ -1,5 +1,6 @@
 package br.ufpa.genewhale.web
 
+import br.ufpa.genewhale.utils.Logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,7 +25,7 @@ class WebServiceJavaImpl(
                 val response = json.decodeFromString<GithubResponse>(value)
                 response.name
             } catch (e: Exception) {
-                e.printStackTrace()
+                Logger.addLog(e.message ?: "Error getting version")
                 null
             }
         }

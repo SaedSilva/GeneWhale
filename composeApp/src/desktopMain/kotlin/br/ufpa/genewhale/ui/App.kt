@@ -3,10 +3,7 @@ package br.ufpa.genewhale.ui
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,7 +50,7 @@ fun App() {
     GenomeTheme {
         Scaffold(
             snackbarHost = {
-                SnackbarHost(snackBarState, modifier = Modifier.width(200.dp).height(100.dp))
+                SnackbarHost(snackBarState, modifier = Modifier.widthIn(min = 200.dp, max = 350.dp).height(100.dp))
             }
         ) { padding ->
             NavHost(
@@ -130,7 +127,7 @@ private fun CoroutineScope.handleSnackBarState(
                         snackBarState.showSnackbar(
                             message = it.message,
                             actionLabel = it.actionLabel,
-                            duration = SnackbarDuration.Short
+                            duration = SnackbarDuration.Long
                         )
                     ) {
                         SnackbarResult.Dismissed -> {}
