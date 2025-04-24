@@ -9,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -32,7 +34,10 @@ fun MemorySlider(
             Slider(
                 value = value,
                 onValueChange = onValueChange,
-                modifier = Modifier.weight(1f).height(24.dp)
+                modifier = Modifier
+                    .pointerHoverIcon(PointerIcon.Hand)
+                    .weight(1f)
+                    .height(24.dp)
             )
             Text("$maxMemory", fontSize = 14.sp)
         }
