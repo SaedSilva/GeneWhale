@@ -10,6 +10,8 @@ import br.ufpa.genewhale.ui.viewmodels.Global
 import br.ufpa.genewhale.ui.viewmodels.HomeViewModel
 import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import br.ufpa.genewhale.ui.viewmodels.tools.PanarooViewModel
+import br.ufpa.genewhale.web.WebService
+import br.ufpa.genewhale.web.WebServiceJavaImpl
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
@@ -23,7 +25,7 @@ import java.util.*
 fun main() = application {
     Locale.setDefault(Locale.US)
     KoinApplication(
-        application = { modules(appModule, viewModelsModule) }
+        application = { modules(appModule, viewModelsModule, webModules) }
     ) {
         val global: Global = koinInject()
         Window(
@@ -42,7 +44,7 @@ fun main() = application {
 }
 
 private val appModule = module {
-    single { Global(get()) }
+    single { Global(get(), get()) }
     single { PanarooService() }
 }
 
@@ -50,4 +52,8 @@ private val viewModelsModule = module {
     viewModelOf(::ProjectViewModel)
     viewModelOf(::PanarooViewModel)
     viewModelOf(::HomeViewModel)
+}
+
+private val webModules = module {
+    single <WebService>{ WebServiceJavaImpl() }
 }
