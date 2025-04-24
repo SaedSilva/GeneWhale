@@ -1,9 +1,7 @@
 package br.ufpa.genewhale.ui
 
-import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -17,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -70,34 +69,10 @@ fun App() {
                 navController = navController,
                 startDestination = Route.Home,
                 modifier = Modifier.padding(padding).padding(16.dp),
-                enterTransition = {
-                    fadeIn(animationSpec = tween(TIME_TRANSITION)) +
-                            slideIntoContainer(
-                                towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                                animationSpec = tween(TIME_TRANSITION)
-                            )
-                },
-                popEnterTransition = {
-                    fadeIn(animationSpec = tween(TIME_TRANSITION)) +
-                            slideIntoContainer(
-                                towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                                animationSpec = tween(TIME_TRANSITION)
-                            )
-                },
-                exitTransition = {
-                    fadeOut(animationSpec = tween(TIME_TRANSITION)) +
-                            slideOutOfContainer(
-                                towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                                animationSpec = tween(TIME_TRANSITION)
-                            )
-                },
-                popExitTransition = {
-                    fadeOut(animationSpec = tween(TIME_TRANSITION)) +
-                            slideOutOfContainer(
-                                towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                                animationSpec = tween(TIME_TRANSITION)
-                            )
-                }
+                enterTransition = enterTransition(),
+                popEnterTransition = popEnterTransition(),
+                exitTransition = exitTransition(),
+                popExitTransition = popExitTransition()
             ) {
                 composable<Route.Project> {
                     val viewModel: ProjectViewModel = koinViewModel()
@@ -144,3 +119,39 @@ fun App() {
         }
     }
 }
+
+private fun exitTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition =
+    {
+        fadeOut(animationSpec = tween(TIME_TRANSITION)) +
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(TIME_TRANSITION)
+                )
+    }
+
+private fun popExitTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition =
+    {
+        fadeOut(animationSpec = tween(TIME_TRANSITION)) +
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(TIME_TRANSITION)
+                )
+    }
+
+private fun enterTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition =
+    {
+        fadeIn(animationSpec = tween(TIME_TRANSITION)) +
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(TIME_TRANSITION)
+                )
+    }
+
+private fun popEnterTransition(): AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition =
+    {
+        fadeIn(animationSpec = tween(TIME_TRANSITION)) +
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(TIME_TRANSITION)
+                )
+    }
