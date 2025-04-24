@@ -6,15 +6,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun GenomeTheme(
-    colorScheme: ColorScheme = MaterialTheme.colorScheme.copy(
-        primary = Colors.primary,
-        inversePrimary = Colors.inversePrimary,
-        secondaryContainer = Colors.secondaryContainer,
-        surface = Colors.surface,
-        surfaceContainer = Colors.surfaceContainer,
-        background = Colors.background,
-        outline = Colors.outline,
-    ),
+    colorScheme: ColorScheme = MyColorScheme,
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
