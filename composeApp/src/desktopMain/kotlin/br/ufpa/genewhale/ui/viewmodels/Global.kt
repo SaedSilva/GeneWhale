@@ -57,7 +57,6 @@ class Global(
         scope.launch {
             val panaroo = async { panarooService.stop() }
             panaroo.await()
-            delay(2000)
             _uiEffect.emit(GlobalEffect.CloseApplication)
         }
     }
