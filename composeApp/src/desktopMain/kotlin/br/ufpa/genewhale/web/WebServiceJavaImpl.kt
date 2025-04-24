@@ -25,7 +25,7 @@ class WebServiceJavaImpl(
                 val response = json.decodeFromString<GithubResponse>(value)
                 response.name
             } catch (e: Exception) {
-                Logger.addLog(e.message ?: "Error getting version")
+                Logger.addLog(e)
                 null
             }
         }
