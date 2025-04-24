@@ -46,7 +46,7 @@ fun App() {
     val global: Global = koinInject()
 
     LaunchedEffect(Unit) {
-        handleGlobalEffect(global, snackBarState)
+        handleSnackBarState(global, snackBarState)
         global.testVersion()
     }
 
@@ -111,7 +111,7 @@ fun App() {
     }
 }
 
-private fun CoroutineScope.handleGlobalEffect(
+private fun CoroutineScope.handleSnackBarState(
     global: Global,
     snackBarState: SnackbarHostState
 ) {
