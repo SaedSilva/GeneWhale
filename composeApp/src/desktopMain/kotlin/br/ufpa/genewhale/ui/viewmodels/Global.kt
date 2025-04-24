@@ -3,7 +3,9 @@ package br.ufpa.genewhale.ui.viewmodels
 import br.ufpa.genewhale.docker.PanarooService
 import br.ufpa.genewhale.ui.APP_VERSION
 import br.ufpa.genewhale.ui.states.GlobalEffect
+import br.ufpa.genewhale.ui.states.GlobalIntent
 import br.ufpa.genewhale.ui.states.GlobalState
+import br.ufpa.genewhale.ui.states.reduce
 import br.ufpa.genewhale.utils.Desktop
 import br.ufpa.genewhale.web.WebService
 import com.sun.management.OperatingSystemMXBean
@@ -27,6 +29,17 @@ class Global(
 
     init {
         operatingSystemMemory()
+    }
+
+    fun handleIntent(intent: GlobalIntent) {
+        when (intent) {
+            is GlobalIntent.ShowLoading -> {
+                _uiState.update { it.reduce(intent) }
+            }
+            is GlobalIntent.HideLoading -> {
+                _uiState.update { it.reduce(intent) }
+            }
+        }
     }
 
     suspend fun handleEffect(effect: GlobalEffect) {

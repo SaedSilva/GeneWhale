@@ -7,7 +7,17 @@ data class GlobalState(
 )
 
 sealed class GlobalIntent {
+    object ShowLoading : GlobalIntent()
+    object HideLoading : GlobalIntent()
+}
 
+fun GlobalState.reduce(
+    intent: GlobalIntent,
+): GlobalState {
+    return when (intent) {
+        is GlobalIntent.ShowLoading -> copy(isLoading = true)
+        is GlobalIntent.HideLoading -> copy(isLoading = false)
+    }
 }
 
 sealed class GlobalEffect {
