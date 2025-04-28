@@ -11,10 +11,11 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
-
         val desktopMain by getting
 
         commonMain.dependencies {
+            implementation(project(":components"))
+
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.kotlin.test)
@@ -51,7 +52,6 @@ kotlin {
 
 
 compose.desktop {
-
     application {
         mainClass = "br.ufpa.genewhale.MainKt"
 
