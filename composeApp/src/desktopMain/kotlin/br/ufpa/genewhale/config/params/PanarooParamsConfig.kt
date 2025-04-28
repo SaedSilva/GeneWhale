@@ -2,6 +2,7 @@ package br.ufpa.genewhale.config.params
 
 import br.ufpa.genewhale.ui.states.tools.CleanMode
 import br.ufpa.genewhale.ui.states.tools.PanarooParams
+import br.ufpa.genewhale.ui.states.tools.RefindMode
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -59,6 +60,9 @@ data class PanarooParamsConfig(
                 lenDifPercent = if (state.lenDifPercent != config.lenDifPercent.toString()) state.lenDifPercent.toFloat() else config.lenDifPercent,
                 familyLenDifPercent = if (state.familyLenDifPercent != config.familyLenDifPercent.toString()) state.familyLenDifPercent.toFloat() else config.familyLenDifPercent,
                 mergeParalogs = state.mergeParalogs,
+                searchRadius = if (state.searchRadius.isNotBlank()) state.searchRadius.toInt() else null,
+                refindPropMatch = if (state.refindPropMatch.isNotBlank()) state.refindPropMatch.toFloat() else null,
+                refindMode = if (state.refindMode != RefindMode.NONE) state.refindMode.toString() else null,
             )
         }
     }
