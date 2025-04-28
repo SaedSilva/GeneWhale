@@ -4,13 +4,14 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    kotlin("plugin.serialization") version "2.1.20"
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
     jvm("desktop")
     
     sourceSets {
+
         val desktopMain by getting
         
         commonMain.dependencies {
@@ -30,6 +31,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.navigation.compose)
 
+            implementation(libs.compose.material.icons.core)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -47,14 +49,14 @@ kotlin {
 }
 
 
+
 compose.desktop {
+
     application {
         mainClass = "br.ufpa.genewhale.MainKt"
 
         nativeDistributions {
-
             macOS {
-
                 iconFile.set(project.file("src/desktopMain/resources/genewhaleicon.icns"))
             }
             windows {
@@ -62,7 +64,6 @@ compose.desktop {
                 iconFile.set(project.file("src/desktopMain/resources/genewhaleicon.ico"))
             }
             linux {
-
                 iconFile.set(project.file("src/desktopMain/resources/genewhaleicon.png"))
             }
 
@@ -73,7 +74,7 @@ compose.desktop {
 
             includeAllModules = true
 
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm)
             packageName = "GeneWhale"
             description = "GeneWhale complete tool for genomes analysis"
             copyright = "© 2025 Saed Silva Sousa. All rights reserved."
