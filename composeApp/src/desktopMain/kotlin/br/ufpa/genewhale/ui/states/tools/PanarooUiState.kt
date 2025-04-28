@@ -58,11 +58,11 @@ data class PanarooParams(
     val lenDifPercent: String = "0.98", //Float
     val familyLenDifPercent: String = "0.0", //Float
     val mergeParalogs: Boolean = false,
-
-    ) {
+) {
     companion object {
         fun fromEntity(entity: PanarooParamsConfig, state: PanarooParams): PanarooParams {
             return state.copy(
+                memory = entity.memory,
                 threads = entity.threads,
                 cleanMode = CleanMode.valueOf(entity.cleanMode?.uppercase(Locale.US) ?: "NONE"),
                 removeInvalidGenes = entity.removeInvalidGenes,

@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PanarooParamsConfig(
     // General
+    val memory: Long = 0L,
     val threads: Int = 1,
     val codonTable: Int = 11,
 
@@ -49,6 +50,7 @@ data class PanarooParamsConfig(
         fun fromState(state: PanarooParams): PanarooParamsConfig {
             val config = PanarooParamsConfig()
             return config.copy(
+                memory = state.memory,
                 threads = if (state.threads > 0) state.threads else config.threads,
                 cleanMode = if (state.cleanMode != CleanMode.NONE) state.cleanMode.toString() else null,
                 removeInvalidGenes = state.removeInvalidGenes,

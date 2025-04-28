@@ -53,6 +53,7 @@ class PanarooViewModel(
                     it.copy(
                         maxMemory = globalState.memoryBytes.toMB(),
                         maxThreads = globalState.threads,
+                        memorySlider = 1.0f / globalState.memoryBytes.toMB() * it.memory,
                         threadsSlider = 1.0f / globalState.threads * it.threads
                     )
                 }
@@ -85,7 +86,10 @@ class PanarooViewModel(
     private fun config(intent: PanarooParamsIntent) {
         if (intent is PanarooParamsIntent.Save) {
             viewModelScope.launch {
-                Config.save(Config.PANAROO_CONFIG_FILE, PanarooParamsConfig.fromState(_uiStateConfig.value))
+                Config.save(
+                    name = Config.PANAROO_CONFIG_FILE,
+                    dataClass = PanarooParamsConfig.fromState(_uiStateConfig.value)
+                )
                 global.handleEffect(GlobalEffect.ShowSnackBar("Configuration saved"))
             }
         }
