@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  builds:
+  build-ubuntu:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '21'
-          distribution: 'jetbrains'
+          distribution: 'temurin'
 
       - name: Grant execute permissions for gradlew
         run: chmod +x gradlew
@@ -47,12 +47,15 @@ jobs:
       - name: Install dependencies
         run: |
           dnf install -y git java-21-openjdk-devel rpm-build
+
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Build RPM
         run: |
           chmod +x gradlew
           ./gradlew composeApp:packageDistributionForCurrentOS
+
       - name: Upload RPM
         uses: actions/upload-artifact@v4
         with:
