@@ -26,7 +26,7 @@ fun CustomTextField(
     Box(
         modifier = modifier
             .height(24.dp)
-            .border(1.dp, MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
+            .border(1.dp, MaterialTheme.colorScheme.outline, ThemeDefaults.ButtonShape)
             .padding(4.dp),
         contentAlignment = Alignment.CenterStart
     ) {

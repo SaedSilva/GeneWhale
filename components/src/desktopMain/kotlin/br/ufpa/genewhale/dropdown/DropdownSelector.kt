@@ -39,7 +39,7 @@ fun <T> DropdownSelector(
                 }
                 .weight(1f)
                 .height(24.dp)
-                .border(1.dp, MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
+                .border(1.dp, MaterialTheme.colorScheme.outline, ThemeDefaults.ButtonShape)
                 .padding(4.dp),
             contentAlignment = Alignment.CenterStart
         ) {

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -56,7 +57,7 @@ fun PickFolder(
             modifier = Modifier
                 .weight(1f)
                 .height(32.dp)
-                .border(1.dp, MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
+                .border(1.dp, MaterialTheme.colorScheme.outline, ThemeDefaults.ButtonShape)
                 .padding(4.dp),
             contentAlignment = Alignment.CenterStart
         ) {
@@ -79,9 +80,7 @@ fun PickFolder(
                     Icon(
                         Icons.Default.Clear,
                         contentDescription = null,
-                        modifier = Modifier.size(16.dp).clickable {
-                            onClickClear()
-                        }
+                        modifier = Modifier.size(16.dp).clickable { onClickClear() }
                     )
                 }
                 TooltipArea(
@@ -90,7 +89,7 @@ fun PickFolder(
                     tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
                 ) {
                     Icon(
-                        painterResource(Res.drawable.folder),
+                        Icons.Default.FolderOpen,
                         contentDescription = null,
                         modifier = Modifier
                             .size(24.dp)
