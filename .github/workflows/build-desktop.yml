@@ -17,15 +17,15 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '21'
-          distribution: 'temurin'
+          distribution: 'jetbrains'
 
       - name: Grant execute permissions for gradlew
         run: chmod +x gradlew
 
       - name: Build Jar and Installer
         run: |
-          ./gradlew composeApp:packageReleaseUberJarForCurrentOS
-          ./gradlew composeApp:packageReleaseDistributionForCurrentOS
+          ./gradlew composeApp:packageUberJarForCurrentOS
+          ./gradlew composeApp:packageDistributionForCurrentOS
 
       - name: Upload Jar
         uses: actions/upload-artifact@v4
@@ -37,11 +37,24 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: compose-desktop-installer
-          path: composeApp/build/compose/binaries/main-release/deb/*.deb
+          path: composeApp/build/compose/binaries/main/deb/*.deb
 
-      - name: Upload Installer AppImage
+  build-rpm:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          dnf install -y git java-21-openjdk-devel rpm-build
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Build RPM
+        run: |
+          chmod +x gradlew
+          ./gradlew composeApp:packageDistributionForCurrentOS
+      - name: Upload RPM
         uses: actions/upload-artifact@v4
         with:
-          name: compose-desktop-installer
-          path: composeApp/build/compose/binaries/main-release/appimage/*.AppImage
-
+          name: compose-desktop-installer-rpm
+          path: composeApp/build/compose/binaries/main/rpm/*.rpm
