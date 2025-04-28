@@ -22,7 +22,7 @@ fun GlobalState.reduce(
     return when (intent) {
         is GlobalIntent.ShowLoading -> copy(isLoading = true)
         is GlobalIntent.HideLoading -> copy(isLoading = false)
-        is GlobalIntent.CloseApplication -> copy(isClosing = true)
+        is GlobalIntent.CloseApplication -> copy(isClosing = true, isClickable = false)
         is GlobalIntent.PermitsClick -> copy(isClickable = true)
         is GlobalIntent.DisableClick -> copy(isClickable = false)
     }
