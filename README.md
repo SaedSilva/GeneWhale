@@ -88,7 +88,7 @@ Alternatively, you can use the installer provided for your operating system.
 Marked tool is minimally functional and can be used for pan-genome analysis.
 The progress bar indicates the percentage of addition of the tool's parameters and functionalities.
 
-- [X] Panaroo ![progress](https://progress-bar.xyz/25/)
+- [X] Panaroo ![progress](https://progress-bar.xyz/30/)
 - [ ] Roary ![progress](https://progress-bar.xyz/0/)
 - [ ] Ppanggolin ![progress](https://progress-bar.xyz/0/)
 - [ ] Pirate ![progress](https://progress-bar.xyz/0/)
