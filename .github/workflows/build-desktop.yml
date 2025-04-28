@@ -73,3 +73,37 @@ jobs:
         with:
           name: compose-desktop-installer-msi
           path: composeApp/build/compose/binaries/main/msi/*.msi
+
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Grant execute permissions for gradlew
+        run: chmod +x gradlew
+
+      - name: Build Jar and Installer (MacOS)
+        run: |
+          ./gradlew composeApp:packageUberJarForCurrentOS
+          ./gradlew composeApp:packageDistributionForCurrentOS
+
+      - name: Upload Jar (MacOS)
+        uses: actions/upload-artifact@v4
+        with:
+          name: compose-desktop-jar-macos
+          path: composeApp/build/compose/jars/*.jar
+
+      - name: Upload Installer DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: compose-desktop-installer-dmg
+          path: composeApp/build/compose/binaries/main/dmg/*.dmg
+
