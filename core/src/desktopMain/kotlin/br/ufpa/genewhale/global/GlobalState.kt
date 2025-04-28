@@ -1,4 +1,4 @@
-package br.ufpa.genewhale.ui.states
+package br.ufpa.genewhale.global
 
 data class GlobalState(
     val isLoading: Boolean = false,

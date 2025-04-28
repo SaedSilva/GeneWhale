@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.ufpa.genewhale.textfield.SearchBar
+import br.ufpa.genewhale.theme.ThemeDefaults
 import br.ufpa.genewhale.ui.states.ProjectUiIntent
 import br.ufpa.genewhale.ui.states.ProjectUiState
-import br.ufpa.genewhale.ui.theme.ThemeDefaults
 
 @Composable
 fun ProjectScreen(

@@ -1,5 +1,6 @@
-package br.ufpa.genewhale.docker
+package br.ufpa.genewhale.services
 
+import br.ufpa.genewhale.global.GlobalService
 import br.ufpa.genewhale.utils.Docker.IDENTIFIER
 import br.ufpa.genewhale.utils.Docker.convertPathForDocker
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,7 +19,7 @@ import kotlinx.coroutines.withContext
  */
 class PanarooService(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) {
+) : GlobalService {
 
     private val _log = MutableSharedFlow<String>(100)
     val logs = _log.asSharedFlow()
@@ -95,7 +96,7 @@ class PanarooService(
     /**
      * Stops the currently running Panaroo process.
      */
-    suspend fun stop() = withContext(Dispatchers.IO) {
+    override suspend fun stop() = withContext(Dispatchers.IO) {
         _isRunning.emit(false)
         try {
             currentProcess?.destroy()

@@ -1,6 +1,6 @@
-package br.ufpa.genewhale.ui.states.tools
+package br.ufpa.genewhale.ui
 
-import br.ufpa.genewhale.config.params.PanarooParamsConfig
+import br.ufpa.genewhale.params.PanarooParamsConfig
 import br.ufpa.genewhale.utils.isValidFloat
 import br.ufpa.genewhale.utils.isValidInt
 import br.ufpa.genewhale.utils.toMB
@@ -192,6 +192,7 @@ fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
                 this
             }
         }
+
         is PanarooParamsIntent.HideRefindModeDropdown -> this.copy(showRefindModeDropdown = false)
         is PanarooParamsIntent.ShowRefindModeDropdown -> this.copy(showRefindModeDropdown = true)
 

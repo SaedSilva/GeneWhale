@@ -1,12 +1,11 @@
-package br.ufpa.genewhale.ui.viewmodels.tools
+package br.ufpa.genewhale.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.ufpa.genewhale.config.params.PanarooParamsConfig
-import br.ufpa.genewhale.docker.PanarooService
-import br.ufpa.genewhale.ui.states.GlobalEffect
-import br.ufpa.genewhale.ui.states.tools.*
-import br.ufpa.genewhale.ui.viewmodels.Global
+import br.ufpa.genewhale.global.Global
+import br.ufpa.genewhale.global.GlobalEffect
+import br.ufpa.genewhale.params.PanarooParamsConfig
+import br.ufpa.genewhale.services.PanarooService
 import br.ufpa.genewhale.utils.Config
 import br.ufpa.genewhale.utils.Desktop
 import br.ufpa.genewhale.utils.toMB

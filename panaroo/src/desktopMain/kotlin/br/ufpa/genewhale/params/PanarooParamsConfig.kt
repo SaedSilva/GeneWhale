@@ -1,8 +1,8 @@
-package br.ufpa.genewhale.config.params
+package br.ufpa.genewhale.params
 
-import br.ufpa.genewhale.ui.states.tools.CleanMode
-import br.ufpa.genewhale.ui.states.tools.PanarooParams
-import br.ufpa.genewhale.ui.states.tools.RefindMode
+import br.ufpa.genewhale.ui.CleanMode
+import br.ufpa.genewhale.ui.PanarooParams
+import br.ufpa.genewhale.ui.RefindMode
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,4 +1,4 @@
-package br.ufpa.genewhale.web
+package br.ufpa.genewhale.services
 
 import br.ufpa.genewhale.utils.Logger
 import kotlinx.coroutines.CoroutineDispatcher

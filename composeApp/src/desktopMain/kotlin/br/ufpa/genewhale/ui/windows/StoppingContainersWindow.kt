@@ -15,8 +15,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
-import br.ufpa.genewhale.ui.theme.Colors
-import br.ufpa.genewhale.ui.theme.GenomeTheme
+import br.ufpa.genewhale.theme.Colors
+import br.ufpa.genewhale.theme.GenomeTheme
 
 @Composable
 fun StoppingContainersWindow() {

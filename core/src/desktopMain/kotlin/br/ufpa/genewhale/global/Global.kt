@@ -1,20 +1,16 @@
-package br.ufpa.genewhale.ui.viewmodels
+package br.ufpa.genewhale.global
 
-import br.ufpa.genewhale.docker.PanarooService
-import br.ufpa.genewhale.ui.APP_VERSION
-import br.ufpa.genewhale.ui.states.GlobalEffect
-import br.ufpa.genewhale.ui.states.GlobalIntent
-import br.ufpa.genewhale.ui.states.GlobalState
-import br.ufpa.genewhale.ui.states.reduce
+import br.ufpa.genewhale.services.WebService
 import br.ufpa.genewhale.utils.Desktop
-import br.ufpa.genewhale.web.WebService
 import com.sun.management.OperatingSystemMXBean
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.lang.management.ManagementFactory
 
+const val APP_VERSION = "1.0.0"
+
 class Global(
-    private val panarooService: PanarooService,
+    private val service: List<GlobalService>,
     private val webService: WebService
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -55,8 +51,10 @@ class Global(
 
     fun stopAll() {
         scope.launch {
-            val panaroo = async { panarooService.stop() }
-            panaroo.await()
+            val stoppingJobs = service.map { service ->
+                async { service.stop() }
+            }
+            stoppingJobs.awaitAll()
             _uiEffect.emit(GlobalEffect.CloseApplication)
         }
     }

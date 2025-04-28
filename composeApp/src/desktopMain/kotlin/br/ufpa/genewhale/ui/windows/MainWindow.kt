@@ -7,9 +7,9 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.rememberWindowState
 import androidx.navigation.NavHostController
+import br.ufpa.genewhale.global.Global
+import br.ufpa.genewhale.global.GlobalIntent
 import br.ufpa.genewhale.ui.App
-import br.ufpa.genewhale.ui.states.GlobalIntent
-import br.ufpa.genewhale.ui.viewmodels.Global
 import org.jetbrains.compose.resources.painterResource
 import pangenome.composeapp.generated.resources.Res
 import pangenome.composeapp.generated.resources.genewhalegenewhaleicon

@@ -1,6 +1,5 @@
-package br.ufpa.genewhale.ui.screens.tools
+package br.ufpa.genewhale.ui
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.TooltipArea
 import androidx.compose.foundation.TooltipPlacement
@@ -28,10 +27,10 @@ import br.ufpa.genewhale.pickfiles.PickFolder
 import br.ufpa.genewhale.sliders.MemorySlider
 import br.ufpa.genewhale.sliders.ThreadsSlider
 import br.ufpa.genewhale.textfield.CustomTextField
+import br.ufpa.genewhale.theme.GenomeTheme
 import br.ufpa.genewhale.tooltips.MyTooltip
-import br.ufpa.genewhale.ui.states.tools.*
-import br.ufpa.genewhale.ui.theme.GenomeTheme
 import io.github.vinceglb.filekit.path
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
