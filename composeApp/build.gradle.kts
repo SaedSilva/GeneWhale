@@ -77,9 +77,7 @@ compose.desktop {
             targetFormats(
                 TargetFormat.Dmg,
                 TargetFormat.Msi,
-                TargetFormat.Exe,
-                TargetFormat.Deb,
-                TargetFormat.Rpm
+                TargetFormat.Deb
             )
             packageName = "GeneWhale"
             description = "GeneWhale complete tool for genomes analysis"
