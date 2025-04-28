@@ -48,6 +48,15 @@ class UtilsTests {
     }
 
     @Test
+    fun `test Long to Bytes`() {
+        val megabytes = 10L // 10 MB
+        Assert.assertEquals(10_485_760L, megabytes.toBytes())
+
+        val zeroMegabytes = 0L
+        Assert.assertEquals(0L, zeroMegabytes.toBytes())
+    }
+
+    @Test
     fun `test Float toMB`() {
         val maxMemory = 100L // 100 MB
         val percentage = 0.25f // 25%
