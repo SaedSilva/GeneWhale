@@ -15,6 +15,8 @@ kotlin {
 
         commonMain.dependencies {
             implementation(project(":components"))
+            implementation(project(":core"))
+            implementation(project(":panaroo"))
 
             implementation(libs.kotlinx.datetime)
 

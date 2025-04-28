@@ -1,9 +1,9 @@
-package br.ufpa.genewhale.docker
+package br.ufpa.genewhale.utils
 
 /**
  * DockerUtils object to handle docker functions
  */
-object DockerUtils {
+object Docker {
     const val IDENTIFIER = "PAPANGENOME"
 
     /**

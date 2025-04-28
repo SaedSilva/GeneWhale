@@ -1,7 +1,7 @@
 package br.ufpa.genewhale.docker
 
-import br.ufpa.genewhale.docker.DockerUtils.IDENTIFIER
-import br.ufpa.genewhale.docker.DockerUtils.convertPathForDocker
+import br.ufpa.genewhale.utils.Docker.IDENTIFIER
+import br.ufpa.genewhale.utils.Docker.convertPathForDocker
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

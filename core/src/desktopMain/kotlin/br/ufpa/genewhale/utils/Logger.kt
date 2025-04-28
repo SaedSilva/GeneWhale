@@ -1,6 +1,5 @@
 package br.ufpa.genewhale.utils
 
-import br.ufpa.genewhale.config.Config
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock

@@ -2,12 +2,12 @@ package br.ufpa.genewhale.ui.viewmodels.tools
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.ufpa.genewhale.config.Config
 import br.ufpa.genewhale.config.params.PanarooParamsConfig
 import br.ufpa.genewhale.docker.PanarooService
 import br.ufpa.genewhale.ui.states.GlobalEffect
 import br.ufpa.genewhale.ui.states.tools.*
 import br.ufpa.genewhale.ui.viewmodels.Global
+import br.ufpa.genewhale.utils.Config
 import br.ufpa.genewhale.utils.Desktop
 import br.ufpa.genewhale.utils.toMB
 import kotlinx.coroutines.flow.MutableStateFlow
