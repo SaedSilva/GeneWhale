@@ -1,9 +1,12 @@
-name: Build Compose Desktop App
+name: Build Desktop App
 
 on:
   push:
     branches:
       - master
+
+env:
+  APP_VERSION: "1.0.0"
 
 jobs:
   build-ubuntu:
@@ -30,13 +33,13 @@ jobs:
       - name: Upload Jar (Linux)
         uses: actions/upload-artifact@v4
         with:
-          name: compose-desktop-jar-linux
+          name: genewhale-jar-linux-${{ env.APP_VERSION }}
           path: composeApp/build/compose/jars/*.jar
 
       - name: Upload Installer DEB
         uses: actions/upload-artifact@v4
         with:
-          name: compose-desktop-installer-deb
+          name: genewhale-installer-deb-${{ env.APP_VERSION }}
           path: composeApp/build/compose/binaries/main/deb/*.deb
 
   build-windows:
@@ -65,13 +68,13 @@ jobs:
       - name: Upload Jar (Windows)
         uses: actions/upload-artifact@v4
         with:
-          name: compose-desktop-jar-windows
+          name: genewhale-jar-windows-${{ env.APP_VERSION }}
           path: composeApp/build/compose/jars/*.jar
 
       - name: Upload Installer MSI
         uses: actions/upload-artifact@v4
         with:
-          name: compose-desktop-installer-msi
+          name: genewhale-installer-msi-${{ env.APP_VERSION }}
           path: composeApp/build/compose/binaries/main/msi/*.msi
 
   build-macos:
@@ -98,12 +101,12 @@ jobs:
       - name: Upload Jar (MacOS)
         uses: actions/upload-artifact@v4
         with:
-          name: compose-desktop-jar-macos
+          name: genewhale-jar-macos-${{ env.APP_VERSION }}
           path: composeApp/build/compose/jars/*.jar
 
       - name: Upload Installer DMG
         uses: actions/upload-artifact@v4
         with:
-          name: compose-desktop-installer-dmg
+          name: genewhale-installer-dmg-${{ env.APP_VERSION }}
           path: composeApp/build/compose/binaries/main/dmg/*.dmg
 
