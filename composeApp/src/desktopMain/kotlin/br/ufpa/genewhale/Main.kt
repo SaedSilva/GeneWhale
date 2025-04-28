@@ -5,10 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.window.application
 import androidx.navigation.compose.rememberNavController
-import br.ufpa.genewhale.di.appModule
-import br.ufpa.genewhale.di.panarooModule
-import br.ufpa.genewhale.di.servicesModule
-import br.ufpa.genewhale.di.viewModelsModule
+import br.ufpa.genewhale.di.modules
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalEffect
 import br.ufpa.genewhale.ui.windows.MainWindow
@@ -20,14 +17,7 @@ import java.util.*
 fun main() = application {
     Locale.setDefault(Locale.US)
     KoinApplication(
-        application = {
-            modules(
-                appModule,
-                servicesModule,
-                viewModelsModule,
-                panarooModule
-            )
-        }
+        application = { modules(modules) }
     ) {
         val global: Global = koinInject()
         val state by global.uiState.collectAsState()
