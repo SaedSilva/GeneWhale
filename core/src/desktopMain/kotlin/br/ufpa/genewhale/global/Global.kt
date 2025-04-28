@@ -41,6 +41,14 @@ class Global(
                 _uiState.update { it.reduce(intent) }
                 stopAll()
             }
+
+            is GlobalIntent.DisableClick -> {
+                _uiState.update { it.reduce(intent) }
+            }
+
+            is GlobalIntent.PermitsClick -> {
+                _uiState.update { it.reduce(intent) }
+            }
         }
     }
 

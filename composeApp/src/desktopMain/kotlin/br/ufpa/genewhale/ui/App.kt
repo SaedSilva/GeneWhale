@@ -27,6 +27,7 @@ import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
+import java.awt.Window
 
 const val APP_VERSION = "1.0.0"
 
@@ -34,7 +35,8 @@ const val APP_VERSION = "1.0.0"
 @Preview
 fun App(
     navController: NavHostController,
-    global: Global
+    global: Global,
+    window: Window? = null
 ) {
     val snackBarState = remember { SnackbarHostState() }
 
@@ -88,6 +90,7 @@ fun App(
                     Panaroo(
                         modifier = Modifier.fillMaxSize(),
                         state = state,
+                        window = window,
                         configState = configState,
                         onNavigateBack = {
                             navController.popBackStack()

@@ -21,16 +21,19 @@ import br.ufpa.genewhale.theme.GenomeTheme
 import br.ufpa.genewhale.theme.ThemeDefaults
 import br.ufpa.genewhale.tooltips.MyTooltip
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
 import org.jetbrains.compose.resources.painterResource
 import pangenome.components.generated.resources.Res
 import pangenome.components.generated.resources.folder
+import java.awt.Window
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PickFolder(
     modifier: Modifier = Modifier,
     value: String,
+    window: Window? = null,
     onChangeValue: (String) -> Unit,
     onClickClear: () -> Unit,
     placeHolder: String,
@@ -38,7 +41,9 @@ fun PickFolder(
     onResult: (PlatformFile?) -> Unit = {},
     tooltip: String
 ) {
-    val launcher = rememberDirectoryPickerLauncher { file ->
+    val launcher = rememberDirectoryPickerLauncher(
+        dialogSettings = FileKitDialogSettings(window)
+    ) { file ->
         onResult(file)
     }
 

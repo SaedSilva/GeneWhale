@@ -26,14 +26,7 @@ class PanarooViewModel(
     val uiStateConfig = _uiStateConfig.asStateFlow()
 
     init {
-        runBlocking {
-            val panaroo = Config.load<PanarooParamsConfig>(Config.PANAROO_CONFIG_FILE)
-            panaroo?.let { data ->
-                _uiStateConfig.update { state ->
-                    PanarooParams.fromEntity(data, state)
-                }
-            }
-        }
+        loadConfig()
         viewModelScope.launch {
             service.logs.collect { output ->
                 _uiState.update { it.reduce(PanarooUiIntent.UpdateOutput(output)) }
@@ -53,6 +46,17 @@ class PanarooViewModel(
                         memorySlider = 1.0f / globalState.memoryBytes.toMB() * it.memory,
                         threadsSlider = 1.0f / globalState.threads * it.threads
                     )
+                }
+            }
+        }
+    }
+
+    private fun loadConfig() {
+        runBlocking {
+            val panaroo = Config.load<PanarooParamsConfig>(Config.PANAROO_CONFIG_FILE)
+            panaroo?.let { data ->
+                _uiStateConfig.update { state ->
+                    PanarooParams.fromEntity(data, state)
                 }
             }
         }
