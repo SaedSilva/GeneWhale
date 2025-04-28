@@ -28,13 +28,13 @@ jobs:
           ./gradlew composeApp:packageReleaseDistributionForCurrentOS
 
       - name: Upload Jar
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: compose-desktop-jar
           path: composeApp/build/compose/jars/*.jar
 
       - name: Upload Installer Deb
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: compose-desktop-installer
           path: composeApp/build/compose/binaries/main-release/deb/*.deb
