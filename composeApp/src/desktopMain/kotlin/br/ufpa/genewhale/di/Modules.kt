@@ -1,26 +1,39 @@
 package br.ufpa.genewhale.di
 
-import br.ufpa.genewhale.docker.PanarooService
-import br.ufpa.genewhale.ui.viewmodels.Global
+
+import br.ufpa.genewhale.global.Global
+import br.ufpa.genewhale.global.GlobalService
+import br.ufpa.genewhale.services.PanarooService
+import br.ufpa.genewhale.services.WebService
+import br.ufpa.genewhale.services.WebServiceJavaImpl
+import br.ufpa.genewhale.ui.PanarooViewModel
 import br.ufpa.genewhale.ui.viewmodels.HomeViewModel
 import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
-import br.ufpa.genewhale.ui.viewmodels.tools.PanarooViewModel
-import br.ufpa.genewhale.web.WebService
-import br.ufpa.genewhale.web.WebServiceJavaImpl
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
- val appModule = module {
-    single { Global(get(), get()) }
-    single { PanarooService() }
+private val appModule = module {
+    single { Global(listOf(get()), get()) }
+}
+private val servicesModule = module {
+    single<GlobalService> { get<PanarooService>() }
+    single<WebService> { WebServiceJavaImpl() }
 }
 
- val viewModelsModule = module {
+private val viewModelsModule = module {
     viewModelOf(::ProjectViewModel)
-    viewModelOf(::PanarooViewModel)
     viewModelOf(::HomeViewModel)
 }
 
- val webModules = module {
-    single <WebService>{ WebServiceJavaImpl() }
+private val panarooModule = module {
+    single { PanarooService() }
+    viewModel { PanarooViewModel(get(), get()) }
 }
+
+val modules = listOf(
+    appModule,
+    servicesModule,
+    viewModelsModule,
+    panarooModule
+)

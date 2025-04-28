@@ -7,18 +7,20 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.rememberWindowState
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import br.ufpa.genewhale.global.Global
+import br.ufpa.genewhale.global.GlobalIntent
 import br.ufpa.genewhale.ui.App
-import br.ufpa.genewhale.ui.states.GlobalIntent
-import br.ufpa.genewhale.ui.viewmodels.Global
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 import pangenome.composeapp.generated.resources.Res
 import pangenome.composeapp.generated.resources.genewhalegenewhaleicon
 import java.awt.Dimension
 
 @Composable
 fun MainWindow(
-    global: Global,
-    navController: NavHostController
+    global: Global = koinInject(),
+    navController: NavHostController = rememberNavController()
 ) {
     Window(
         onCloseRequest = {
@@ -31,9 +33,8 @@ fun MainWindow(
             if (it.key == Key.Escape) {
                 navController.navigateUp()
                 true
-            } else {
-                false
             }
+            false
         }
     ) {
         window.minimumSize = Dimension(1280, 720)

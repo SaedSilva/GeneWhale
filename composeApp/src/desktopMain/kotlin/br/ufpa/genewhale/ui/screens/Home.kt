@@ -13,11 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.ufpa.genewhale.ui.components.cards.ToolCard
-import br.ufpa.genewhale.ui.components.cards.Tools
+import br.ufpa.genewhale.cards.ToolCard
+import br.ufpa.genewhale.cards.Tools
+import br.ufpa.genewhale.theme.GenomeTheme
 import br.ufpa.genewhale.ui.states.HomeUIState
 import br.ufpa.genewhale.ui.states.HomeUiIntent
-import br.ufpa.genewhale.ui.theme.GenomeTheme
 import org.jetbrains.compose.resources.painterResource
 import pangenome.composeapp.generated.resources.GeneWhaleNoBg
 import pangenome.composeapp.generated.resources.Res
