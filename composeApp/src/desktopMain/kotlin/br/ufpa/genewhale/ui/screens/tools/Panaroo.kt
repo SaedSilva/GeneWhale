@@ -31,7 +31,6 @@ import br.ufpa.genewhale.ui.components.textfield.CustomTextField
 import br.ufpa.genewhale.ui.components.tooltips.MyTooltip
 import br.ufpa.genewhale.ui.states.tools.*
 import br.ufpa.genewhale.ui.theme.GenomeTheme
-import br.ufpa.genewhale.ui.theme.ThemeDefaults
 import io.github.vinceglb.filekit.path
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -206,7 +205,8 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                                             "moderate: " +
                                             "Requires moderate evidence (present in  at least 1% of genomes) to keep likely contaminant genes. Keeps genes that are refound more often than they were called originally.\n" +
                                             "sensitive: " +
-                                            "Does not delete any genes and only performes merge and refinding operations. Useful if rare plasmids are of interest as these are often hard to disguish from contamination. Results will likely include  higher number of spurious annotations."
+                                            "Does not delete any genes and only performes merge and refinding operations. Useful if rare plasmids are of interest as these are often hard to disguish from contamination.\n" +
+                                            "Results will likely include  higher number of spurious annotations."
                                 )
                             },
                             delayMillis = 100,
@@ -222,17 +222,11 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                     DropdownSelector(
                         modifier = Modifier.width(128.dp),
                         expanded = state.showCleaModeDropdown,
-                        onDismissRequest = {
-                            onIntent(PanarooParamsIntent.HideCleanModeDropdown)
-                        },
+                        onDismissRequest = { onIntent(PanarooParamsIntent.HideCleanModeDropdown) },
                         selectedOption = state.cleanMode,
                         options = CleanMode.entries,
-                        onClickOption = {
-                            onIntent(PanarooParamsIntent.ChangeCleanMode(it))
-                        },
-                        onClick = {
-                            onIntent(PanarooParamsIntent.ShowCleanModeDropdown)
-                        }
+                        onClickOption = { onIntent(PanarooParamsIntent.ChangeCleanMode(it)) },
+                        onClick = { onIntent(PanarooParamsIntent.ShowCleanModeDropdown) }
                     )
                 }
                 VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
@@ -280,11 +274,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                         )
                         Text("Merge paralogs")
                         TooltipArea(
-                            tooltip = {
-                                MyTooltip(
-                                    tooltip = "don't split paralogs"
-                                )
-                            },
+                            tooltip = { MyTooltip(tooltip = "don't split paralogs") },
                             delayMillis = 100,
                             tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
                         ) {
@@ -306,13 +296,9 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        Text("threshold")
+                        Text("Threshold")
                         TooltipArea(
-                            tooltip = {
-                                MyTooltip(
-                                    tooltip = "sequence identity threshold (default=0.98)"
-                                )
-                            },
+                            tooltip = { MyTooltip(tooltip = "sequence identity threshold (default=0.98)") },
                             delayMillis = 100,
                             tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
                         ) {
@@ -326,9 +312,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                     CustomTextField(
                         modifier = Modifier,
                         value = state.threshold,
-                        onChangeValue = {
-                            onIntent(PanarooParamsIntent.ChangeThreshold(it))
-                        }
+                        onChangeValue = { onIntent(PanarooParamsIntent.ChangeThreshold(it)) }
                     )
                 }
                 VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
@@ -339,13 +323,9 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        Text("family threshold")
+                        Text("Family threshold")
                         TooltipArea(
-                            tooltip = {
-                                MyTooltip(
-                                    tooltip = "protein family sequence identity threshold (default=0.7)"
-                                )
-                            },
+                            tooltip = { MyTooltip(tooltip = "protein family sequence identity threshold (default=0.7)") },
                             delayMillis = 100,
                             tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
                         ) {
@@ -359,9 +339,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                     CustomTextField(
                         modifier = Modifier,
                         value = state.familyThreshold,
-                        onChangeValue = {
-                            onIntent(PanarooParamsIntent.ChangeFamilyThreshold(it))
-                        }
+                        onChangeValue = { onIntent(PanarooParamsIntent.ChangeFamilyThreshold(it)) }
                     )
                 }
                 VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
@@ -372,13 +350,9 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        Text("LEN_DIF_PERCENT")
+                        Text("Len dif percent")
                         TooltipArea(
-                            tooltip = {
-                                MyTooltip(
-                                    tooltip = "length difference cutoff (default=0.98)"
-                                )
-                            },
+                            tooltip = { MyTooltip(tooltip = "length difference cutoff (default=0.98)") },
                             delayMillis = 100,
                             tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
                         ) {
@@ -392,9 +366,7 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                     CustomTextField(
                         modifier = Modifier,
                         value = state.lenDifPercent,
-                        onChangeValue = {
-                            onIntent(PanarooParamsIntent.ChangeLenDifPercent(it))
-                        }
+                        onChangeValue = { onIntent(PanarooParamsIntent.ChangeLenDifPercent(it)) }
                     )
                 }
                 VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
@@ -405,12 +377,10 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        Text("FAMILY_LEN_DIF_PERCENT")
+                        Text("Family len dif percent")
                         TooltipArea(
                             tooltip = {
-                                MyTooltip(
-                                    tooltip = "length difference cutoff at the gene family level (default=0.0)"
-                                )
+                                MyTooltip(tooltip = "length difference cutoff at the gene family level (default=0.0)")
                             },
                             delayMillis = 100,
                             tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
@@ -425,17 +395,113 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                     CustomTextField(
                         modifier = Modifier,
                         value = state.familyLenDifPercent,
-                        onChangeValue = {
-                            onIntent(PanarooParamsIntent.ChangeFamilyLenDifPercent(it))
-                        }
+                        onChangeValue = { onIntent(PanarooParamsIntent.ChangeFamilyLenDifPercent(it)) }
                     )
                 }
+                VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
 
-                //mergeParalogs
+                //searchRadius
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        Text("Search radius")
+                        TooltipArea(
+                            tooltip = {
+                                MyTooltip(
+                                    tooltip = "the distance in nucleotides surronding the neighbour \n" +
+                                            "of an accessory gene in which to search for it"
+                                )
+                            },
+                            delayMillis = 100,
+                            tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+                    CustomTextField(
+                        modifier = Modifier,
+                        value = state.searchRadius,
+                        onChangeValue = { onIntent(PanarooParamsIntent.ChangeSearchRadius(it)) }
+                    )
+                }
+                VerticalDivider(modifier = Modifier.height(56.dp).padding(end = 4.dp, start = 4.dp))
 
-
+                //refind prop match
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        Text("Refind prop match")
+                        TooltipArea(
+                            tooltip = {
+                                MyTooltip(
+                                    tooltip = "the proportion of an accessory gene that must be found\n" +
+                                            "in order to consider it a match"
+                                )
+                            },
+                            delayMillis = 100,
+                            tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+                    CustomTextField(
+                        modifier = Modifier,
+                        value = state.refindPropMatch,
+                        onChangeValue = { onIntent(PanarooParamsIntent.ChangeRefindPropMatch(it)) }
+                    )
+                }
             }
             HorizontalDivider()
+
+            Row {
+                // refindMode
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Refind mode")
+                        TooltipArea(
+                            tooltip = {
+                                MyTooltip(
+                                    tooltip = "The stringency mode at which to re-find genes.\n" +
+                                            "default: Will re-find similar gene sequences. Allows for premature stop codons and incorrect lengths to account for misassemblies.\n" +
+                                            "strict: Prevents fragmented, misassembled, or potential pseudogene sequences from being re-found.\n" +
+                                            "off: Turns off all re-finding steps."
+                                )
+                            },
+                            delayMillis = 100,
+                            tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+                    DropdownSelector(
+                        modifier = Modifier.width(128.dp),
+                        expanded = state.showRefindModeDropdown,
+                        onDismissRequest = { onIntent(PanarooParamsIntent.HideRefindModeDropdown) },
+                        selectedOption = state.refindMode,
+                        options = RefindMode.entries,
+                        onClickOption = { onIntent(PanarooParamsIntent.ChangeRefindMode(it)) },
+                        onClick = { onIntent(PanarooParamsIntent.ShowRefindModeDropdown) }
+                    )
+                }
+            }
         }
         MyButton(
             modifier = Modifier.height(32.dp).align(Alignment.BottomEnd),

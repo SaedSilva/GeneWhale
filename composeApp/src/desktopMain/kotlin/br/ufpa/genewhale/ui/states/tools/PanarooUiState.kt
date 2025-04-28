@@ -2,9 +2,9 @@ package br.ufpa.genewhale.ui.states.tools
 
 import br.ufpa.genewhale.config.params.PanarooParamsConfig
 import br.ufpa.genewhale.utils.isValidFloat
+import br.ufpa.genewhale.utils.isValidInt
 import br.ufpa.genewhale.utils.toMB
 import br.ufpa.genewhale.utils.toThreads
-import java.util.*
 
 data class PanarooUiState(
     val inputFolder: String = "",
@@ -58,19 +58,27 @@ data class PanarooParams(
     val lenDifPercent: String = "0.98", //Float
     val familyLenDifPercent: String = "0.0", //Float
     val mergeParalogs: Boolean = false,
+
+    val searchRadius: String = "0", //Int
+    val refindPropMatch: String = "0.0", //Float
+    val showRefindModeDropdown: Boolean = false,
+    val refindMode: RefindMode = RefindMode.NONE,
 ) {
     companion object {
         fun fromEntity(entity: PanarooParamsConfig, state: PanarooParams): PanarooParams {
             return state.copy(
                 memory = entity.memory,
                 threads = entity.threads,
-                cleanMode = CleanMode.valueOf(entity.cleanMode?.uppercase(Locale.US) ?: "NONE"),
+                cleanMode = CleanMode.valueOf(entity.cleanMode?.uppercase() ?: "NONE"),
                 removeInvalidGenes = entity.removeInvalidGenes,
                 threshold = entity.threshold.toString(),
                 familyThreshold = entity.familyThreshold.toString(),
                 lenDifPercent = entity.lenDifPercent.toString(),
                 familyLenDifPercent = entity.familyLenDifPercent.toString(),
                 mergeParalogs = entity.mergeParalogs,
+                searchRadius = entity.searchRadius?.toString() ?: "",
+                refindPropMatch = entity.refindPropMatch?.toString() ?: "",
+                refindMode = RefindMode.valueOf(entity.refindMode?.uppercase() ?: "NONE"),
             )
         }
     }
@@ -94,6 +102,12 @@ sealed class PanarooParamsIntent {
     data class ChangeLenDifPercent(val threshold: String) : PanarooParamsIntent()
     data class ChangeFamilyLenDifPercent(val threshold: String) : PanarooParamsIntent()
     data class SetMergeParalogs(val merge: Boolean) : PanarooParamsIntent()
+
+    data class ChangeSearchRadius(val searchRadius: String) : PanarooParamsIntent()
+    data class ChangeRefindPropMatch(val refindPropMatch: String) : PanarooParamsIntent()
+    data object ShowRefindModeDropdown : PanarooParamsIntent()
+    data object HideRefindModeDropdown : PanarooParamsIntent()
+    data class ChangeRefindMode(val refindMode: RefindMode) : PanarooParamsIntent()
 }
 
 fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
@@ -162,32 +176,44 @@ fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
         }
 
         is PanarooParamsIntent.SetMergeParalogs -> this.copy(mergeParalogs = intent.merge)
+
+        is PanarooParamsIntent.ChangeSearchRadius -> {
+            if (intent.searchRadius.isEmpty() || intent.searchRadius.isValidInt()) {
+                this.copy(searchRadius = intent.searchRadius)
+            } else {
+                this
+            }
+        }
+
+        is PanarooParamsIntent.ChangeRefindPropMatch -> {
+            if (intent.refindPropMatch.isEmpty() || intent.refindPropMatch.isValidFloat()) {
+                this.copy(refindPropMatch = intent.refindPropMatch)
+            } else {
+                this
+            }
+        }
+        is PanarooParamsIntent.HideRefindModeDropdown -> this.copy(showRefindModeDropdown = false)
+        is PanarooParamsIntent.ShowRefindModeDropdown -> this.copy(showRefindModeDropdown = true)
+
+        is PanarooParamsIntent.ChangeRefindMode -> this.copy(refindMode = intent.refindMode)
     }
 }
 
-enum class CleanMode {
-    NONE,
-    STRICT,
-    MODERATE,
-    SENSITIVE;
+enum class CleanMode(val value: String) {
+    NONE("none"),
+    STRICT("strict"),
+    MODERATE("moderate"),
+    SENSITIVE("sensitive");
 
-    override fun toString(): String {
-        return when (this) {
-            NONE -> "none"
-            STRICT -> "strict"
-            MODERATE -> "moderate"
-            SENSITIVE -> "sensitive"
-        }
-    }
+    override fun toString() = value.lowercase()
+}
 
-    fun fromString(value: String): CleanMode {
-        return when (value) {
-            "none" -> NONE
-            "strict" -> STRICT
-            "moderate" -> MODERATE
-            "sensitive" -> SENSITIVE
-            else -> NONE
-        }
-    }
+enum class RefindMode(val value: String) {
+    NONE("none"),
+    DEFAULT("default"),
+    STRICT("strict"),
+    OFF("off");
+
+    override fun toString() = value.lowercase()
 }
 

@@ -35,8 +35,6 @@ class PanarooViewModel(
                 }
             }
         }
-
-
         viewModelScope.launch {
             service.logs.collect { output ->
                 _uiState.update { it.reduce(PanarooUiIntent.UpdateOutput(output)) }
@@ -159,6 +157,29 @@ class PanarooViewModel(
         if (config.familyThreshold.isNotBlank() && config.familyThreshold != original.familyThreshold) {
             params.add("--family_threshold")
             params.add(config.familyThreshold)
+        }
+        if (config.lenDifPercent.isNotBlank() && config.lenDifPercent != original.lenDifPercent) {
+            params.add("--len_dif_percent")
+            params.add(config.lenDifPercent)
+        }
+        if (config.familyLenDifPercent.isNotBlank() && config.familyLenDifPercent != original.familyLenDifPercent) {
+            params.add("--family_len_dif_percent")
+            params.add(config.familyLenDifPercent)
+        }
+        if (config.mergeParalogs) {
+            params.add("--merge_paralogs")
+        }
+        if (config.searchRadius.isNotBlank() && config.searchRadius != original.searchRadius) {
+            params.add("--search_radius")
+            params.add(config.searchRadius)
+        }
+        if (config.refindPropMatch.isNotBlank() && config.refindPropMatch != original.refindPropMatch) {
+            params.add("--refind_prop_match")
+            params.add(config.refindPropMatch)
+        }
+        if (config.refindMode != RefindMode.NONE) {
+            params.add("--refind_mode")
+            params.add(config.refindMode.toString())
         }
 
         return params
