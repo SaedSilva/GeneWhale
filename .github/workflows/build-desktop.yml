@@ -1,0 +1,47 @@
+name: Build Compose Desktop App
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  builds:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Grant execute permissions for gradlew
+        run: chmod +x gradlew
+
+      - name: Build Jar and Installer
+        run: |
+          ./gradlew composeApp:packageReleaseUberJarForCurrentOS
+          ./gradlew composeApp:packageReleaseDistributionForCurrentOS
+
+      - name: Upload Jar
+        uses: actions/upload-artifact@v3
+        with:
+          name: compose-desktop-jar
+          path: composeApp/build/compose/jars/*.jar
+
+      - name: Upload Installer Deb
+        uses: actions/upload-artifact@v3
+        with:
+          name: compose-desktop-installer
+          path: composeApp/build/compose/binaries/main-release/deb/*.deb
+
+      - name: Upload Installer AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: compose-desktop-installer
+          path: composeApp/build/compose/binaries/main-release/appimage/*.AppImage
+

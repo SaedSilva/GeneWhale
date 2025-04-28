@@ -9,11 +9,11 @@ plugins {
 
 kotlin {
     jvm("desktop")
-    
+
     sourceSets {
 
         val desktopMain by getting
-        
+
         commonMain.dependencies {
             implementation(libs.kotlinx.datetime)
 
@@ -74,7 +74,13 @@ compose.desktop {
 
             includeAllModules = true
 
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm)
+            targetFormats(
+                TargetFormat.Dmg,
+                TargetFormat.Msi,
+                TargetFormat.Exe,
+                TargetFormat.Deb,
+                TargetFormat.Rpm
+            )
             packageName = "GeneWhale"
             description = "GeneWhale complete tool for genomes analysis"
             copyright = "© 2025 Saed Silva Sousa. All rights reserved."
