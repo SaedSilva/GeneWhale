@@ -102,7 +102,6 @@ fun Panaroo(
             onResult = { it?.let { onIntent(PanarooUiIntent.ChangeOutputFolder(it.path)) } }
         )
 
-
         MyOutlinedButton(
             modifier = Modifier.height(32.dp),
             onClick = {

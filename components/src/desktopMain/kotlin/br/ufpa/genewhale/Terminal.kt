@@ -34,7 +34,6 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
         modifier = modifier
             .clip(ThemeDefaults.ButtonShape)
             .background(Color.Black.copy(0.8f))
-            .border(4.dp, MaterialTheme.colorScheme.outline)
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Text(
@@ -57,7 +56,6 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
                     .pointerHoverIcon(PointerIcon.Hand)
                     .align(Alignment.CenterEnd)
                     .fillMaxHeight()
-                    .shadow(4.dp)
                     .padding(8.dp),
                 style = LocalScrollbarStyle.current.copy(
                     hoverDurationMillis = 100,
@@ -75,6 +73,7 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
 
 @Composable
 fun TerminalLine(modifier: Modifier, text: String) {
+    val text = if (text.isNotBlank()) "> $text" else ""
     Text(
         text = text,
         color = Color.White,
