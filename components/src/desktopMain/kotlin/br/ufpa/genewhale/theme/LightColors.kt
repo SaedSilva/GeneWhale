@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 
-object Colors {
+object LightColors {
     val primary: Color = Color(0xFF00688F)
     val inversePrimary: Color = Color(0xFF78d7fa)
     val secondary: Color = Color(0xFF668890)
@@ -16,13 +16,13 @@ object Colors {
     val background: Color = Color(0xFFF0F0F0)
 }
 
-val MyColorScheme: ColorScheme
+val MyLightColorScheme: ColorScheme
     @Composable @ReadOnlyComposable get() = MaterialTheme.colorScheme.copy(
-        primary = Colors.primary,
-        inversePrimary = Colors.inversePrimary,
-        secondary = Colors.secondary,
-        secondaryContainer = Colors.secondaryContainer,
-        surface = Colors.surface,
-        surfaceContainer = Colors.surfaceContainer,
-        background = Colors.background,
+        primary = LightColors.primary,
+        inversePrimary = LightColors.inversePrimary,
+        secondary = LightColors.secondary,
+        secondaryContainer = LightColors.secondaryContainer,
+        surface = LightColors.surface,
+        surfaceContainer = LightColors.surfaceContainer,
+        background = LightColors.background,
     )

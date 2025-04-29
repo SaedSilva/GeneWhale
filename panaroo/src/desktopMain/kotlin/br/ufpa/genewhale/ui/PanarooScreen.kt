@@ -85,7 +85,7 @@ fun Panaroo(
             onChangeValue = { onIntent(PanarooUiIntent.ChangeInputFolder(it)) },
             onClickClear = { onIntent(PanarooUiIntent.ClearInputFolder) },
             tooltip = "Select gff input folder with files",
-            placeHolder = "Select input...",
+            placeHolder = "Input folder...",
             onClickButton = { },
             onResult = { it?.let { onIntent(PanarooUiIntent.ChangeInputFolder(it.path)) } }
         )
@@ -97,7 +97,7 @@ fun Panaroo(
             onChangeValue = { onIntent(PanarooUiIntent.ChangeOutputFolder(it)) },
             onClickClear = { onIntent(PanarooUiIntent.ClearOutputFolder) },
             tooltip = "Select output folder",
-            placeHolder = "Select output...",
+            placeHolder = "Output folder...",
             onClickButton = { },
             onResult = { it?.let { onIntent(PanarooUiIntent.ChangeOutputFolder(it.path)) } }
         )
@@ -196,7 +196,8 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                 //Clean Mode
                 Column {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Clean mode")
                         TooltipArea(
@@ -472,7 +473,8 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                 // refindMode
                 Column {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Refind mode")
                         TooltipArea(

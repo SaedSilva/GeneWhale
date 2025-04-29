@@ -15,7 +15,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
-import br.ufpa.genewhale.theme.Colors
+import br.ufpa.genewhale.theme.LightColors
 import br.ufpa.genewhale.theme.GenomeTheme
 
 @Composable
@@ -32,7 +32,7 @@ fun StoppingContainersWindow() {
         )
     ) {
         GenomeTheme {
-            Surface(modifier = Modifier.fillMaxSize(), color = Colors.background.copy(0.9f)) {
+            Surface(modifier = Modifier.fillMaxSize(), color = LightColors.background.copy(0.9f)) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally

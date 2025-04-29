@@ -9,14 +9,21 @@ import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.PointerEvent
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.onPointerEvent
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.genewhale.clickableWithHoverIcon
 import br.ufpa.genewhale.theme.GenomeTheme
 import br.ufpa.genewhale.theme.ThemeDefaults
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun <T> DropdownSelector(
     modifier: Modifier = Modifier,
@@ -46,7 +53,11 @@ fun <T> DropdownSelector(
             Column {
                 Text(selectedOption.toString(), fontSize = 12.sp, lineHeight = 12.sp)
                 //TODO made this a custom component
-                DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = onDismissRequest,
+                    modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
+                ) {
                     options.forEachIndexed { index, value ->
                         DropdownMenuItem(
                             text = { Text(value.toString()) },
