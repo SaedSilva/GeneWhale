@@ -181,7 +181,7 @@ class PanarooViewModel(
             params.add(config.refindPropMatch)
         }
         if (config.refindMode != RefindMode.NONE) {
-            params.add("--refind_mode")
+            params.add("--refind-mode")
             params.add(config.refindMode.toString())
         }
 

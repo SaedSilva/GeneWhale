@@ -12,7 +12,7 @@ object LightColors {
     val inversePrimary: Color = Color(0xFF78d7fa)
     val secondary: Color = Color(0xFF668890)
     val secondaryContainer: Color = Color(0xFFBBBBBB)
-    val surface: Color = Color(0xFFF0F0F0)
+    val surface: Color = Color(0xFFFFFFFF)
     val surfaceContainer: Color = Color(0xFFFFFFFF)
     val background: Color = Color(0xFFF0F0F0)
 }
