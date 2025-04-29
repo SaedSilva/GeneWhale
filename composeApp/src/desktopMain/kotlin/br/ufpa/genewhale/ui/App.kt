@@ -29,8 +29,6 @@ import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import java.awt.Window
 
-const val APP_VERSION = "1.0.0"
-
 @Composable
 @Preview
 fun App(
@@ -48,7 +46,12 @@ fun App(
     GenomeTheme {
         Scaffold(
             snackbarHost = {
-                SnackbarHost(snackBarState, modifier = Modifier.widthIn(min = 200.dp, max = 350.dp).height(100.dp))
+                SnackbarHost(
+                    hostState = snackBarState,
+                    modifier = Modifier
+                        .widthIn(min = 200.dp, max = 350.dp)
+                        .height(100.dp)
+                )
             }
         ) { padding ->
             NavHost(
