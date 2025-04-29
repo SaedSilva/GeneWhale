@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.net.HttpURLConnection
 import java.net.URI
+import java.net.URL
 
 class WebServiceJavaImpl(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -18,10 +19,11 @@ class WebServiceJavaImpl(
     override suspend fun getLatestVersion(): String? {
         return withContext(dispatcher) {
             try {
-                val url = URI(GITHUB_API_URL).toURL()
-                val conn = url.openConnection() as HttpURLConnection
-                conn.requestMethod = "GET"
-                val value = conn.inputStream.bufferedReader().use { it.readText() }
+                val url = urlFromString(GITHUB_API_URL)
+                    ?: throw IllegalArgumentException("This url is not valid: $GITHUB_API_URL")
+                val conn = url.openHttpURLConnection()
+                conn.setToGETRequestMethod()
+                val value = conn.receiveValue()
                 val response = json.decodeFromString<GithubResponse>(value)
                 response.name
             } catch (e: Exception) {
@@ -34,6 +36,11 @@ class WebServiceJavaImpl(
     companion object {
         private const val GITHUB_API_URL = "https://api.github.com/repos/saedsilva/genewhale/releases/latest"
     }
+
+    private fun urlFromString(url: String): URL? = URI(url).toURL()
+    private fun HttpURLConnection.setToGETRequestMethod() = { this.requestMethod = "GET" }
+    private fun HttpURLConnection.receiveValue() = this.inputStream.bufferedReader().use { it.readText() }
+    private fun URL.openHttpURLConnection() = this.openConnection() as HttpURLConnection
 }
 
 @Serializable
