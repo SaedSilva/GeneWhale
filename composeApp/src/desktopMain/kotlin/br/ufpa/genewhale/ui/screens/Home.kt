@@ -2,21 +2,15 @@ package br.ufpa.genewhale.ui.screens
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,8 +20,8 @@ import br.ufpa.genewhale.theme.GenomeTheme
 import br.ufpa.genewhale.ui.states.HomeUIState
 import br.ufpa.genewhale.ui.states.HomeUiIntent
 import org.jetbrains.compose.resources.painterResource
-import pangenome.composeapp.generated.resources.genewhalegenewhaleicon
 import pangenome.composeapp.generated.resources.Res
+import pangenome.composeapp.generated.resources.genewhalegenewhaleicon
 
 @Composable
 fun HomeScreen(
@@ -41,11 +35,13 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-            OutlinedCard {
-        Column(
-            modifier = Modifier.widthIn(max = 1072.dp).padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        OutlinedCard {
+            Column(
+                modifier = Modifier
+                    .widthIn(max = 1072.dp)
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Image(
                     painter = painterResource(Res.drawable.genewhalegenewhaleicon),
                     contentDescription = null,
@@ -55,11 +51,14 @@ fun HomeScreen(
                     text = "GeneWhale is an integrated bioinformatics tool that combines multiple pangenome analysis software into a unified platform. It simplifies and automates complex workflows by running all analyses within a pre-configured Docker environment, ensuring reproducibility, portability, and ease of use across different systems.",
                     modifier = Modifier,
                     textAlign = TextAlign.Justify,
-                    fontSize = 22.sp,
-                    lineHeight = 28.sp,
+                    fontSize = 20.sp,
+                    lineHeight = 26.sp,
                 )
             }
         }
+
+        Text("Tools", fontSize = 32.sp, fontWeight = FontWeight.Bold)
+
         LazyVerticalGrid(
             modifier = Modifier.widthIn(max = 1072.dp),
             columns = GridCells.FixedSize(256.dp),
@@ -69,12 +68,11 @@ fun HomeScreen(
             item {
                 ToolCard(
                     tool = Tools.Panaroo,
-                    onClick = {
-                        onNavigateToPanarooScreen()
-                    }
+                    onClick = { onNavigateToPanarooScreen() }
                 )
             }
-            item {
+            //TODO add the rest of the tools
+            /*item {
                 ToolCard(
                     tool = Tools.Peppan,
                     onClick = {
@@ -118,7 +116,7 @@ fun HomeScreen(
                     },
                     enabled = false
                 )
-            }
+            }*/
         }
     }
 }

@@ -52,7 +52,6 @@ fun <T> DropdownSelector(
         ) {
             Column {
                 Text(selectedOption.toString(), fontSize = 12.sp, lineHeight = 12.sp)
-                //TODO made this a custom component
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = onDismissRequest,

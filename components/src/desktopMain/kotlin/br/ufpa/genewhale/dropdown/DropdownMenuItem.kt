@@ -85,7 +85,6 @@ internal fun DropdownMenuItemContent(
                 .padding(contentPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // TODO(b/271818892): Align menu list item style with general list item style.
         ProvideTextStyle(MaterialTheme.typography.labelLarge) {
             if (leadingIcon != null) {
                 CompositionLocalProvider(

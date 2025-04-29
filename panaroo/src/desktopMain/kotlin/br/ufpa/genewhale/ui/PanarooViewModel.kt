@@ -69,9 +69,9 @@ class PanarooViewModel(
             is PanarooUiIntent.ChangeOutputFolder -> changeOutputFolder(intent)
             is PanarooUiIntent.ClearOutputFolder -> clearOutputFolder(intent)
             is PanarooUiIntent.ClearOutput -> clearOutput(intent)
-            is PanarooUiIntent.RunPanaroo -> runPanaroo(intent)
+            is PanarooUiIntent.RunPanaroo -> runPanaroo()
             is PanarooUiIntent.UpdateOutput -> updateOutput(intent)
-            is PanarooUiIntent.CloseScreen -> closeScreen(intent)
+            is PanarooUiIntent.CloseScreen -> closeScreen()
             is PanarooUiIntent.OpenDocs -> openDocs()
         }
     }
@@ -97,7 +97,7 @@ class PanarooViewModel(
         _uiStateConfig.update { it.reduce(intent) }
     }
 
-    private fun closeScreen(intent: PanarooUiIntent.CloseScreen) {
+    private fun closeScreen() {
         viewModelScope.launch {
             global.job?.cancel()
             global.job = null
@@ -108,7 +108,7 @@ class PanarooViewModel(
         _uiState.update { it.reduce(intent) }
     }
 
-    private fun runPanaroo(intent: PanarooUiIntent.RunPanaroo) {
+    private fun runPanaroo() {
         viewModelScope.launch {
             service.basicUsage(
                 input = _uiState.value.inputFolder,
@@ -187,5 +187,4 @@ class PanarooViewModel(
 
         return params
     }
-
 }
