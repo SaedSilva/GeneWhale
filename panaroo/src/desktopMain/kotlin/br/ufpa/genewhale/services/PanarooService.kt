@@ -1,6 +1,6 @@
 package br.ufpa.genewhale.services
 
-import br.ufpa.genewhale.global.GlobalService
+import br.ufpa.genewhale.global.DockerService
 import br.ufpa.genewhale.utils.Docker.IDENTIFIER
 import br.ufpa.genewhale.utils.Docker.convertPathForDocker
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,14 +19,14 @@ import kotlinx.coroutines.withContext
  */
 class PanarooService(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : GlobalService {
+) : DockerService {
 
     private val _log = MutableSharedFlow<String>(100)
-    val logs = _log.asSharedFlow()
+    override val logs = _log.asSharedFlow()
     private val _isRunning = MutableStateFlow(false)
-    val isRunning = _isRunning.asStateFlow()
+    override val isRunning = _isRunning.asStateFlow()
 
-    private var currentProcess: Process? = null
+    override var currentProcess: Process? = null
 
     /**
      * Basic usage of the Panaroo tool.
@@ -119,7 +119,7 @@ class PanarooService(
     /**
      * Removes the Panaroo Docker container.
      */
-    suspend fun remove() = withContext(Dispatchers.IO) {
+    override suspend fun remove() = withContext(Dispatchers.IO) {
         try {
             val command = listOf("docker", "rm", "${IDENTIFIER}_panaroo")
             val process = ProcessBuilder(command).start()

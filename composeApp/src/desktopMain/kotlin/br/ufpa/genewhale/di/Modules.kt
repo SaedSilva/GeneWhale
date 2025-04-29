@@ -1,7 +1,7 @@
 package br.ufpa.genewhale.di
 
 import br.ufpa.genewhale.global.Global
-import br.ufpa.genewhale.global.GlobalService
+import br.ufpa.genewhale.global.DockerService
 import br.ufpa.genewhale.services.PanarooService
 import br.ufpa.genewhale.services.WebService
 import br.ufpa.genewhale.services.WebServiceJavaImpl
@@ -16,7 +16,7 @@ private val appModule = module {
     single { Global(listOf(get<PanarooService>()), get()) }
 }
 private val servicesModule = module {
-    single<GlobalService> { get<PanarooService>() }
+    single<DockerService> { get<PanarooService>() }
     single<WebService> { WebServiceJavaImpl() }
 }
 
