@@ -130,7 +130,7 @@ fun PickFolder(
         }
 
         bottomText?.let {
-            Text(it, color = MaterialTheme.colorScheme.inverseSurface)
+            Text(it, color = LightColors.iconColor)
         }
     }
 }
