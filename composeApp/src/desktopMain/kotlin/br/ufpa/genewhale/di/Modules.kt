@@ -1,7 +1,7 @@
 package br.ufpa.genewhale.di
 
 import br.ufpa.genewhale.global.Global
-import br.ufpa.genewhale.global.DockerService
+import br.ufpa.genewhale.services.DockerService
 import br.ufpa.genewhale.services.PanarooService
 import br.ufpa.genewhale.services.WebService
 import br.ufpa.genewhale.services.WebServiceJavaImpl

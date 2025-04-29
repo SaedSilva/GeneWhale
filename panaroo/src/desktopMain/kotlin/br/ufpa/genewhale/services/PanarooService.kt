@@ -1,6 +1,5 @@
 package br.ufpa.genewhale.services
 
-import br.ufpa.genewhale.global.DockerService
 import br.ufpa.genewhale.utils.Docker.IDENTIFIER
 import br.ufpa.genewhale.utils.Docker.convertPathForDocker
 import kotlinx.coroutines.CoroutineDispatcher
@@ -35,11 +34,24 @@ class PanarooService(
      * @param memory Optional memory limit in MB for the Docker container.
      * @param parameters Additional parameters for the Panaroo command.
      */
-    suspend fun basicUsage(
+    override suspend fun <T : Enum<T>> start(
         input: String,
         output: String,
-        memory: Long? = null,
-        parameters: List<String> = emptyList()
+        memory: Long?,
+        parameters: List<String>,
+        type: T
+    ) {
+        when (type) {
+            Panaroo.BasicUsage -> basicUsage(input, output, parameters, memory)
+            else -> throw IllegalArgumentException("Unsupported Panaroo type: $type")
+        }
+    }
+
+    private suspend fun basicUsage(
+        input: String,
+        output: String,
+        parameters: List<String>,
+        memory: Long?
     ) {
         if (currentProcess?.isAlive != true) {
             withContext(dispatcher) {

@@ -1,5 +1,6 @@
 package br.ufpa.genewhale.global
 
+import br.ufpa.genewhale.services.DockerService
 import br.ufpa.genewhale.services.WebService
 import br.ufpa.genewhale.utils.Desktop
 import com.sun.management.OperatingSystemMXBean

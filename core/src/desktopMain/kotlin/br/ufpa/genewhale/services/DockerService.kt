@@ -1,4 +1,4 @@
-package br.ufpa.genewhale.global
+package br.ufpa.genewhale.services
 
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +21,15 @@ interface DockerService {
      * The current process of the Docker service.
      */
     var currentProcess: Process?
+
+
+    suspend fun <T : Enum<T>> start(
+        input: String,
+        output: String,
+        memory: Long? = null,
+        parameters: List<String> = emptyList(),
+        type: T
+    )
 
     /**
      * remove the Docker container.

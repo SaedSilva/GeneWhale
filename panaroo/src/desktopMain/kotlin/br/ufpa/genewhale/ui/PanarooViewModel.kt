@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalEffect
 import br.ufpa.genewhale.params.PanarooParamsConfig
+import br.ufpa.genewhale.services.Panaroo
 import br.ufpa.genewhale.services.PanarooService
 import br.ufpa.genewhale.utils.Config
 import br.ufpa.genewhale.utils.Desktop
@@ -110,11 +111,12 @@ class PanarooViewModel(
 
     private fun runPanaroo() {
         viewModelScope.launch {
-            service.basicUsage(
+            service.start(
                 input = _uiState.value.inputFolder,
                 output = _uiState.value.outputFolder,
                 memory = if (_uiStateConfig.value.memory > 0L) _uiStateConfig.value.memory else null,
-                parameters = createParams(_uiStateConfig.value)
+                parameters = createParams(_uiStateConfig.value),
+                type = Panaroo.BasicUsage
             )
         }
     }
