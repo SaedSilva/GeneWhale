@@ -14,6 +14,7 @@ object LightColors {
     val secondaryContainer: Color = Color(0xFFBBBBBB)
     val surface: Color = Color(0xFFFFFFFF)
     val surfaceContainer: Color = Color(0xFFFFFFFF)
+    val surfaceContainerLow: Color = Color(0xFFf5f5f5)
     val background: Color = Color(0xFFF0F0F0)
     val outlineVariant: Color = Color(0xFFd1d5db)
     val iconColor: Color = Color(0xFF4b5563)
@@ -28,6 +29,7 @@ val MyLightColorScheme: ColorScheme
         secondaryContainer = LightColors.secondaryContainer,
         surface = LightColors.surface,
         surfaceContainer = LightColors.surfaceContainer,
+        surfaceContainerLow = LightColors.surfaceContainerLow,
         background = LightColors.background,
         outlineVariant = LightColors.outlineVariant
     )

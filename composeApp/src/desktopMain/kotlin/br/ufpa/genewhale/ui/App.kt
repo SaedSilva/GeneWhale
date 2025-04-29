@@ -57,7 +57,7 @@ fun App(
             NavHost(
                 navController = navController,
                 startDestination = Route.Home,
-                modifier = Modifier.padding(padding).padding(16.dp),
+                modifier = Modifier.padding(padding),
                 enterTransition = enterTransition(),
                 popEnterTransition = popEnterTransition(),
                 exitTransition = exitTransition(),
@@ -94,13 +94,10 @@ fun App(
                         modifier = Modifier.fillMaxSize(),
                         state = state,
                         window = window,
-                        configState = configState,
                         onNavigateBack = {
                             navController.popBackStack()
                         },
-                        onConfigIntent = {
-                            viewModel.handleConfigIntent(it)
-                        }
+                        onNavigateToConfigure = {},
                     ) {
                         viewModel.handleIntent(it)
                     }

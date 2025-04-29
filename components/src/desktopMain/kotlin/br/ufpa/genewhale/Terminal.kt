@@ -35,7 +35,7 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
             .clip(ThemeDefaults.ButtonShape)
             .background(Color.Black.copy(0.8f))
     ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
+        Box(modifier = Modifier.weight(1f)) {
             Text(
                 text = "Terminal",
                 color = Color.Green,
