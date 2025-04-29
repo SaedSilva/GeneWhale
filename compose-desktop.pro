@@ -1,5 +1,3 @@
-#TODO Not working
-
 -keep class kotlinx.coroutines.** { *; }
 
 -keep class com.sun.jna** { *; }
@@ -10,6 +8,18 @@
 
 -keep class org.koin** { *; }
 -dontnote org.koin**
+
+-keepclassmembers enum * {
+    public *;
+}
+
+#-keep class CleanMode {
+#    public *;
+#}
+#
+#-keep class RefindMode {
+#    public *;
+#}
 
 #Kotlinx Serialization rules as per https://github.com/Kotlin/kotlinx.serialization/blob/master/rules/common.pro
 # Keep `Companion` object fields of serializable classes.

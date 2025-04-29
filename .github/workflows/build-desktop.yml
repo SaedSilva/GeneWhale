@@ -27,8 +27,8 @@ jobs:
 
       - name: Build Jar and Installer (Linux)
         run: |
-          ./gradlew composeApp:packageUberJarForCurrentOS
-          ./gradlew composeApp:packageDistributionForCurrentOS
+          ./gradlew composeApp:packageReleaseUberJarForCurrentOS
+          ./gradlew composeApp:packageReleaseDistributionForCurrentOS
 
       - name: Upload Jar (Linux)
         uses: actions/upload-artifact@v4
@@ -62,8 +62,8 @@ jobs:
 
       - name: Build Jar and Installer (Windows)
         run: |
-          ./gradlew composeApp:packageUberJarForCurrentOS
-          ./gradlew composeApp:packageDistributionForCurrentOS
+          ./gradlew composeApp:packageReleaseUberJarForCurrentOS
+          ./gradlew composeApp:packageReleaseDistributionForCurrentOS
 
       - name: Upload Jar (Windows)
         uses: actions/upload-artifact@v4
@@ -95,8 +95,8 @@ jobs:
 
       - name: Build Jar and Installer (MacOS)
         run: |
-          ./gradlew composeApp:packageUberJarForCurrentOS
-          ./gradlew composeApp:packageDistributionForCurrentOS
+          ./gradlew composeApp:packageReleaseUberJarForCurrentOS
+          ./gradlew composeApp:packageReleaseDistributionForCurrentOS
 
       - name: Upload Jar (MacOS)
         uses: actions/upload-artifact@v4
