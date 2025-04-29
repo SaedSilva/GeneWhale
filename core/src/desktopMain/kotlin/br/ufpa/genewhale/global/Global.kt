@@ -11,7 +11,7 @@ import java.lang.management.ManagementFactory
 const val APP_VERSION = "1.0.0"
 
 class Global(
-    private val service: List<DockerService>,
+    private val dockerServices: List<DockerService>,
     private val webService: WebService
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -60,7 +60,7 @@ class Global(
 
     fun stopAll() {
         scope.launch {
-            val stoppingJobs = service.map { service ->
+            val stoppingJobs = dockerServices.map { service ->
                 async { service.stop() }
             }
             stoppingJobs.awaitAll()

@@ -1,5 +1,6 @@
 package br.ufpa.genewhale.sliders
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.ufpa.genewhale.theme.GenomeTheme
 
 @Composable
 fun MemorySlider(
@@ -41,6 +43,23 @@ fun MemorySlider(
             )
             Text("$maxMemory", fontSize = 14.sp)
         }
-        Text("Selected memory: $selectedMemory mb", fontSize = 14.sp)
+        val text = if (selectedMemory == 0L) "Selected memory: Auto" else "Selected memory: $selectedMemory mb"
+        Text(
+            text,
+            fontSize = 14.sp
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun MemorySliderPreview() {
+    GenomeTheme {
+        MemorySlider(
+            value = 0.5f,
+            onValueChange = {},
+            maxMemory = 16L,
+            selectedMemory = 8L
+        )
     }
 }

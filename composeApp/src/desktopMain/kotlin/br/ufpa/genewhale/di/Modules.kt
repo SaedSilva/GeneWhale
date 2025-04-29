@@ -1,7 +1,6 @@
 package br.ufpa.genewhale.di
 
 import br.ufpa.genewhale.global.Global
-import br.ufpa.genewhale.services.DockerService
 import br.ufpa.genewhale.services.PanarooService
 import br.ufpa.genewhale.services.WebService
 import br.ufpa.genewhale.services.WebServiceJavaImpl
@@ -13,7 +12,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 private val appModule = module {
-    single { Global(listOf(get()), get()) }
+    single { Global(listOf(get<PanarooService>()), get()) }
 }
 
 private val servicesModule = module {
@@ -26,8 +25,8 @@ private val viewModelsModule = module {
 }
 
 private val panarooModule = module {
-    single<DockerService> { PanarooService() }
-    viewModel { PanarooViewModel(get(), get()) }
+    single<PanarooService> { PanarooService() }
+    viewModel { PanarooViewModel(get<PanarooService>(), get()) }
 }
 
 val modules = listOf(

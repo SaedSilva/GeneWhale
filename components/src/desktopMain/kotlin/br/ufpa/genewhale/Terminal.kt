@@ -33,7 +33,7 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
     Column(
         modifier = modifier
             .clip(ThemeDefaults.ButtonShape)
-            .background(Color.Black)
+            .background(Color.Black.copy(0.8f))
             .border(4.dp, MaterialTheme.colorScheme.outline)
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -42,7 +42,6 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
                 color = Color.Green,
                 modifier = Modifier
                     .padding(8.dp)
-                    .background(Color.Black)
                     .align(Alignment.TopEnd)
             )
             LazyColumn(modifier = Modifier.padding(8.dp), state) {
