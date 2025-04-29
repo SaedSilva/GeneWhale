@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 
 object LightColors {
     val primary: Color = Color(0xFF00688F)
+    val primaryContainer: Color = Color(0xFF1fb9f2)
     val inversePrimary: Color = Color(0xFF78d7fa)
     val secondary: Color = Color(0xFF668890)
     val secondaryContainer: Color = Color(0xFFBBBBBB)
@@ -19,6 +20,7 @@ object LightColors {
 val MyLightColorScheme: ColorScheme
     @Composable @ReadOnlyComposable get() = MaterialTheme.colorScheme.copy(
         primary = LightColors.primary,
+        primaryContainer = LightColors.primaryContainer,
         inversePrimary = LightColors.inversePrimary,
         secondary = LightColors.secondary,
         secondaryContainer = LightColors.secondaryContainer,
