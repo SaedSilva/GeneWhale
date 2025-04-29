@@ -1,6 +1,7 @@
 package br.ufpa.genewhale.global
 
 data class GlobalState(
+    val isClickable: Boolean = true,
     val isLoading: Boolean = false,
     val isClosing: Boolean = false,
     val memoryBytes: Long = 0,
@@ -11,6 +12,8 @@ sealed class GlobalIntent {
     data object ShowLoading : GlobalIntent()
     data object HideLoading : GlobalIntent()
     data object CloseApplication : GlobalIntent()
+    data object PermitsClick : GlobalIntent()
+    data object DisableClick : GlobalIntent()
 }
 
 fun GlobalState.reduce(
@@ -19,7 +22,9 @@ fun GlobalState.reduce(
     return when (intent) {
         is GlobalIntent.ShowLoading -> copy(isLoading = true)
         is GlobalIntent.HideLoading -> copy(isLoading = false)
-        is GlobalIntent.CloseApplication -> copy(isClosing = true)
+        is GlobalIntent.CloseApplication -> copy(isClosing = true, isClickable = false)
+        is GlobalIntent.PermitsClick -> copy(isClickable = true)
+        is GlobalIntent.DisableClick -> copy(isClickable = false)
     }
 }
 
@@ -30,5 +35,6 @@ sealed class GlobalEffect {
         val actionLabel: String,
         val action: () -> Unit
     ) : GlobalEffect()
+
     data object CloseApplication : GlobalEffect()
 }

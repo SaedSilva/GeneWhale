@@ -10,7 +10,7 @@ import java.lang.management.ManagementFactory
 const val APP_VERSION = "1.0.0"
 
 class Global(
-    private val service: List<GlobalService>,
+    private val service: List<DockerService>,
     private val webService: WebService
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -40,6 +40,14 @@ class Global(
             is GlobalIntent.CloseApplication -> {
                 _uiState.update { it.reduce(intent) }
                 stopAll()
+            }
+
+            is GlobalIntent.DisableClick -> {
+                _uiState.update { it.reduce(intent) }
+            }
+
+            is GlobalIntent.PermitsClick -> {
+                _uiState.update { it.reduce(intent) }
             }
         }
     }

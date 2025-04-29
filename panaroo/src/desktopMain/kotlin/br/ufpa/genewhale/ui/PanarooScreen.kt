@@ -31,12 +31,14 @@ import br.ufpa.genewhale.theme.GenomeTheme
 import br.ufpa.genewhale.tooltips.MyTooltip
 import io.github.vinceglb.filekit.path
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import java.awt.Window
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Panaroo(
     modifier: Modifier = Modifier,
     state: PanarooUiState,
+    window: Window? = null,
     configState: PanarooParams,
     onNavigateBack: () -> Unit,
     onConfigIntent: (PanarooParamsIntent) -> Unit,
@@ -79,10 +81,11 @@ fun Panaroo(
         PickFolder(
             modifier = Modifier.fillMaxWidth(),
             value = state.inputFolder,
+            window = window,
             onChangeValue = { onIntent(PanarooUiIntent.ChangeInputFolder(it)) },
             onClickClear = { onIntent(PanarooUiIntent.ClearInputFolder) },
             tooltip = "Select gff input folder with files",
-            placeHolder = "Select input...",
+            placeHolder = "Input folder...",
             onClickButton = { },
             onResult = { it?.let { onIntent(PanarooUiIntent.ChangeInputFolder(it.path)) } }
         )
@@ -90,10 +93,11 @@ fun Panaroo(
         PickFolder(
             modifier = Modifier.fillMaxWidth(),
             value = state.outputFolder,
+            window = window,
             onChangeValue = { onIntent(PanarooUiIntent.ChangeOutputFolder(it)) },
             onClickClear = { onIntent(PanarooUiIntent.ClearOutputFolder) },
             tooltip = "Select output folder",
-            placeHolder = "Select output...",
+            placeHolder = "Output folder...",
             onClickButton = { },
             onResult = { it?.let { onIntent(PanarooUiIntent.ChangeOutputFolder(it.path)) } }
         )
@@ -192,7 +196,8 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                 //Clean Mode
                 Column {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Clean mode")
                         TooltipArea(
@@ -468,7 +473,8 @@ private fun Config(modifier: Modifier = Modifier, state: PanarooParams, onIntent
                 // refindMode
                 Column {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Refind mode")
                         TooltipArea(

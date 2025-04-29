@@ -26,14 +26,7 @@ class PanarooViewModel(
     val uiStateConfig = _uiStateConfig.asStateFlow()
 
     init {
-        runBlocking {
-            val panaroo = Config.load<PanarooParamsConfig>(Config.PANAROO_CONFIG_FILE)
-            panaroo?.let { data ->
-                _uiStateConfig.update { state ->
-                    PanarooParams.fromEntity(data, state)
-                }
-            }
-        }
+        loadConfig()
         viewModelScope.launch {
             service.logs.collect { output ->
                 _uiState.update { it.reduce(PanarooUiIntent.UpdateOutput(output)) }
@@ -58,6 +51,17 @@ class PanarooViewModel(
         }
     }
 
+    private fun loadConfig() {
+        runBlocking {
+            val panaroo = Config.load<PanarooParamsConfig>(Config.PANAROO_CONFIG_FILE)
+            panaroo?.let { data ->
+                _uiStateConfig.update { state ->
+                    PanarooParams.fromEntity(data, state)
+                }
+            }
+        }
+    }
+
     fun handleIntent(intent: PanarooUiIntent) {
         when (intent) {
             is PanarooUiIntent.ChangeInputFolder -> changeInputFolder(intent)
@@ -65,9 +69,9 @@ class PanarooViewModel(
             is PanarooUiIntent.ChangeOutputFolder -> changeOutputFolder(intent)
             is PanarooUiIntent.ClearOutputFolder -> clearOutputFolder(intent)
             is PanarooUiIntent.ClearOutput -> clearOutput(intent)
-            is PanarooUiIntent.RunPanaroo -> runPanaroo(intent)
+            is PanarooUiIntent.RunPanaroo -> runPanaroo()
             is PanarooUiIntent.UpdateOutput -> updateOutput(intent)
-            is PanarooUiIntent.CloseScreen -> closeScreen(intent)
+            is PanarooUiIntent.CloseScreen -> closeScreen()
             is PanarooUiIntent.OpenDocs -> openDocs()
         }
     }
@@ -93,7 +97,7 @@ class PanarooViewModel(
         _uiStateConfig.update { it.reduce(intent) }
     }
 
-    private fun closeScreen(intent: PanarooUiIntent.CloseScreen) {
+    private fun closeScreen() {
         viewModelScope.launch {
             global.job?.cancel()
             global.job = null
@@ -104,7 +108,7 @@ class PanarooViewModel(
         _uiState.update { it.reduce(intent) }
     }
 
-    private fun runPanaroo(intent: PanarooUiIntent.RunPanaroo) {
+    private fun runPanaroo() {
         viewModelScope.launch {
             service.basicUsage(
                 input = _uiState.value.inputFolder,
@@ -177,11 +181,10 @@ class PanarooViewModel(
             params.add(config.refindPropMatch)
         }
         if (config.refindMode != RefindMode.NONE) {
-            params.add("--refind_mode")
+            params.add("--refind-mode")
             params.add(config.refindMode.toString())
         }
 
         return params
     }
-
 }

@@ -30,11 +30,9 @@ fun main() = application {
                 }
             }
         }
-
+        MainWindow(global, navController)
         if (state.isClosing) {
             StoppingContainersWindow()
-        } else {
-            MainWindow(global, navController)
         }
     }
 }

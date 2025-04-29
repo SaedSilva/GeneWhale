@@ -12,6 +12,7 @@ kotlin {
         val desktopMain by getting
 
         commonMain.dependencies {
+            implementation(libs.filekit.core)
             implementation(libs.kotlin.test)
             implementation(compose.runtime)
             implementation(libs.kotlinx.datetime)

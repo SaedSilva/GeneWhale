@@ -200,21 +200,3 @@ fun PanarooParams.reduce(intent: PanarooParamsIntent): PanarooParams {
     }
 }
 
-enum class CleanMode(val value: String) {
-    NONE("none"),
-    STRICT("strict"),
-    MODERATE("moderate"),
-    SENSITIVE("sensitive");
-
-    override fun toString() = value.lowercase()
-}
-
-enum class RefindMode(val value: String) {
-    NONE("none"),
-    DEFAULT("default"),
-    STRICT("strict"),
-    OFF("off");
-
-    override fun toString() = value.lowercase()
-}
-

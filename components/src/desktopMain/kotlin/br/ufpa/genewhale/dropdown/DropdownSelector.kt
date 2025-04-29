@@ -6,17 +6,24 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
-import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.genewhale.clickableWithHoverIcon
 import br.ufpa.genewhale.theme.GenomeTheme
 import br.ufpa.genewhale.theme.ThemeDefaults
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun <T> DropdownSelector(
     modifier: Modifier = Modifier,
@@ -39,14 +46,17 @@ fun <T> DropdownSelector(
                 }
                 .weight(1f)
                 .height(24.dp)
-                .border(1.dp, MaterialTheme.colorScheme.primary, ThemeDefaults.ButtonShape)
+                .border(1.dp, MaterialTheme.colorScheme.outline, ThemeDefaults.ButtonShape)
                 .padding(4.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Column {
                 Text(selectedOption.toString(), fontSize = 12.sp, lineHeight = 12.sp)
-                //TODO made this a custom component
-                DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = onDismissRequest,
+                    modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
+                ) {
                     options.forEachIndexed { index, value ->
                         DropdownMenuItem(
                             text = { Text(value.toString()) },
@@ -54,7 +64,7 @@ fun <T> DropdownSelector(
                                 onDismissRequest()
                                 onClickOption(value)
                             },
-                            contentPadding = PaddingValues(2.dp)
+                            contentPadding = PaddingValues(horizontal = 4.dp)
                         )
                         if (index < options.size - 1) {
                             HorizontalDivider()

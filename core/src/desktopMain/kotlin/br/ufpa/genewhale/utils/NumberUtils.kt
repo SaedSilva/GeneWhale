@@ -10,6 +10,13 @@ fun Long.toMB(): Long {
 }
 
 /**
+ * Converts a given size in megabytes to bytes.
+ */
+fun Long.toBytes(): Long {
+    return this * (1024 * 1024)
+}
+
+/**
  * Converts a part of a given size in megabytes to bytes.
  * @param maxMemory The max size in megabytes.
  * This is used to calculate the size in bytes based on a percentage.

@@ -34,7 +34,7 @@ fun Terminal(modifier: Modifier = Modifier, output: List<String>) {
         modifier = modifier
             .clip(ThemeDefaults.ButtonShape)
             .background(Color.Black)
-            .border(4.dp, MaterialTheme.colorScheme.primary)
+            .border(4.dp, MaterialTheme.colorScheme.outline)
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Text(

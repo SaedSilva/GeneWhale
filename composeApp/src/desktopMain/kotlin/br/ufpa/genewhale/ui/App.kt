@@ -27,14 +27,14 @@ import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
-
-const val APP_VERSION = "1.0.0"
+import java.awt.Window
 
 @Composable
 @Preview
 fun App(
     navController: NavHostController,
-    global: Global
+    global: Global,
+    window: Window? = null
 ) {
     val snackBarState = remember { SnackbarHostState() }
 
@@ -46,7 +46,12 @@ fun App(
     GenomeTheme {
         Scaffold(
             snackbarHost = {
-                SnackbarHost(snackBarState, modifier = Modifier.widthIn(min = 200.dp, max = 350.dp).height(100.dp))
+                SnackbarHost(
+                    hostState = snackBarState,
+                    modifier = Modifier
+                        .widthIn(min = 200.dp, max = 350.dp)
+                        .height(100.dp)
+                )
             }
         ) { padding ->
             NavHost(
@@ -88,6 +93,7 @@ fun App(
                     Panaroo(
                         modifier = Modifier.fillMaxSize(),
                         state = state,
+                        window = window,
                         configState = configState,
                         onNavigateBack = {
                             navController.popBackStack()

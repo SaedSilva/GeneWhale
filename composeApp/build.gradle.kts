@@ -51,8 +51,6 @@ kotlin {
     }
 }
 
-
-
 compose.desktop {
     application {
         mainClass = "br.ufpa.genewhale.MainKt"
@@ -71,7 +69,7 @@ compose.desktop {
 
             buildTypes.release.proguard {
                 version.set("7.7.0")
-                joinOutputJars.set(true)
+                configurationFiles.from(project.file("../compose-desktop.pro"))
             }
 
             includeAllModules = true
