@@ -13,10 +13,10 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 private val appModule = module {
-    single { Global(listOf(get<PanarooService>()), get()) }
+    single { Global(listOf(get()), get()) }
 }
+
 private val servicesModule = module {
-    single<DockerService> { get<PanarooService>() }
     single<WebService> { WebServiceJavaImpl() }
 }
 
@@ -26,7 +26,7 @@ private val viewModelsModule = module {
 }
 
 private val panarooModule = module {
-    single { PanarooService() }
+    single<DockerService> { PanarooService() }
     viewModel { PanarooViewModel(get(), get()) }
 }
 

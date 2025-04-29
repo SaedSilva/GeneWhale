@@ -1,5 +1,5 @@
 package br.ufpa.genewhale.services
 
-enum class Panaroo {
+enum class PanarooUsages {
     BasicUsage
 }

@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalEffect
 import br.ufpa.genewhale.params.PanarooParamsConfig
-import br.ufpa.genewhale.services.Panaroo
-import br.ufpa.genewhale.services.PanarooService
+import br.ufpa.genewhale.services.DockerService
+import br.ufpa.genewhale.services.PanarooUsages
 import br.ufpa.genewhale.utils.Config
 import br.ufpa.genewhale.utils.Desktop
 import br.ufpa.genewhale.utils.toMB
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class PanarooViewModel(
-    private val service: PanarooService,
+    private val service: DockerService,
     private val global: Global,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(PanarooUiState())
@@ -116,7 +116,7 @@ class PanarooViewModel(
                 output = _uiState.value.outputFolder,
                 memory = if (_uiStateConfig.value.memory > 0L) _uiStateConfig.value.memory else null,
                 parameters = createParams(_uiStateConfig.value),
-                type = Panaroo.BasicUsage
+                type = PanarooUsages.BasicUsage
             )
         }
     }
@@ -142,51 +142,52 @@ class PanarooViewModel(
     }
 
     private fun createParams(config: PanarooParams): List<String> {
-        val params = mutableListOf<String>()
         val original = PanarooParams()
-        if (config.threads > 0) {
-            params.add("--threads")
-            params.add(config.threads.toString())
-        }
-        if (config.cleanMode != CleanMode.NONE) {
-            params.add("--clean-mode")
-            params.add(config.cleanMode.toString())
-        }
-        if (config.removeInvalidGenes) {
-            params.add("--remove-invalid-genes")
-        }
-        if (config.threshold.isNotBlank() && config.threshold != original.threshold) {
-            params.add("--threshold")
-            params.add(config.threshold)
-        }
-        if (config.familyThreshold.isNotBlank() && config.familyThreshold != original.familyThreshold) {
-            params.add("--family_threshold")
-            params.add(config.familyThreshold)
-        }
-        if (config.lenDifPercent.isNotBlank() && config.lenDifPercent != original.lenDifPercent) {
-            params.add("--len_dif_percent")
-            params.add(config.lenDifPercent)
-        }
-        if (config.familyLenDifPercent.isNotBlank() && config.familyLenDifPercent != original.familyLenDifPercent) {
-            params.add("--family_len_dif_percent")
-            params.add(config.familyLenDifPercent)
-        }
-        if (config.mergeParalogs) {
-            params.add("--merge_paralogs")
-        }
-        if (config.searchRadius.isNotBlank() && config.searchRadius != original.searchRadius) {
-            params.add("--search_radius")
-            params.add(config.searchRadius)
-        }
-        if (config.refindPropMatch.isNotBlank() && config.refindPropMatch != original.refindPropMatch) {
-            params.add("--refind_prop_match")
-            params.add(config.refindPropMatch)
-        }
-        if (config.refindMode != RefindMode.NONE) {
-            params.add("--refind-mode")
-            params.add(config.refindMode.toString())
-        }
-
+        val params = mutableListOf<String>()
+            .apply {
+                if (config.threads > 0) {
+                    add("--threads")
+                    add(config.threads.toString())
+                }
+                if (config.cleanMode != CleanMode.NONE) {
+                    add("--clean-mode")
+                    add(config.cleanMode.toString())
+                }
+                if (config.removeInvalidGenes) {
+                    add("--remove-invalid-genes")
+                }
+                if (config.threshold.isNotBlank() && config.threshold != original.threshold) {
+                    add("--threshold")
+                    add(config.threshold)
+                }
+                if (config.familyThreshold.isNotBlank() && config.familyThreshold != original.familyThreshold) {
+                    add("--family_threshold")
+                    add(config.familyThreshold)
+                }
+                if (config.lenDifPercent.isNotBlank() && config.lenDifPercent != original.lenDifPercent) {
+                    add("--len_dif_percent")
+                    add(config.lenDifPercent)
+                }
+                if (config.familyLenDifPercent.isNotBlank() && config.familyLenDifPercent != original.familyLenDifPercent) {
+                    add("--family_len_dif_percent")
+                    add(config.familyLenDifPercent)
+                }
+                if (config.mergeParalogs) {
+                    add("--merge_paralogs")
+                }
+                if (config.searchRadius.isNotBlank() && config.searchRadius != original.searchRadius) {
+                    add("--search_radius")
+                    add(config.searchRadius)
+                }
+                if (config.refindPropMatch.isNotBlank() && config.refindPropMatch != original.refindPropMatch) {
+                    add("--refind_prop_match")
+                    add(config.refindPropMatch)
+                }
+                if (config.refindMode != RefindMode.NONE) {
+                    add("--refind-mode")
+                    add(config.refindMode.toString())
+                }
+            }
         return params
     }
 }

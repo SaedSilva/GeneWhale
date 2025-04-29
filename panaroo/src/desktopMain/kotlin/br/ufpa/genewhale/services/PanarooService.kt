@@ -27,13 +27,6 @@ class PanarooService(
 
     override var currentProcess: Process? = null
 
-    /**
-     * Basic usage of the Panaroo tool.
-     * @param input The input directory containing GFF files.
-     * @param output The output directory for results.
-     * @param memory Optional memory limit in MB for the Docker container.
-     * @param parameters Additional parameters for the Panaroo command.
-     */
     override suspend fun <T : Enum<T>> start(
         input: String,
         output: String,
@@ -42,11 +35,20 @@ class PanarooService(
         type: T
     ) {
         when (type) {
-            Panaroo.BasicUsage -> basicUsage(input, output, parameters, memory)
+            PanarooUsages.BasicUsage -> basicUsage(input, output, parameters, memory)
             else -> throw IllegalArgumentException("Unsupported Panaroo type: $type")
         }
     }
 
+    /**
+     * Executes the basic usage of Panaroo with the provided parameters.
+     * This method constructs the Docker command and runs it in a separate process.
+     * It handles logging and process management.
+     * @param input The input directory containing GFF files.
+     * @param output The output directory for results.
+     * @param parameters Additional parameters for the Panaroo command.
+     * @param memory Optional memory limit in MB for the Docker container.
+     */
     private suspend fun basicUsage(
         input: String,
         output: String,
