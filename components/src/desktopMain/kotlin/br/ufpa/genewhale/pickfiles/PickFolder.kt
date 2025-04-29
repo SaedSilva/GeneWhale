@@ -4,10 +4,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.FolderOpen
+import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -19,14 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.genewhale.clickableWithHoverIcon
 import br.ufpa.genewhale.theme.GenomeTheme
+import br.ufpa.genewhale.theme.LightColors
 import br.ufpa.genewhale.theme.ThemeDefaults
 import br.ufpa.genewhale.tooltips.MyTooltip
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
-import org.jetbrains.compose.resources.painterResource
-import pangenome.components.generated.resources.Res
-import pangenome.components.generated.resources.folder
 import java.awt.Window
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -40,7 +39,9 @@ fun PickFolder(
     placeHolder: String,
     onClickButton: () -> Unit,
     onResult: (PlatformFile?) -> Unit = {},
-    tooltip: String
+    tooltip: String,
+    topText: String? = null,
+    bottomText: String? = null
 ) {
     val launcher = rememberDirectoryPickerLauncher(
         dialogSettings = FileKitDialogSettings(window)
@@ -48,29 +49,71 @@ fun PickFolder(
         onResult(file)
     }
 
-    Row(
+    Column(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
+
+        topText?.let {
+            Text(it)
+        }
+
         Box(
             modifier = Modifier
-                .weight(1f)
-                .height(32.dp)
-                .border(1.dp, MaterialTheme.colorScheme.outline, ThemeDefaults.ButtonShape)
-                .padding(4.dp),
+                .height(height)
+                .border(1.dp, MaterialTheme.colorScheme.outline, ThemeDefaults.TextFieldShape),
             contentAlignment = Alignment.CenterStart
         ) {
             BasicTextField(
                 value = value,
                 onValueChange = { onChangeValue(it) },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(start = startEndPadding),
                 textStyle = LocalTextStyle.current.copy(fontSize = 16.sp)
             )
             if (value.isBlank()) {
-                Text(placeHolder, fontSize = 16.sp)
+                Text(
+                    placeHolder,
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(start = startEndPadding)
+                )
             }
+
+            TooltipArea(
+                modifier = Modifier.align(Alignment.CenterEnd),
+                tooltip = { MyTooltip(tooltip = tooltip) },
+                delayMillis = 100,
+                tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clickableWithHoverIcon {
+                            onClickButton()
+                            launcher.launch()
+                        }
+                        .background(
+                            color = MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(
+                                topStart = 0.dp,
+                                topEnd = 4.dp,
+                                bottomEnd = 4.dp,
+                                bottomStart = 0.dp
+                            )
+                        )
+                        .height(height)
+                        .width(height + 16.dp)
+
+                ) {
+                    Icon(
+                        Icons.Outlined.FolderOpen,
+                        tint = LightColors.iconColor,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.Center)
+                    )
+                }
+            }
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(2.dp),
@@ -83,33 +126,12 @@ fun PickFolder(
                         modifier = Modifier.size(16.dp).clickable { onClickClear() }
                     )
                 }
-                TooltipArea(
-                    tooltip = { MyTooltip(tooltip = tooltip) },
-                    delayMillis = 100,
-                    tooltipPlacement = TooltipPlacement.CursorPoint(alignment = Alignment.TopEnd)
-                ) {
-                    Icon(
-                        Icons.Default.FolderOpen,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(24.dp)
-                            .clickableWithHoverIcon {
-                                onClickButton()
-                                launcher.launch()
-                            }
-                    )
-                }
             }
         }
 
-        /*OutlinedButton(
-            onClick = {
-                onClickButton()
-            },
-            shape = ThemeDefaults.ButtonShape
-        ) {
-            Text(buttonText)
-        }*/
+        bottomText?.let {
+            Text(it, color = MaterialTheme.colorScheme.inverseSurface)
+        }
     }
 }
 
@@ -118,13 +140,18 @@ fun PickFolder(
 private fun PickFolderPreview() {
     GenomeTheme {
         PickFolder(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             value = "",
             onChangeValue = { },
             onClickClear = { },
             tooltip = "",
-            placeHolder = "Select input",
-            onClickButton = {}
+            placeHolder = "/path/to/folder",
+            onClickButton = {},
+            topText = "Teste",
+            bottomText = "teste"
         )
     }
 }
+
+private val startEndPadding = 4.dp
+private val height = 32.dp

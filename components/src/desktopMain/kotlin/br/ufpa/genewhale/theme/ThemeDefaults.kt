@@ -8,4 +8,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 object ThemeDefaults {
     val ButtonShape: CornerBasedShape
         @Composable @ReadOnlyComposable get() = MaterialTheme.shapes.small
+
+    val TextFieldShape: CornerBasedShape
+        @Composable @ReadOnlyComposable get() = MaterialTheme.shapes.extraSmall
 }
