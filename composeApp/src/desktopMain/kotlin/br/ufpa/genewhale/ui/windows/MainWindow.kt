@@ -26,7 +26,7 @@ fun MainWindow(
             global.handleIntent(GlobalIntent.CloseApplication)
         },
         title = "GeneWhale",
-        state = rememberWindowState(placement = WindowPlacement.Maximized),
+        state = rememberWindowState(placement = WindowPlacement.Floating),
         icon = painterResource(Res.drawable.genewhalegenewhaleicon),
         onKeyEvent = {
             when {

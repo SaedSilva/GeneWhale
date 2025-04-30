@@ -7,6 +7,7 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.ufpa.genewhale.Terminal
@@ -51,7 +52,7 @@ fun Panaroo(
                         modifier = Modifier.padding(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text("Select folders", fontSize = 18.sp)
+                        Text("Select folders", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                         PickFolder(
                             modifier = Modifier,
                             value = state.inputFolder,
@@ -85,7 +86,7 @@ fun Panaroo(
                         modifier = Modifier.padding(8.dp).fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text("Controls", fontSize = 18.sp)
+                        Text("Controls", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {

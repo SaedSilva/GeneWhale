@@ -1,13 +1,11 @@
 package br.ufpa.genewhale.pickfiles
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
@@ -110,20 +108,6 @@ fun PickFolder(
                         modifier = Modifier
                             .size(24.dp)
                             .align(Alignment.Center)
-                    )
-                }
-            }
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
-                modifier = Modifier.align(Alignment.CenterEnd)
-            ) {
-                AnimatedVisibility(value.isNotBlank()) {
-                    Icon(
-                        Icons.Default.Clear,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp).clickable { onClickClear() }
                     )
                 }
             }
