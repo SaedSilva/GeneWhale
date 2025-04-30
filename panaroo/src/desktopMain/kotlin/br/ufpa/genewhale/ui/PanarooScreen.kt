@@ -6,7 +6,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,7 +27,6 @@ fun Panaroo(
     window: Window? = null,
     onNavigateBack: () -> Unit,
     onNavigateToConfigure: () -> Unit,
-    disposableEffect: () -> Unit = {},
     onIntent: (PanarooUiIntent) -> Unit,
 ) {
     ToolScreen(
@@ -115,11 +113,6 @@ fun Panaroo(
                     }
                 }
             }
-        }
-    }
-    DisposableEffect(Unit) {
-        onDispose {
-            disposableEffect()
         }
     }
 }

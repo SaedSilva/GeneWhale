@@ -21,7 +21,6 @@ fun main() = application {
     ) {
         val global: Global = koinInject()
         val state by global.uiState.collectAsState()
-        val navController = rememberNavController()
 
         LaunchedEffect(Unit) {
             global.uiEffect.collect {
@@ -30,7 +29,7 @@ fun main() = application {
                 }
             }
         }
-        MainWindow(global, navController)
+        MainWindow(global)
         if (state.isClosing) {
             StoppingContainersWindow()
         }

@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalEffect
@@ -34,7 +35,7 @@ import java.awt.Window
 @Composable
 @Preview
 fun App(
-    navController: NavHostController,
+    navController: NavHostController = rememberNavController(),
     global: Global,
     window: Window? = null
 ) {
@@ -81,9 +82,7 @@ fun App(
                     HomeScreen(
                         modifier = Modifier.fillMaxSize(),
                         state = state,
-                        onNavigateToPanarooScreen = {
-                            navController.navigate(Route.Tools.Panaroo.Graph)
-                        },
+                        onNavigateToPanarooScreen = { navController.navigate(Route.Tools.Panaroo.Graph) },
                     ) {
                         viewModel.handleIntent(it)
                     }
@@ -97,18 +96,20 @@ fun App(
                             modifier = Modifier.fillMaxSize(),
                             state = state,
                             window = window,
-                            onNavigateBack = { navController.popBackStack() },
-                            disposableEffect = { panarooScope.close() },
-                            onNavigateToConfigure = {},
+                            onNavigateBack = {
+                                panarooScope.close()
+                                navController.navigateUp()
+                            },
+                            onNavigateToConfigure = { navController.navigate(Route.Tools.Panaroo.Config) },
                         ) {
                             viewModel.handleIntent(it)
                         }
                     }
-                    composable <Route.Tools.Panaroo.Config>{
-                        //TODO Config Screen
+                    composable<Route.Tools.Panaroo.Config> {
                         val panarooScope = getKoin().getOrCreateScope<PanarooScope>(PanarooScope.ID)
                         val viewModel: PanarooViewModel = panarooScope.get()
                         val state by viewModel.uiStateConfig.collectAsStateWithLifecycle()
+                        Text(state.toString())
                     }
                 }
             }
@@ -139,7 +140,7 @@ private fun CoroutineScope.handleGlobalEffects(
                         )
                     ) {
                         SnackbarResult.Dismissed -> {}
-                        SnackbarResult.ActionPerformed -> it.action()
+                        SnackbarResult.ActionPerformed -> it.action.invoke()
                     }
                 }
 
