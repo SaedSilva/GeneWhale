@@ -5,6 +5,7 @@ import br.ufpa.genewhale.services.PanarooService
 import br.ufpa.genewhale.services.WebService
 import br.ufpa.genewhale.services.WebServiceJavaImpl
 import br.ufpa.genewhale.ui.PanarooViewModel
+import br.ufpa.genewhale.ui.navigation.PanarooScope
 import br.ufpa.genewhale.ui.viewmodels.HomeViewModel
 import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import org.koin.core.module.dsl.viewModel
@@ -26,7 +27,7 @@ private val viewModelsModule = module {
 
 private val panarooModule = module {
     single<PanarooService> { PanarooService() }
-    viewModel { PanarooViewModel(get<PanarooService>(), get()) }
+    scope <PanarooScope>{ scoped { PanarooViewModel(get<PanarooService>(), get()) } }
 }
 
 val modules = listOf(

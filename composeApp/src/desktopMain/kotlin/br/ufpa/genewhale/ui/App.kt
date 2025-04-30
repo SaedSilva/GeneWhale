@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalEffect
 import br.ufpa.genewhale.theme.GenomeTheme
@@ -26,6 +27,7 @@ import br.ufpa.genewhale.ui.viewmodels.HomeViewModel
 import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 import java.awt.Window
 
@@ -80,26 +82,33 @@ fun App(
                         modifier = Modifier.fillMaxSize(),
                         state = state,
                         onNavigateToPanarooScreen = {
-                            navController.navigate(Route.Tools.Panaroo)
+                            navController.navigate(Route.Tools.Panaroo.Graph)
                         },
                     ) {
                         viewModel.handleIntent(it)
                     }
                 }
-                composable<Route.Tools.Panaroo> {
-                    val viewModel: PanarooViewModel = koinViewModel()
-                    val state by viewModel.uiState.collectAsStateWithLifecycle()
-                    val configState by viewModel.uiStateConfig.collectAsStateWithLifecycle()
-                    Panaroo(
-                        modifier = Modifier.fillMaxSize(),
-                        state = state,
-                        window = window,
-                        onNavigateBack = {
-                            navController.popBackStack()
-                        },
-                        onNavigateToConfigure = {},
-                    ) {
-                        viewModel.handleIntent(it)
+                navigation<Route.Tools.Panaroo.Graph>(startDestination = Route.Tools.Panaroo.BasicUsage) {
+                    composable<Route.Tools.Panaroo.BasicUsage> {
+                        val panarooScope = getKoin().getOrCreateScope<PanarooScope>(PanarooScope.ID)
+                        val viewModel: PanarooViewModel = panarooScope.get()
+                        val state by viewModel.uiState.collectAsStateWithLifecycle()
+                        Panaroo(
+                            modifier = Modifier.fillMaxSize(),
+                            state = state,
+                            window = window,
+                            onNavigateBack = { navController.popBackStack() },
+                            disposableEffect = { panarooScope.close() },
+                            onNavigateToConfigure = {},
+                        ) {
+                            viewModel.handleIntent(it)
+                        }
+                    }
+                    composable <Route.Tools.Panaroo.Config>{
+                        //TODO Config Screen
+                        val panarooScope = getKoin().getOrCreateScope<PanarooScope>(PanarooScope.ID)
+                        val viewModel: PanarooViewModel = panarooScope.get()
+                        val state by viewModel.uiStateConfig.collectAsStateWithLifecycle()
                     }
                 }
             }
