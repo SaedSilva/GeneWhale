@@ -3,11 +3,11 @@ package br.ufpa.genewhale.ui.windows
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.rememberWindowState
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalIntent
 import br.ufpa.genewhale.ui.App
@@ -27,7 +27,13 @@ fun MainWindow(
         },
         title = "GeneWhale",
         state = rememberWindowState(placement = WindowPlacement.Maximized),
-        icon = painterResource(Res.drawable.genewhalegenewhaleicon)
+        icon = painterResource(Res.drawable.genewhalegenewhaleicon),
+        onKeyEvent = {
+            when {
+                it.key == Key.Escape -> true // Lock the escape key for prevent navigate back
+                else -> false
+            }
+        }
     ) {
         val state by global.uiState.collectAsState()
         window.isEnabled = state.isClickable

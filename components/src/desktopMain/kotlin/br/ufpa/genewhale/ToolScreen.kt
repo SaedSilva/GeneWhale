@@ -83,9 +83,7 @@ private fun ToolScreenPreview() {
             onClickClose = null,
         ) {
             Terminal(
-                output = listOf(
-                    "Hello World",
-                )
+                output = listOf("Hello World")
             )
         }
     }
