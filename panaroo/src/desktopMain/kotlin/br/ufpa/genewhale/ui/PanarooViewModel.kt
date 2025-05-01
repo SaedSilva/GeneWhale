@@ -136,10 +136,12 @@ class PanarooViewModel(
     }
 
     private fun changeOutputFolder(intent: PanarooUiIntent.ChangeOutputFolder) {
+        global.handleIntent(GlobalIntent.PermitsClick)
         _uiState.update { it.reduce(intent) }
     }
 
     private fun changeInputFolder(intent: PanarooUiIntent.ChangeInputFolder) {
+        global.handleIntent(GlobalIntent.PermitsClick)
         _uiState.update { it.reduce(intent) }
     }
 

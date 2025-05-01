@@ -1,17 +1,21 @@
 package br.ufpa.genewhale.ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -28,10 +32,8 @@ import br.ufpa.genewhale.ui.viewmodels.HomeViewModel
 import br.ufpa.genewhale.ui.viewmodels.ProjectViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.component.getScopeName
 import java.awt.Window
 
 @Composable
@@ -42,6 +44,7 @@ fun App(
     window: Window? = null
 ) {
     val snackBarState = remember { SnackbarHostState() }
+    val state by global.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         handleGlobalEffects(global, snackBarState)
@@ -59,6 +62,31 @@ fun App(
                 )
             }
         ) { padding ->
+
+            if (!state.isClickable) {
+                Dialog(
+                    onDismissRequest = {},
+                    properties = DialogProperties(
+                        usePlatformDefaultWidth = false,
+                        dismissOnBackPress = false,
+                        dismissOnClickOutside = false
+                    )
+                ) {
+                    OutlinedCard {
+                        Column(
+                            modifier = Modifier
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Text("Action in progress", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                            CircularProgressIndicator()
+                        }
+
+                    }
+                }
+            }
+
             NavHost(
                 navController = navController,
                 startDestination = Route.Home,
