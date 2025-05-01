@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalEffect
+import br.ufpa.genewhale.global.GlobalIntent
 import br.ufpa.genewhale.params.PanarooParamsConfig
 import br.ufpa.genewhale.services.DockerService
 import br.ufpa.genewhale.services.PanarooUsages
@@ -65,6 +66,7 @@ class PanarooViewModel(
 
     fun handleIntent(intent: PanarooUiIntent) {
         when (intent) {
+            is PanarooUiIntent.ClickPickFolder -> clickPickFolder()
             is PanarooUiIntent.ChangeInputFolder -> changeInputFolder(intent)
             is PanarooUiIntent.ClearInputFolder -> clearInputFolder(intent)
             is PanarooUiIntent.ChangeOutputFolder -> changeOutputFolder(intent)
@@ -75,6 +77,10 @@ class PanarooViewModel(
             is PanarooUiIntent.CloseScreen -> closeScreen()
             is PanarooUiIntent.OpenDocs -> openDocs()
         }
+    }
+
+    private fun clickPickFolder() {
+        global.handleIntent(GlobalIntent.DisableClick)
     }
 
     fun handleConfigIntent(intent: PanarooParamsIntent) {

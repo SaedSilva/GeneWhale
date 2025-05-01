@@ -14,9 +14,10 @@ data class PanarooUiState(
 )
 
 sealed class PanarooUiIntent {
-    data class ChangeInputFolder(val folder: String) : PanarooUiIntent()
+    data object ClickPickFolder : PanarooUiIntent()
+    data class ChangeInputFolder(val folder: String?) : PanarooUiIntent()
     data object ClearInputFolder : PanarooUiIntent()
-    data class ChangeOutputFolder(val folder: String) : PanarooUiIntent()
+    data class ChangeOutputFolder(val folder: String?) : PanarooUiIntent()
     data object ClearOutputFolder : PanarooUiIntent()
     data object RunPanaroo : PanarooUiIntent()
     data object ClearOutput : PanarooUiIntent()
@@ -27,9 +28,10 @@ sealed class PanarooUiIntent {
 
 fun PanarooUiState.reduce(intent: PanarooUiIntent): PanarooUiState {
     return when (intent) {
-        is PanarooUiIntent.ChangeInputFolder -> this.copy(inputFolder = intent.folder)
+        is PanarooUiIntent.ClickPickFolder -> this
+        is PanarooUiIntent.ChangeInputFolder -> this.copy(inputFolder = intent.folder ?: this.inputFolder)
         is PanarooUiIntent.ClearInputFolder -> this.copy(inputFolder = "")
-        is PanarooUiIntent.ChangeOutputFolder -> this.copy(outputFolder = intent.folder)
+        is PanarooUiIntent.ChangeOutputFolder -> this.copy(outputFolder = intent.folder ?: this.outputFolder)
         is PanarooUiIntent.ClearOutputFolder -> this.copy(outputFolder = "")
         is PanarooUiIntent.RunPanaroo -> this
         is PanarooUiIntent.ClearOutput -> this.copy(output = emptyList())

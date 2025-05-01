@@ -61,8 +61,8 @@ fun Panaroo(
                             onClickClear = { onIntent(PanarooUiIntent.ClearInputFolder) },
                             tooltip = "Select gff input folder with files",
                             placeHolder = "/path/to/input/folder",
-                            onClickButton = { },
-                            onResult = { it?.let { onIntent(PanarooUiIntent.ChangeInputFolder(it.path)) } }
+                            onClickButton = { onIntent(PanarooUiIntent.ClickPickFolder) },
+                            onResult = { onIntent(PanarooUiIntent.ChangeInputFolder(it?.path)) }
                         )
 
                         PickFolder(
@@ -73,8 +73,8 @@ fun Panaroo(
                             onClickClear = { onIntent(PanarooUiIntent.ClearOutputFolder) },
                             tooltip = "Select output folder",
                             placeHolder = "/path/to/output/folder",
-                            onClickButton = { },
-                            onResult = { it?.let { onIntent(PanarooUiIntent.ChangeOutputFolder(it.path)) } }
+                            onClickButton = { onIntent(PanarooUiIntent.ClickPickFolder) },
+                            onResult = { onIntent(PanarooUiIntent.ChangeOutputFolder(it?.path)) }
                         )
                     }
                 }

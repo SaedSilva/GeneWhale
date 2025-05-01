@@ -57,7 +57,6 @@ class Global(
         _uiEffect.emit(effect)
     }
 
-
     fun stopAll() {
         scope.launch {
             val stoppingJobs = dockerServices.map { service ->

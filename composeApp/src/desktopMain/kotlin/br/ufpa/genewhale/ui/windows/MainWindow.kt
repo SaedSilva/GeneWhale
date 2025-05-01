@@ -35,8 +35,6 @@ fun MainWindow(
             }
         }
     ) {
-        val state by global.uiState.collectAsState()
-        window.isEnabled = state.isClickable
         window.minimumSize = Dimension(1280, 720)
         App(
             global = global,
