@@ -63,7 +63,7 @@ fun App(
             }
         ) { padding ->
 
-            if (!state.isClickable) {
+            if (state.actionInProgress) {
                 Dialog(
                     onDismissRequest = {},
                     properties = DialogProperties(
@@ -79,10 +79,9 @@ fun App(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            Text("Action in progress", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                            Text(state.textAction ?: "", fontWeight = FontWeight.Bold, fontSize = 20.sp)
                             CircularProgressIndicator()
                         }
-
                     }
                 }
             }
@@ -153,6 +152,7 @@ private fun CoroutineScope.handleGlobalEffects(
 ) {
     launch {
         global.uiEffect.collect {
+            println(it)
             when (it) {
                 is GlobalEffect.ShowSnackBar -> {
                     snackBarState.showSnackbar(

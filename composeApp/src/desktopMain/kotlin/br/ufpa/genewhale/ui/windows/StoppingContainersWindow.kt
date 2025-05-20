@@ -19,6 +19,7 @@ import br.ufpa.genewhale.theme.LightColors
 import br.ufpa.genewhale.theme.GenomeTheme
 
 @Composable
+@Deprecated(level = DeprecationLevel.HIDDEN, message = "Blocking UI")
 fun StoppingContainersWindow() {
     Window(
         onCloseRequest = {},

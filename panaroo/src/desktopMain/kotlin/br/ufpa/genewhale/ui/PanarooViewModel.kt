@@ -80,7 +80,7 @@ class PanarooViewModel(
     }
 
     private fun clickPickFolder() {
-        global.handleIntent(GlobalIntent.DisableClick)
+        global.handleIntent(GlobalIntent.HideActionInProgress)
     }
 
     fun handleConfigIntent(intent: PanarooParamsIntent) {
@@ -136,12 +136,12 @@ class PanarooViewModel(
     }
 
     private fun changeOutputFolder(intent: PanarooUiIntent.ChangeOutputFolder) {
-        global.handleIntent(GlobalIntent.PermitsClick)
+        global.handleIntent(GlobalIntent.ShowActionInProgress("Picking output folder"))
         _uiState.update { it.reduce(intent) }
     }
 
     private fun changeInputFolder(intent: PanarooUiIntent.ChangeInputFolder) {
-        global.handleIntent(GlobalIntent.PermitsClick)
+        global.handleIntent(GlobalIntent.ShowActionInProgress("Picking input folder"))
         _uiState.update { it.reduce(intent) }
     }
 

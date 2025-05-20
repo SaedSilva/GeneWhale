@@ -4,7 +4,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.window.application
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.ufpa.genewhale.di.modules
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalEffect
@@ -20,7 +20,6 @@ fun main() = application {
         application = { modules(modules) }
     ) {
         val global: Global = koinInject()
-        val state by global.uiState.collectAsState()
 
         LaunchedEffect(Unit) {
             global.uiEffect.collect {
@@ -29,9 +28,7 @@ fun main() = application {
                 }
             }
         }
+
         MainWindow(global)
-        if (state.isClosing) {
-            StoppingContainersWindow()
-        }
     }
 }

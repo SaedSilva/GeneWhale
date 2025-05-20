@@ -1,30 +1,25 @@
 package br.ufpa.genewhale.global
 
 data class GlobalState(
-    val isClickable: Boolean = true,
-    val isLoading: Boolean = false,
-    val isClosing: Boolean = false,
+    val actionInProgress: Boolean = false,
+    val textAction: String? = null,
     val memoryBytes: Long = 0,
     val threads: Int = 0,
 )
 
 sealed class GlobalIntent {
-    data object ShowLoading : GlobalIntent()
-    data object HideLoading : GlobalIntent()
     data object CloseApplication : GlobalIntent()
-    data object PermitsClick : GlobalIntent()
-    data object DisableClick : GlobalIntent()
+    data class ShowActionInProgress(val text: String) : GlobalIntent()
+    data object HideActionInProgress : GlobalIntent()
 }
 
 fun GlobalState.reduce(
     intent: GlobalIntent,
 ): GlobalState {
     return when (intent) {
-        is GlobalIntent.ShowLoading -> copy(isLoading = true)
-        is GlobalIntent.HideLoading -> copy(isLoading = false)
-        is GlobalIntent.CloseApplication -> copy(isClosing = true, isClickable = false)
-        is GlobalIntent.PermitsClick -> copy(isClickable = true)
-        is GlobalIntent.DisableClick -> copy(isClickable = false)
+        is GlobalIntent.CloseApplication -> copy(actionInProgress = true, textAction = "Stopping Containers")
+        is GlobalIntent.ShowActionInProgress -> copy(actionInProgress = true, textAction = intent.text)
+        is GlobalIntent.HideActionInProgress -> copy(actionInProgress = false, textAction = null)
     }
 }
 

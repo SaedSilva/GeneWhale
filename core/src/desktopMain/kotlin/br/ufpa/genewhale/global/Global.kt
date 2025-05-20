@@ -19,7 +19,7 @@ class Global(
     private val _uiState = MutableStateFlow(GlobalState())
     val uiState = _uiState.asStateFlow()
 
-    private val _uiEffect = MutableSharedFlow<GlobalEffect>()
+    private val _uiEffect = MutableSharedFlow<GlobalEffect>(replay = 1)
     val uiEffect = _uiEffect.asSharedFlow()
 
     var job: Job? = null
@@ -30,24 +30,16 @@ class Global(
 
     fun handleIntent(intent: GlobalIntent) {
         when (intent) {
-            is GlobalIntent.ShowLoading -> {
-                _uiState.update { it.reduce(intent) }
-            }
-
-            is GlobalIntent.HideLoading -> {
-                _uiState.update { it.reduce(intent) }
-            }
-
             is GlobalIntent.CloseApplication -> {
                 _uiState.update { it.reduce(intent) }
                 stopAll()
             }
 
-            is GlobalIntent.DisableClick -> {
+            is GlobalIntent.HideActionInProgress -> {
                 _uiState.update { it.reduce(intent) }
             }
 
-            is GlobalIntent.PermitsClick -> {
+            is GlobalIntent.ShowActionInProgress -> {
                 _uiState.update { it.reduce(intent) }
             }
         }
