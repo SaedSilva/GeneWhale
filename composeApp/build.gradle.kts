@@ -14,10 +14,6 @@ kotlin {
         val desktopMain by getting
 
         commonMain.dependencies {
-            implementation(project(":components"))
-            implementation(project(":core"))
-            implementation(project(":panaroo"))
-
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.kotlin.test)
@@ -35,6 +31,7 @@ kotlin {
             implementation(libs.navigation.compose)
 
             implementation(libs.compose.material.icons.core)
+            implementation(compose.materialIconsExtended)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

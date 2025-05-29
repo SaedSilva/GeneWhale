@@ -3,6 +3,7 @@ package br.ufpa.genewhale.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import br.ufpa.genewhale.ui.states.ProjectUiIntent
 import br.ufpa.genewhale.ui.states.ProjectUiState
+import br.ufpa.genewhale.home.reduce
 import br.ufpa.genewhale.ui.states.reduce
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

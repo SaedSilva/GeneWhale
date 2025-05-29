@@ -1,20 +1,14 @@
 package br.ufpa.genewhale.ui.windows
 
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
-import androidx.compose.ui.window.DialogWindow
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.rememberWindowState
 import br.ufpa.genewhale.global.Global
 import br.ufpa.genewhale.global.GlobalIntent
-import br.ufpa.genewhale.global.GlobalState
-import br.ufpa.genewhale.ui.App
+import br.ufpa.genewhale.global.App
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import pangenome.composeapp.generated.resources.Res

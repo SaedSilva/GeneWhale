@@ -15,8 +15,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
-import br.ufpa.genewhale.theme.LightColors
-import br.ufpa.genewhale.theme.GenomeTheme
+import br.ufpa.genewhale.uicomponents.theme.LightColors
+import br.ufpa.genewhale.uicomponents.theme.GenomeTheme
 
 @Composable
 @Deprecated(level = DeprecationLevel.HIDDEN, message = "Blocking UI")
